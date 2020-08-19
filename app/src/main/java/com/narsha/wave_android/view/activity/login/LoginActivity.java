@@ -27,6 +27,8 @@ public class LoginActivity extends AppCompatActivity {
     Button loginButton;
     MainViewModel mainViewModel;
     Call<Result> request;
+    String getEdit1;
+    String getEdit2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +44,8 @@ public class LoginActivity extends AppCompatActivity {
 
     public void setListener(){
         loginButton.setOnClickListener(v -> {
-            String getEdit1 = idEt.getText().toString();
-            String getEdit2 = passEt.getText().toString();
+            getEdit1 = idEt.getText().toString();
+            getEdit2 = passEt.getText().toString();
             Log.i("test", getEdit1 + " " + getEdit2);
 
             if(getEdit1.isEmpty()){
