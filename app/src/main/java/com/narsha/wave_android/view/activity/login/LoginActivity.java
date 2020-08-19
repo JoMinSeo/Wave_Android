@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.narsha.wave_android.R;
-import com.narsha.wave_android.data.request.login.Login;
 import com.narsha.wave_android.view.activity.main.MainActivity;
 
 public class LoginActivity extends AppCompatActivity {
