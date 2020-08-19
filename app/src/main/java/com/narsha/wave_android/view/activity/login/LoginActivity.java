@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -22,7 +21,7 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private static final String KEY_UsER = "user_info";
+    private static final String KEY_USER = "user_info";
     EditText idEt, passEt;
     Button loginButton;
     MainViewModel mainViewModel;
@@ -66,13 +65,13 @@ public class LoginActivity extends AppCompatActivity {
                         Log.i("test", result.getResult());
                         // shared preference에 필요한 정보 저장하고
                         // finish...
-                        SharedPreferences sharedPreferences = getSharedPreferences(KEY_UsER, MODE_PRIVATE);
+                        SharedPreferences sharedPreferences = getSharedPreferences(KEY_USER, MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
 
                         editor.putString("userId", getEdit1);
                         editor.putString("userPassword",getEdit2);
 
-                        editor.apply();
+                        editor.commit();
                         finish();
                     }
                 }

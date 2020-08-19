@@ -13,6 +13,7 @@ import com.narsha.wave_android.view.activity.login.LoginActivity;
 import com.narsha.wave_android.viewmodel.MainViewModel;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String KEY_USER = "user_info";
     String userId;
     MainViewModel mainViewModel;
 
@@ -27,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        SharedPreferences sharedPreferences = getSharedPreferences("user", MODE_PRIVATE);
-        userId = sharedPreferences.getString(userId, null);
+        SharedPreferences sharedPreferences = getSharedPreferences(KEY_USER, MODE_PRIVATE);
+        userId = sharedPreferences.getString("userId", null);
 
         if(userId == null){
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
