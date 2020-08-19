@@ -8,7 +8,7 @@ public class Server {
     private ServerAPI api;
     private Server() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("")
+                .baseUrl("http://10.80.161.67:8081/Wave_backend/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         api = retrofit.create(ServerAPI.class);
