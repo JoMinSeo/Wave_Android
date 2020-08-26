@@ -24,7 +24,6 @@ public class LoginActivity extends AppCompatActivity {
     private static final String KEY_USER = "user_info";
     EditText idEt, passEt;
     Button loginButton;
-    MainViewModel mainViewModel;
     Call<Result> request;
     String getEdit1;
     String getEdit2;

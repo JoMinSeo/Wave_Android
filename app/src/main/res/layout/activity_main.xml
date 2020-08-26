@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/fragment"
-        android:name="com.narsha.wave_android.view.fragment.home.HomeFragment"
+        android:name="com.narsha.wave_android.view.fragment.main.MainFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
