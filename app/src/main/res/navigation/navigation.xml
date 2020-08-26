@@ -2,12 +2,14 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/navigation">
+    android:id="@+id/navigation"
+    app:startDestination="@+id/navigation_home">
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.narsha.wave_android.view.fragment.main.MainFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_search"
@@ -20,4 +22,10 @@
         android:name="com.narsha.wave_android.view.fragment.profile.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/navigation_playlist"
+        android:name="com.narsha.wave_android.view.fragment.playlist.PlayListFragment"
+        android:label="Playlist"
+        tools:layout="@layout/fragment_play_list" />
 </navigation>
