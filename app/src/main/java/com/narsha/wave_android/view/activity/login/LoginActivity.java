@@ -17,7 +17,7 @@ import com.narsha.wave_android.data.Result;
 import com.narsha.wave_android.data.User;
 import com.narsha.wave_android.network.Server;
 import com.narsha.wave_android.view.activity.main.MainActivity;
-import com.narsha.wave_android.view.activity.signUp.SignUpActivity;
+import com.narsha.wave_android.view.activity.signup.SignUpActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;

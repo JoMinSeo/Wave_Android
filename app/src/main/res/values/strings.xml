@@ -5,4 +5,6 @@
     <string name="title_playlist">플레이리스트</string>
     <string name="title_search">검색</string>
     <string name="title_profile">프로필</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
