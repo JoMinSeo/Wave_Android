@@ -11,6 +11,6 @@ public interface ServerAPI {
     @POST("login.api")
     Call<Result> login(@Body User user);
 
-    @POST("signup")
+    @POST("register.api")
     Call<Result> signUp(@Body User user);
 }

@@ -16,6 +16,7 @@ import com.narsha.wave_android.R;
 import com.narsha.wave_android.data.Result;
 import com.narsha.wave_android.data.User;
 import com.narsha.wave_android.network.Server;
+import com.narsha.wave_android.view.activity.main.MainActivity;
 import com.narsha.wave_android.view.activity.signUp.SignUpActivity;
 
 import retrofit2.Call;
@@ -76,8 +77,7 @@ public class LoginActivity extends AppCompatActivity {
                     if(response.code()==200){
                         Result result = response.body();
                         Log.i("test", result.getResult());
-                        // shared preference에 필요한 정보 저장하고
-                        // finish...
+
                         SharedPreferences sharedPreferences = getSharedPreferences(KEY_USER, MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -85,6 +85,8 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString("userPassword",getEdit2);
 
                         editor.commit();
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
                         finish();
                     }
                 }
