@@ -73,18 +73,20 @@ public class LoginActivity extends AppCompatActivity {
                     Log.i("test", response.code()+"");
                     if(response.code()==200){
                         Result result = response.body();
-                        Log.i("test", result.getResult());
+                        if(result.getResult().equals("ok")) {
+                            Log.i("test", result.getResult());
 
-                        SharedPreferences sharedPreferences = getSharedPreferences(KEY_USER, MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                            SharedPreferences sharedPreferences = getSharedPreferences(KEY_USER, MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                        editor.putString("userId", getEdit1);
-                        editor.putString("userPassword",getEdit2);
+                            editor.putString("userId", getEdit1);
+                            editor.putString("userPassword", getEdit2);
 
-                        editor.commit();
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(intent);
-                        finish();
+                            editor.commit();
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
                     }
                 }
 
