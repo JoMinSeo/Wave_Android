@@ -56,35 +56,35 @@ public class SignUpFragment extends Fragment {
         next.setOnClickListener(view1 ->{
 
 
-                if(edit_pwd.getText().toString().equals(edit_pwd_check.getText().toString())) {
+            if(edit_pwd.getText().toString().equals(edit_pwd_check.getText().toString())) {
 
-                    User user = new User(edit_id.getText().toString(), edit_pwd.getText().toString());
+                User user = new User(edit_id.getText().toString(), edit_pwd.getText().toString());
 
-                    request = Server.getInstance().getApi().signUp(user);
-                    request.enqueue(new Callback<Result>() {
-                        @Override
-                        public void onResponse(Call<Result> call, Response<Result> response) {
-                            Log.i("test", response.code() + "");
-                            if (response.code() == 200) {
-                                Result result = response.body();
-                                if(result.getResult().equals("ok")){
-                                    Log.i("test", result.getResult());
-                                    NavController controller = Navigation.findNavController(view);
-                                    controller.navigate(R.id.action_signUpFragment_to_songSelectFragment1);
-                                }else{
-                                    Toast.makeText(getContext(), "이미 사용중인 아이디입니다.",Toast.LENGTH_LONG).show();
-                                }
-
+                request = Server.getInstance().getApi().signUp(user);
+                request.enqueue(new Callback<Result>() {
+                    @Override
+                    public void onResponse(Call<Result> call, Response<Result> response) {
+                        Log.i("test", response.code() + "");
+                        if (response.code() == 200) {
+                            Result result = response.body();
+                            if(result.getResult().equals("ok")){
+                                Log.i("test", result.getResult());
+                                NavController controller = Navigation.findNavController(view);
+                                controller.navigate(R.id.action_signUpFragment_to_songSelectFragment1);
+                            }else{
+                                Toast.makeText(getContext(), "이미 사용중인 아이디입니다.",Toast.LENGTH_LONG).show();
                             }
-                        }
 
-                        @Override
-                        public void onFailure(Call<Result> call, Throwable t) {
-                            t.printStackTrace();
-                            Log.i("test", "failed");
                         }
-                    });
-                }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Result> call, Throwable t) {
+                        t.printStackTrace();
+                        Log.i("test", "failed");
+                    }
+                });
+            }
 
         });
     }
