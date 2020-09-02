@@ -57,10 +57,9 @@ public class MainFragment extends Fragment {
         return root;
     }
     public void addNewItem() {
-        for(int i = 0 ; i < 10; i ++) {
+        for(int i = 0 ; i < 4; i ++) {
             SliderItem sliderItem = new SliderItem();
-            sliderItem.setDescription("Slider Item Added Manually "+i);
-            sliderItem.setImageUrl(R.color.colorAccent);
+            sliderItem.setImageUrl(R.drawable.ic_launcher_background);
             adapter.addItem(sliderItem);
         }
     }
