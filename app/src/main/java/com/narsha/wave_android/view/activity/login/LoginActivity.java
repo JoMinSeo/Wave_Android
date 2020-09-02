@@ -2,17 +2,21 @@ package com.narsha.wave_android.view.activity.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.narsha.wave_android.R;
 import com.narsha.wave_android.data.Result;
 import com.narsha.wave_android.data.User;
 import com.narsha.wave_android.network.Server;
+import com.narsha.wave_android.view.activity.signUp.SignUpActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String KEY_USER = "user_info";
     EditText idEt, passEt;
+    TextView noId;
     Button loginButton;
     Call<Result> request;
     String getEdit1;
@@ -35,7 +40,15 @@ public class LoginActivity extends AppCompatActivity {
         idEt = findViewById(R.id.et_id);
         passEt = findViewById(R.id.et_pass);
         loginButton = findViewById(R.id.btn_login);
+        noId = findViewById(R.id.noId_Tv);
 
+        noId.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
         setListener();
     }
 
