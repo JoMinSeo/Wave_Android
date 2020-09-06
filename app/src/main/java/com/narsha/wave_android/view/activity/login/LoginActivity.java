@@ -30,8 +30,8 @@ public class LoginActivity extends AppCompatActivity {
     TextView noId;
     Button loginButton;
     Call<Result> request;
-    String getEdit1;
-    String getEdit2;
+    String idEdit;
+    String pwEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,20 +55,20 @@ public class LoginActivity extends AppCompatActivity {
 
     public void setListener(){
         loginButton.setOnClickListener(v -> {
-            getEdit1 = idEt.getText().toString();
-            getEdit2 = passEt.getText().toString();
-            Log.i("test", getEdit1 + " " + getEdit2);
+            idEdit = idEt.getText().toString();
+            pwEdit = passEt.getText().toString();
+            Log.i("test", idEdit + " " + pwEdit);
 
-            if(getEdit1.isEmpty()){
+            if(idEdit.isEmpty()){
                 Toast.makeText(getApplicationContext(), "아이디를 입력하여 주세요.", Toast.LENGTH_SHORT).show();
                 return;
             }
-            if(getEdit2.isEmpty()){
+            if(pwEdit.isEmpty()){
                 Toast.makeText(getApplicationContext(), "비밀번호를 입력하여 주세요.", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            User user = new User(getEdit1, getEdit2);
+            User user = new User(idEdit, pwEdit);
             request = Server.getInstance().getApi().login(user);
             request.enqueue(new Callback<Result>() {
                 @Override
@@ -82,8 +82,8 @@ public class LoginActivity extends AppCompatActivity {
                             SharedPreferences sharedPreferences = getSharedPreferences(KEY_USER, MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                            editor.putString("userId", getEdit1);
-                            editor.putString("userPassword", getEdit2);
+                            editor.putString("userId", idEdit);
+                            editor.putString("userPassword", pwEdit);
 
                             editor.commit();
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
