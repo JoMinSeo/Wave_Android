@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.btn_login);
         noId = findViewById(R.id.noId_Tv);
 
-        noId.setOnClickListener(new View.OnClickListener(){
+        noId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
@@ -53,17 +53,17 @@ public class LoginActivity extends AppCompatActivity {
         setListener();
     }
 
-    public void setListener(){
+    public void setListener() {
         loginButton.setOnClickListener(v -> {
             idEdit = idEt.getText().toString();
             pwEdit = passEt.getText().toString();
             Log.i("test", idEdit + " " + pwEdit);
 
-            if(idEdit.isEmpty()){
+            if (idEdit.isEmpty()) {
                 Toast.makeText(getApplicationContext(), "아이디를 입력하여 주세요.", Toast.LENGTH_SHORT).show();
                 return;
             }
-            if(pwEdit.isEmpty()){
+            if (pwEdit.isEmpty()) {
                 Toast.makeText(getApplicationContext(), "비밀번호를 입력하여 주세요.", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -73,10 +73,10 @@ public class LoginActivity extends AppCompatActivity {
             request.enqueue(new Callback<Result>() {
                 @Override
                 public void onResponse(Call<Result> call, Response<Result> response) {
-                    Log.i("test", response.code()+"");
-                    if(response.code()==200){
+                    Log.i("test", response.code() + "");
+                    if (response.code() == 200) {
                         Result result = response.body();
-                        if(result.getResult().equals("ok")) {
+                        if (result.getResult().equals("ok")) {
                             Log.i("test", result.getResult());
 
                             SharedPreferences sharedPreferences = getSharedPreferences(KEY_USER, MODE_PRIVATE);
@@ -104,6 +104,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(request!=null) request.cancel();
+        if (request != null) request.cancel();
     }
 }
