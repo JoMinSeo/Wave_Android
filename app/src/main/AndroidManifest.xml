@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.activity.login.LoginActivity"/>
+        <activity android:name=".view.activity.signup.ChangePwActivity"></activity>
+        <activity android:name=".view.activity.login.LoginActivity" />
         <activity android:name=".view.activity.signup.SignUpActivity" />
         <activity android:name=".view.activity.intro.IntroActivity">
             <intent-filter>
