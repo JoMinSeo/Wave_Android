@@ -26,8 +26,8 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         SharedPreferences preferences = requireActivity().getSharedPreferences("user_info", Context.MODE_PRIVATE);
-        //view.findViewById(R.id.profile_id_Tv);
-        
+        view.findViewById(R.id.profile_id_Tv);
+
 
     }
 
