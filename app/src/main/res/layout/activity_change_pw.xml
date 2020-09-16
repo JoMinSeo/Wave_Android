@@ -56,4 +56,17 @@
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <Button
+        android:layout_width="297dp"
+        android:layout_height="60dp"
+        android:text="완료"
+        android:textColor="#FFFFFF"
+        android:textSize="22sp"
+        android:background="#0080FF"
+        android:layout_marginTop="280dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/changePw_newpw_Et" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
