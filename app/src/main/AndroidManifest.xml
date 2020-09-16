@@ -14,7 +14,7 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".view.activity.login.LoginActivity"/>
         <activity android:name=".view.activity.signup.SignUpActivity" />
-        <activity android:name=".IntroActivity">
+        <activity android:name=".view.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
