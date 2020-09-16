@@ -1,4 +1,4 @@
-package com.narsha.wave_android.view
+package com.narsha.wave_android.view.activity.intro
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
