@@ -29,7 +29,7 @@ public class ProfileFragment extends Fragment {
 
 
 
-        TextView tv = (TextView)view.findViewById(R.id.myplay);
+        TextView tv = (TextView)view.findViewById(R.id.changePw);
         tv.setOnClickListener(new TextView.OnClickListener(){
             @Override
             public void onClick(View view){
