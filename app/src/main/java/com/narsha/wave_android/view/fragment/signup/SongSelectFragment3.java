@@ -40,9 +40,7 @@ public class SongSelectFragment3 extends Fragment {
     }
     public void addList(){
         selectGenreList = new ArrayList<SelectGenre>();
-        for(int i = 1; i <= 5; i ++){
-            selectGenreList.add(new SelectGenre("장르 "+i));
-        }
+
         adapter.setData(selectGenreList);
     }
     @Override
@@ -58,7 +56,7 @@ public class SongSelectFragment3 extends Fragment {
 
         next.setOnClickListener(view1 ->{
             NavController controller = Navigation.findNavController(view);
-            controller.navigate(R.id.action_songSelectFragment3_to_songSelectFragment4);
+            controller.navigate(R.id.action_songSelectFragment3_to_completeFragment);
         });
     }
 }

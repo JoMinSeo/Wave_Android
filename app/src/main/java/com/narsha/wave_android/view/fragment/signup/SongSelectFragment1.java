@@ -10,24 +10,32 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.narsha.wave_android.R;
+import com.narsha.wave_android.data.Result;
 import com.narsha.wave_android.data.request.signup.SelectGenre;
+import com.narsha.wave_android.network.Server;
 import com.narsha.wave_android.view.adapter.signup.SongSelectAdapter1;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class SongSelectFragment1 extends Fragment {
     private RecyclerView select_Recycler;
     private List<SelectGenre> selectGenreList;
     private SongSelectAdapter1 adapter;
-    private String[] dummy = {"힙합", "발라드", "팝", "댄스", "재즈", "클래식", "락","R&B","일렉트로닉"};
+    private Call<List<SelectGenre>> selectGenre;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,11 +52,25 @@ public class SongSelectFragment1 extends Fragment {
         return root;
     }
     public void addList(){
-        selectGenreList = new ArrayList<SelectGenre>();
-        for(int i = 0; i < 9; i ++){
-            selectGenreList.add(new SelectGenre(dummy[i]));
-        }
-        adapter.setData(selectGenreList);
+        selectGenre = Server.getInstance().getApi().getGenre1();
+
+        selectGenre.enqueue(new Callback<List<SelectGenre>>() {
+            @Override
+            public void onResponse(Call<List<SelectGenre>> call, Response<List<SelectGenre>> response) {
+                if(response.code() == 200){
+                    selectGenreList = response.body();
+                    adapter.setData(selectGenreList);
+                }else{
+                    Log.i("E",response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<SelectGenre>> call, Throwable t) {
+
+            }
+
+        });
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

@@ -22,7 +22,7 @@ public class SongSelectAdapter1 extends RecyclerView.Adapter<SongSelectAdapter1.
 
     public void setData(List<SelectGenre> selectGenreList){
         this.selectGenreList = selectGenreList;
-
+        notifyDataSetChanged();
     }
     public SongSelectAdapter1(Context mContext){
         this.mContext = mContext;
@@ -40,7 +40,7 @@ public class SongSelectAdapter1 extends RecyclerView.Adapter<SongSelectAdapter1.
     @Override
     public void onBindViewHolder(@NonNull SongSelectViewHolder holder, int position) {
         SelectGenre selectGenre = selectGenreList.get(position);
-        holder.button.setText(selectGenre.getGenre());
+        holder.button.setText(selectGenre.getName());
 
         holder.btn_select.setOnClickListener(v->{
             holder.btn_select.setBackgroundColor(mContext.getColor(R.color.colorBlue));
