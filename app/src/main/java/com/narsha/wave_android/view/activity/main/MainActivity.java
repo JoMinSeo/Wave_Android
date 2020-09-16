@@ -29,13 +29,9 @@ public class MainActivity extends AppCompatActivity {
 
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         BottomNavigationView navView = findViewById(R.id.bottomNavigationView);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
         NavController navController = Navigation.findNavController(this, R.id.fragment_host);
-        /*AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_playlist, R.id.navigation_search,R.id.navigation_profile)
-                .build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);*/
+
         NavigationUI.setupWithNavController(navView, navController);
     }
 
