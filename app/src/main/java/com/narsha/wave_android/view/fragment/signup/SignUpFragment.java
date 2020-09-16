@@ -21,6 +21,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.narsha.wave_android.R;
 import com.narsha.wave_android.data.Result;
 import com.narsha.wave_android.data.User;
+import com.narsha.wave_android.data.request.signup.UserSignUp;
 import com.narsha.wave_android.network.Server;
 import com.narsha.wave_android.view.activity.main.MainActivity;
 import com.narsha.wave_android.view.activity.signup.SignUpActivity;
@@ -50,6 +51,8 @@ public class SignUpFragment extends Fragment {
         TextInputEditText edit_id = view.findViewById(R.id.id_regi);
         TextInputEditText edit_pwd = view.findViewById(R.id.pwd_regi);
         TextInputEditText edit_pwd_check = view.findViewById(R.id.pwd_check);
+        TextInputEditText edit_name = view.findViewById(R.id.name_regi);
+        TextInputEditText edit_email = view.findViewById(R.id.email_regi);
 
         Button next = view.findViewById(R.id.next);
 
@@ -58,7 +61,7 @@ public class SignUpFragment extends Fragment {
 
             if(edit_pwd.getText().toString().equals(edit_pwd_check.getText().toString())) {
 
-                User user = new User(edit_id.getText().toString(), edit_pwd.getText().toString());
+                UserSignUp user = new UserSignUp(edit_id.getText().toString(), edit_pwd.getText().toString(), edit_email.getText().toString(), edit_name.getText().toString());
 
                 request = Server.getInstance().getApi().signUp(user);
                 request.enqueue(new Callback<Result>() {

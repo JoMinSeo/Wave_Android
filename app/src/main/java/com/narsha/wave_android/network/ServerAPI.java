@@ -2,6 +2,7 @@ package com.narsha.wave_android.network;
 
 import com.narsha.wave_android.data.Result;
 import com.narsha.wave_android.data.User;
+import com.narsha.wave_android.data.request.signup.UserSignUp;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -12,5 +13,5 @@ public interface ServerAPI {
     Call<Result> login(@Body User user);
 
     @POST("register.api")
-    Call<Result> signUp(@Body User user);
+    Call<Result> signUp(@Body UserSignUp user);
 }
