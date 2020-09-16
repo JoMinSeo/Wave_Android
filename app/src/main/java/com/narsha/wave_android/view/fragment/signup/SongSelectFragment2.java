@@ -49,7 +49,7 @@ public class SongSelectFragment2 extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        adapter = new SongSelectAdapter1();
+        adapter = new SongSelectAdapter1(getContext());
 
         addList();
 

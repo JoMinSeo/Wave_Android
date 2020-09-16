@@ -27,6 +27,7 @@ public class SongSelectFragment1 extends Fragment {
     private RecyclerView select_Recycler;
     private List<SelectGenre> selectGenreList;
     private SongSelectAdapter1 adapter;
+    private String[] dummy = {"힙합", "발라드", "팝", "댄스", "재즈", "클래식", "락","R&B","일렉트로닉"};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,15 +45,15 @@ public class SongSelectFragment1 extends Fragment {
     }
     public void addList(){
         selectGenreList = new ArrayList<SelectGenre>();
-        for(int i = 1; i <= 9; i ++){
-            selectGenreList.add(new SelectGenre("장르 "+i));
+        for(int i = 0; i < 9; i ++){
+            selectGenreList.add(new SelectGenre(dummy[i]));
         }
         adapter.setData(selectGenreList);
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        adapter = new SongSelectAdapter1();
+        adapter = new SongSelectAdapter1(getContext());
 
         addList();
 

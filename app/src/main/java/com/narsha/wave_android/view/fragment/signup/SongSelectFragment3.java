@@ -48,8 +48,7 @@ public class SongSelectFragment3 extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        adapter = new SongSelectAdapter1();
-
+        adapter = new SongSelectAdapter1(getContext());
         addList();
 
         select_Recycler = view.findViewById(R.id.recyclers_3);
