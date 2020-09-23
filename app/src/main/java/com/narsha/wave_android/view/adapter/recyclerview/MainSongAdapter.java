@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,19 +13,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.narsha.wave_android.R;
-import com.narsha.wave_android.data.request.signup.SelectGenre;
-import com.narsha.wave_android.data.response.music.List_db;
+import com.narsha.wave_android.data.response.music.PlayList;
+import com.narsha.wave_android.data.response.music.RecommendList;
 import com.narsha.wave_android.data.response.music.Song;
 
 import java.util.List;
-import java.util.Objects;
 
 public class MainSongAdapter extends RecyclerView.Adapter<MainSongAdapter.MainSongViewHolder> {
-    private List<Song> Songs;
+    private List<PlayList> MainList;
     Context mContext;
 
-    public void setData(List<Song> Songs){
-        this.Songs = Songs;
+    public void setData(List<PlayList> Songs){
+        this.MainList = Songs;
         notifyDataSetChanged();
     }
     public MainSongAdapter(Context mContext){
@@ -44,21 +42,23 @@ public class MainSongAdapter extends RecyclerView.Adapter<MainSongAdapter.MainSo
 
     @Override
     public void onBindViewHolder(@NonNull MainSongViewHolder holder, int position) {
-       Glide.with(mContext).load(Songs.get(position).getJacket()).into(holder.imageView_jacket);
-       holder.title.setText(Songs.get(position).getTitle());
+        if(MainList != null){
+            if(MainList.get(position) != null) {
+                        String url = MainList.get(position).getJacket();
+                        Glide.with(mContext).load(url).into(holder.imageView_jacket);
+            }
+        }
     }
     @Override
     public int getItemCount() {
-        return Songs == null ? 0 : Songs.size();
+        return MainList == null ? 0 : MainList.size();
     }
 
     class MainSongViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView_jacket;
-        TextView title;
         public MainSongViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView_jacket = itemView.findViewById(R.id.img_title);
-            title = itemView.findViewById(R.id.title);
         }
     }
 }
