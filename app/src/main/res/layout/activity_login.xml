@@ -44,6 +44,7 @@
         android:hint="  비밀번호"
         android:textColorHint="#2174BD"
         android:textSize="20sp"
+        android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.925"

@@ -30,6 +30,7 @@ class PlaylistAdapter(val list : ArrayList<playList>) :
             itemView.setOnClickListener {
                 val intent = Intent(itemView.context, SongListActivity::class.java)
                 intent.putExtra("ListId", playList.listId)
+                itemView.context.startActivity(intent)
             }
         }
     }
