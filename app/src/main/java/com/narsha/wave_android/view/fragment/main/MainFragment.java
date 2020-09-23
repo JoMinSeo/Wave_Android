@@ -20,6 +20,7 @@ import com.narsha.wave_android.data.response.music.Song;
 import com.narsha.wave_android.data.slider.SliderItem;
 import com.narsha.wave_android.network.Server;
 import com.narsha.wave_android.view.adapter.imageslider.MainImageSlider;
+import com.narsha.wave_android.view.adapter.listener.OnItemClickListener;
 import com.narsha.wave_android.view.adapter.recyclerview.MainSongAdapter;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
@@ -60,9 +61,24 @@ public class MainFragment extends Fragment {
         genre2 = view.findViewById(R.id.genre2);
         genre3 = view.findViewById(R.id.genre3);
 
-        adapter_main = new MainSongAdapter(getContext());
-        adapter_main2 = new MainSongAdapter(getContext());
-        adapter_main3 = new MainSongAdapter(getContext());
+        adapter_main = new MainSongAdapter(getContext(), new OnItemClickListener() {
+            @Override
+            public void OnItemClick(int position) {
+
+            }
+        });
+        adapter_main2 = new MainSongAdapter(getContext(), new OnItemClickListener() {
+            @Override
+            public void OnItemClick(int position) {
+
+            }
+        });
+        adapter_main3 = new MainSongAdapter(getContext(), new OnItemClickListener() {
+            @Override
+            public void OnItemClick(int position) {
+
+            }
+        });
 
         recycler_first.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         recycler_second.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
