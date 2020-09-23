@@ -16,19 +16,22 @@ import com.narsha.wave_android.R;
 import com.narsha.wave_android.data.response.music.PlayList;
 import com.narsha.wave_android.data.response.music.RecommendList;
 import com.narsha.wave_android.data.response.music.Song;
+import com.narsha.wave_android.view.adapter.listener.OnItemClickListener;
 
 import java.util.List;
 
 public class MainSongAdapter extends RecyclerView.Adapter<MainSongAdapter.MainSongViewHolder> {
     private List<PlayList> MainList;
     Context mContext;
+    OnItemClickListener onItemClickListener;
 
     public void setData(List<PlayList> Songs){
         this.MainList = Songs;
         notifyDataSetChanged();
     }
-    public MainSongAdapter(Context mContext){
+    public MainSongAdapter(Context mContext, OnItemClickListener onItemClickListener){
         this.mContext = mContext;
+        this.onItemClickListener = onItemClickListener;
     }
 
     @NonNull
@@ -48,6 +51,9 @@ public class MainSongAdapter extends RecyclerView.Adapter<MainSongAdapter.MainSo
                         Glide.with(mContext).load(url).into(holder.imageView_jacket);
             }
         }
+        holder.itemView.setOnClickListener(v->{
+            onItemClickListener.OnItemClick(position);
+        });
     }
     @Override
     public int getItemCount() {
