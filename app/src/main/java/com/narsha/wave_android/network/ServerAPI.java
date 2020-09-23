@@ -4,6 +4,8 @@ import com.narsha.wave_android.data.Result;
 import com.narsha.wave_android.data.User;
 import com.narsha.wave_android.data.request.signup.SelectGenre;
 import com.narsha.wave_android.data.request.signup.UserSignUp;
+import com.narsha.wave_android.data.response.music.List_db;
+import com.narsha.wave_android.data.response.music.Song;
 
 import java.util.List;
 
@@ -21,4 +23,7 @@ public interface ServerAPI {
 
     @GET("taste1.api")
     Call<List<SelectGenre>> getGenre1();
+
+    @GET("list.api")
+    Call<List<Song>> getList();
 }
