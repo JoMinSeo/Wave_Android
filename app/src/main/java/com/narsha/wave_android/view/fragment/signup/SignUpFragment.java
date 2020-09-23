@@ -13,11 +13,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-
-import com.google.android.material.textfield.TextInputEditText;
 import com.narsha.wave_android.R;
 import com.narsha.wave_android.data.Result;
 import com.narsha.wave_android.data.User;
@@ -50,11 +49,11 @@ public class SignUpFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        TextInputEditText edit_id = view.findViewById(R.id.id_regi);
-        TextInputEditText edit_pwd = view.findViewById(R.id.pwd_regi);
-        TextInputEditText edit_pwd_check = view.findViewById(R.id.pwd_check);
-        TextInputEditText edit_name = view.findViewById(R.id.name_regi);
-        TextInputEditText edit_email = view.findViewById(R.id.email_regi);
+        AppCompatEditText edit_id = view.findViewById(R.id.id_regi);
+        AppCompatEditText edit_pwd = view.findViewById(R.id.pwd_regi);
+        AppCompatEditText edit_pwd_check = view.findViewById(R.id.pwd_check);
+        AppCompatEditText edit_name = view.findViewById(R.id.name_regi);
+        AppCompatEditText edit_email = view.findViewById(R.id.email_regi);
 
         Button next = view.findViewById(R.id.next);
 
