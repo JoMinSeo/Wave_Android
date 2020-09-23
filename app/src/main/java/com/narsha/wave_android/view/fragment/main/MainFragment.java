@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.narsha.wave_android.R;
 import com.narsha.wave_android.data.response.music.RecommendList;
@@ -37,6 +38,7 @@ public class MainFragment extends Fragment {
     private RecyclerView recycler_first, recycler_second, recycler_third;
     private Call<List<RecommendList>> listmusic;
     private List<RecommendList> list_musics;
+    private TextView genre1, genre2, genre3;
     public MainFragment() {
         // Required empty public constructor
     }
@@ -53,6 +55,10 @@ public class MainFragment extends Fragment {
         recycler_first = view.findViewById(R.id.recycler_first);
         recycler_second = view.findViewById(R.id.recycler_second);
         recycler_third = view.findViewById(R.id.recycler_third);
+
+        genre1 = view.findViewById(R.id.genre1);
+        genre2 = view.findViewById(R.id.genre2);
+        genre3 = view.findViewById(R.id.genre3);
 
         adapter_main = new MainSongAdapter(getContext());
         adapter_main2 = new MainSongAdapter(getContext());
@@ -77,6 +83,10 @@ public class MainFragment extends Fragment {
                     adapter_main.setData(list_musics.get(0).getList());
                     adapter_main2.setData(list_musics.get(1).getList());
                     adapter_main3.setData(list_musics.get(2).getList());
+
+                    genre1.setText("#"+list_musics.get(0).getGenreName());
+                    genre2.setText("#"+list_musics.get(1).getGenreName());
+                    genre3.setText("#"+list_musics.get(2).getGenreName());
 
                 }
             }
