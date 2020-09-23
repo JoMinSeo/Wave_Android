@@ -1,12 +1,14 @@
 package com.narsha.wave_android.network;
 
 import com.narsha.wave_android.data.Result;
+import com.narsha.wave_android.data.SongList;
 import com.narsha.wave_android.data.User;
 import com.narsha.wave_android.data.request.signup.SelectGenre;
 import com.narsha.wave_android.data.request.signup.UserSignUp;
 import com.narsha.wave_android.data.response.music.RecommendList;
 import com.narsha.wave_android.data.response.music.Song;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -26,4 +28,7 @@ public interface ServerAPI {
 
     @GET("list.api")
     Call<List<RecommendList>> getList();
+
+    @GET("listInfo.api")
+    Call<ArrayList<SongList>> getSongList();
 }
