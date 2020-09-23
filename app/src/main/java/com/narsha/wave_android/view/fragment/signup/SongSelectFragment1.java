@@ -48,7 +48,6 @@ public class SongSelectFragment1 extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_song_select1, container, false);
 
-
         return root;
     }
     public void addList(){
