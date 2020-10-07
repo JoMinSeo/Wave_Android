@@ -4,21 +4,25 @@
     <item
         android:id="@+id/navigation_home"
         android:title="@string/title_home"
+        android:enabled="true"
         android:icon="@drawable/ic_home"/>
 
     <item
         android:id="@+id/navigation_search"
         android:title="@string/title_search"
+        android:enabled="true"
         android:icon="@drawable/ic_search"/>
 
     <item
         android:id="@+id/navigation_playlist"
         android:title="@string/title_playlist"
+        android:enabled="true"
         android:icon="@drawable/ic_playlist"/>
 
     <item
         android:id="@+id/navigation_profile"
         android:title="@string/title_profile"
+        android:enabled="true"
         android:icon="@drawable/ic_profile"/>
 
 </menu>

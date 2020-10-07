@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="276dp"
         android:text="wave"
-        android:textColor="#0080FF"
+        android:textColor="@color/colorLightBlue"
         android:textSize="60sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
