@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,9 +39,9 @@ public class SearchFragment extends Fragment {
         viewPager.setAdapter(adapter);
 
         TabLayout tabLayout = view.findViewById(R.id.searched_tab);
-        new TabLayoutMediator(tabLayout, viewPager,
-                (tab, position) -> tab.setText((position + 1) == 1 ? "전체" : (position + 1) == 2 ?  "곡" : "아티스트")).attach();
 
+        new TabLayoutMediator(tabLayout, viewPager,
+                (tab, position) -> tab.setText((position + 1) == 1 ? "전체" : (position + 1) == 2 ?  "앨범" : (position + 1) == 3 ? "곡" : "아티스트" )).attach();
     }
 
     @Override
