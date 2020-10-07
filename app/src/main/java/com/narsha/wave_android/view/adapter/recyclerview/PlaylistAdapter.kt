@@ -1,6 +1,7 @@
 package com.narsha.wave_android.view.adapter.recyclerview
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +25,7 @@ class PlaylistAdapter(val list : List<PlayList>, val listener: OnItemClickListen
        // val user = itemView?.findViewById<TextView>(R.id.item_user_Text)
 
 
-        fun bind(list: PlayList) {
+        fun bind(position: Int, list: PlayList) {
             title?.text = list.title
             Glide.with(itemView.context).load(list.jacket).into(image)
             //user?.text = song.
@@ -33,7 +34,7 @@ class PlaylistAdapter(val list : List<PlayList>, val listener: OnItemClickListen
                 //val intent = Intent(itemView.context, SongListActivity::class.java)
                 //intent.putExtra("ListId", song.songid)
                 //itemView.context.startActivity(intent)
-                listener.OnItemClick(0, list)
+                listener.OnItemClick(position, list)
             }
         }
     }
@@ -44,11 +45,12 @@ class PlaylistAdapter(val list : List<PlayList>, val listener: OnItemClickListen
     }
 
     override fun getItemCount(): Int {
+        Log.i("Adatper", "itemCount" + list.size)
             return list.size
     }
 
     override fun onBindViewHolder(holder: PlaylistAdapter.Holder, position: Int) {
-        holder.bind(list[position])
+        holder.bind(position, list[position])
     }
 
 }
