@@ -9,10 +9,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.narsha.wave_android.R
-import com.narsha.wave_android.data.response.playlist.playList
+import com.narsha.wave_android.data.response.music.PlayList
+import com.narsha.wave_android.data.response.music.Song
 import com.narsha.wave_android.view.activity.song.SongListActivity
 
-class PlaylistAdapter(val list : ArrayList<playList>) :
+class PlaylistAdapter(val list : List<Song>) :
         RecyclerView.Adapter<PlaylistAdapter.Holder>(){
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -22,14 +23,14 @@ class PlaylistAdapter(val list : ArrayList<playList>) :
         val user = itemView?.findViewById<TextView>(R.id.item_user_Text)
 
 
-        fun bind(playList: playList) {
-            title?.text = playList.listTitle
-            Glide.with(itemView.context).load(playList.listImageUrl).into(image)
-            user?.text = playList.userId
+        fun bind(song: Song) {
+            title?.text = song.title
+            Glide.with(itemView.context).load(song.jacket).into(image)
+            //user?.text = song.
 
             itemView.setOnClickListener {
                 val intent = Intent(itemView.context, SongListActivity::class.java)
-                intent.putExtra("ListId", playList.listId)
+                intent.putExtra("ListId", song.songid)
                 itemView.context.startActivity(intent)
             }
         }
@@ -41,7 +42,7 @@ class PlaylistAdapter(val list : ArrayList<playList>) :
     }
 
     override fun getItemCount(): Int {
-        return list.size
+            return list.size
     }
 
     override fun onBindViewHolder(holder: PlaylistAdapter.Holder, position: Int) {

@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.narsha.wave_android.R
 import com.narsha.wave_android.data.Songs
-import com.narsha.wave_android.data.response.playlist.playList
+import com.narsha.wave_android.data.response.music.PlayList
 import com.narsha.wave_android.view.activity.song.SongActivity
 import com.narsha.wave_android.view.activity.song.SongListActivity
 
