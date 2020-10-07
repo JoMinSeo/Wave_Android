@@ -4,14 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="120dp"
     android:background="@drawable/boarder"
     android:layout_margin="5dp">
 
     <ImageView
         android:id="@+id/item_song_img"
         android:layout_width="100dp"
-        android:layout_height="96dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

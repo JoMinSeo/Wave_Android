@@ -58,7 +58,7 @@ public class MainFragment extends Fragment {
 
     private void onItemClick(int index, int position, PlayList playList){
         model.playList.setValue(playList);
-        navController.navigate(R.id.action_navigation_home_to_navigation_playlist);
+        navController.navigate(R.id.action_navigation_home_to_songListFragment);
     }
 
     @Override

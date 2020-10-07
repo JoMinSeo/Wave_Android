@@ -12,26 +12,28 @@ import com.narsha.wave_android.R
 import com.narsha.wave_android.data.response.music.PlayList
 import com.narsha.wave_android.data.response.music.Song
 import com.narsha.wave_android.view.activity.song.SongListActivity
+import com.narsha.wave_android.view.adapter.listener.OnItemClickListener
 
-class PlaylistAdapter(val list : List<Song>) :
+class PlaylistAdapter(val list : List<PlayList>, val listener: OnItemClickListener) :
         RecyclerView.Adapter<PlaylistAdapter.Holder>(){
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
         val title = itemView?.findViewById<TextView>(R.id.item_title_text)
         val image = itemView?.findViewById<ImageView>(R.id.item_image_IV)
-        val user = itemView?.findViewById<TextView>(R.id.item_user_Text)
+       // val user = itemView?.findViewById<TextView>(R.id.item_user_Text)
 
 
-        fun bind(song: Song) {
-            title?.text = song.title
-            Glide.with(itemView.context).load(song.jacket).into(image)
+        fun bind(list: PlayList) {
+            title?.text = list.title
+            Glide.with(itemView.context).load(list.jacket).into(image)
             //user?.text = song.
 
             itemView.setOnClickListener {
-                val intent = Intent(itemView.context, SongListActivity::class.java)
-                intent.putExtra("ListId", song.songid)
-                itemView.context.startActivity(intent)
+                //val intent = Intent(itemView.context, SongListActivity::class.java)
+                //intent.putExtra("ListId", song.songid)
+                //itemView.context.startActivity(intent)
+                listener.OnItemClick(0, list)
             }
         }
     }
