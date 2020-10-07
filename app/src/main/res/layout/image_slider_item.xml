@@ -7,10 +7,9 @@
 
     <ImageView
         android:id="@+id/iv_auto_image_slider"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/ic_launcher_background"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/loginback"
+        android:layout_gravity="center"
         android:scaleType="fitXY" />
-
-
 </FrameLayout>
