@@ -7,5 +7,8 @@
         <item name="colorAccent">@color/colorLightBlue</item>
         <item name="windowNoTitle">true</item>
     </style>
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/intro_img</item>
+    </style>
 
 </resources>
