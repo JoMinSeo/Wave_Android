@@ -29,7 +29,8 @@
     <EditText
         android:id="@+id/et_id"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.057"
         android:layout_margin="30dp"
         android:background="@drawable/edittext_back"
         android:fontFamily="@font/nanum_squarer"
@@ -48,7 +49,8 @@
     <EditText
         android:id="@+id/et_pass"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.057"
         android:layout_margin="30dp"
         android:background="@drawable/edittext_back"
         android:hint="비밀번호"
@@ -66,8 +68,10 @@
 
     <Button
         android:id="@+id/btn_login"
-        android:layout_width="350dp"
-        android:layout_height="50dp"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_percent="0.8"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.055"
         android:layout_marginTop="50dp"
         android:background="@drawable/regi_btn"
         android:fontFamily="@font/nanum_squarer"
