@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.narsha.wave_android.R;
-import com.narsha.wave_android.view.activity.signup.ChangePwActivity;
 
 public class ProfileFragment extends Fragment {
 
