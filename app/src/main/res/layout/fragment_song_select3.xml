@@ -19,7 +19,7 @@
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginTop="68dp"
-        android:background="@color/colorLightBlue"
+        android:background="@drawable/regi_btn"
         android:text="다음"
         android:textColor="@color/colorWhite"
         android:textSize="20sp"

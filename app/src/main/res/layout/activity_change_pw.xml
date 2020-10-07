@@ -64,7 +64,7 @@
         android:text="완료"
         android:textColor="@color/colorWhite"
         android:textSize="22sp"
-        android:background="#0080FF"
+        android:background="@drawable/regi_btn"
         android:layout_marginTop="280dp"
         android:fontFamily="@font/nanum_squarer"
         app:layout_constraintEnd_toEndOf="parent"
