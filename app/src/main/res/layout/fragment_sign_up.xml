@@ -5,118 +5,104 @@
     android:id="@+id/content_signup"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/loginback"
     tools:context=".view.activity.signup.SignUpActivity">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/id_Et"
+    <EditText
+        android:id="@+id/name_regi"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/edittext_back"
+        android:hint="  이름"
+        android:textColorHint="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+    <EditText
+        android:id="@+id/id_regi"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_margin="20dp"
-        app:hintTextColor="#0080FF"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/edittext_back"
+        android:hint="  아이디"
+        android:textColorHint="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name_regi" />
+
+    <EditText
+        android:id="@+id/email_regi"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/edittext_back"
+        android:hint="  이메일"
+        android:inputType="textEmailAddress"
+        android:textColorHint="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/id_regi" />
+
+    <EditText
+        android:id="@+id/pwd_regi"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:layout_marginBottom="104dp"
+        android:background="@drawable/edittext_back"
+        android:hint="  비밀번호"
+        android:textColorHint="@color/colorPrimary"
+        android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.325">
+        app:layout_constraintTop_toBottomOf="@+id/email_regi" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/id_regi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="아이디"
-            android:textColorHint="#0080FF" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/pw_Et"
+    <EditText
+        android:id="@+id/pwd_check"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_margin="20dp"
-        app:hintTextColor="#0080FF"
-        app:layout_constraintBottom_toTopOf="@+id/repw_Et"
+        android:layout_marginTop="8dp"
+        android:textColorHint="@color/colorPrimary"
+        android:hint="  비밀번호 확인"
+        android:inputType="textPassword"
+        android:background="@drawable/edittext_back"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/id_Et">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/pwd_regi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="비밀번호"
-            android:inputType="textPassword"
-            android:textColorHint="#0080FF" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/repw_Et"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        app:hintTextColor="#0080FF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pw_Et">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/pwd_check"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="비밀번호 확인"
-            android:inputType="textPassword"
-            android:textColorHint="#0080FF" />
-    </com.google.android.material.textfield.TextInputLayout>
+        app:layout_constraintTop_toBottomOf="@+id/pwd_regi"/>
 
     <Button
         android:id="@+id/next"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:background="@color/colorLightBlue"
+        android:layout_width="125dp"
+        android:layout_height="42dp"
+        android:background="@drawable/regi_btn"
         android:text="다음"
         android:textColor="@color/colorWhite"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.93"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.806" />
+        app:layout_constraintVertical_bias="0.976" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/em_Et"
-        android:layout_width="0dp"
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/id_Et"
+        android:layout_marginTop="56dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.075"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:srcCompat="@drawable/logo" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/email_regi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="이메일"
-            android:inputType="textWebEmailAddress" />
-    </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/name_Et"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/next"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/repw_Et"
-        app:layout_constraintVertical_bias="0.083">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/name_regi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="이름" />
-    </com.google.android.material.textfield.TextInputLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

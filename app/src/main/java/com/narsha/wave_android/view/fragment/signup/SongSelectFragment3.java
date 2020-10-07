@@ -40,16 +40,13 @@ public class SongSelectFragment3 extends Fragment {
     }
     public void addList(){
         selectGenreList = new ArrayList<SelectGenre>();
-        for(int i = 1; i <= 5; i ++){
-            selectGenreList.add(new SelectGenre("장르 "+i));
-        }
+
         adapter.setData(selectGenreList);
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        adapter = new SongSelectAdapter1();
-
+        adapter = new SongSelectAdapter1(getContext());
         addList();
 
         select_Recycler = view.findViewById(R.id.recyclers_3);
@@ -59,7 +56,7 @@ public class SongSelectFragment3 extends Fragment {
 
         next.setOnClickListener(view1 ->{
             NavController controller = Navigation.findNavController(view);
-            controller.navigate(R.id.action_songSelectFragment3_to_songSelectFragment4);
+            controller.navigate(R.id.action_songSelectFragment3_to_completeFragment);
         });
     }
 }

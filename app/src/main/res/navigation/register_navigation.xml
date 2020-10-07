@@ -29,8 +29,8 @@
         android:label="fragment_song_select3"
         tools:layout="@layout/fragment_song_select3" >
         <action
-            android:id="@+id/action_songSelectFragment3_to_songSelectFragment4"
-            app:destination="@id/songSelectFragment4" />
+            android:id="@+id/action_songSelectFragment3_to_completeFragment"
+            app:destination="@id/completeFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -39,15 +39,6 @@
         <action
             android:id="@+id/action_signUpFragment_to_songSelectFragment1"
             app:destination="@id/songSelectFragment1" />
-    </fragment>
-    <fragment
-        android:id="@+id/songSelectFragment4"
-        android:name="com.narsha.wave_android.view.fragment.signup.SongSelectFragment4"
-        android:label="fragment_song_select4"
-        tools:layout="@layout/fragment_song_select4" >
-        <action
-            android:id="@+id/action_songSelectFragment4_to_completeFragment"
-            app:destination="@id/completeFragment" />
     </fragment>
     <fragment
         android:id="@+id/completeFragment"

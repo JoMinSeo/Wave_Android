@@ -40,16 +40,14 @@ public class SongSelectFragment2 extends Fragment {
     }
     public void addList(){
         selectGenreList = new ArrayList<SelectGenre>();
-        for(int i = 1; i <= 9; i ++){
-            selectGenreList.add(new SelectGenre("장르 "+i));
-        }
+
         adapter.setData(selectGenreList);
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        adapter = new SongSelectAdapter1();
+        adapter = new SongSelectAdapter1(getContext());
 
         addList();
 

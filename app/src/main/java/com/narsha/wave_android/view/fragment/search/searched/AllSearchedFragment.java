@@ -1,4 +1,4 @@
-package com.narsha.wave_android.view.fragment.search;
+package com.narsha.wave_android.view.fragment.search.searched;
 
 import android.os.Bundle;
 
@@ -16,37 +16,30 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import com.narsha.wave_android.R;
 import com.narsha.wave_android.view.adapter.search.StateFragment;
 
-public class SearchFragment extends Fragment {
 
-    public SearchFragment() {
+public class AllSearchedFragment extends Fragment {
+
+
+
+    public AllSearchedFragment() {
         // Required empty public constructor
-    }
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ViewPager2 viewPager = view.findViewById(R.id.pager);
-        StateFragment adapter = new StateFragment(this);
-        viewPager.setAdapter(adapter);
+    }
 
-        TabLayout tabLayout = view.findViewById(R.id.searched_tab);
-        new TabLayoutMediator(tabLayout, viewPager,
-                (tab, position) -> tab.setText((position + 1) == 1 ? "전체" : (position + 1) == 2 ?  "곡" : "아티스트")).attach();
-
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_search, container, false);
-        return root;
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_all_searched, container, false);
     }
 }
