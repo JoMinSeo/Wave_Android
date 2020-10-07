@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.narsha.wave_android.R
 import com.narsha.wave_android.data.SongList
 import com.narsha.wave_android.data.Songs
+import com.narsha.wave_android.data.response.music.Song
 import com.narsha.wave_android.network.Server
 import com.narsha.wave_android.network.ServerAPI
 import com.narsha.wave_android.view.adapter.recyclerview.SongListAdapter
@@ -16,7 +17,7 @@ import retrofit2.Retrofit
 class SongListActivity : AppCompatActivity() {
 
     lateinit var server : Server
-    lateinit var songs : ArrayList<Songs>
+    lateinit var songs : List<Song>
 
 
 
@@ -24,7 +25,7 @@ class SongListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_song_list)
 
-        var listId = intent.getStringExtra("ListId").toInt()
+        /*var listId = intent.getStringExtra("ListId").toInt()
 
         val adapter = SongListAdapter(songs)
 
@@ -44,6 +45,6 @@ class SongListActivity : AppCompatActivity() {
                     override fun onFailure(call: Call<ArrayList<SongList>>, t: Throwable) {
                     }
                 }
-        )
+        )*/
     }
 }

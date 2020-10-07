@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.narsha.wave_android.R;
 import com.narsha.wave_android.data.response.music.PlayList;
+import com.narsha.wave_android.view.adapter.listener.OnItemClickListener;
 import com.narsha.wave_android.view.adapter.recyclerview.PlaylistAdapter;
 import com.narsha.wave_android.viewmodel.MainViewModel;
 
@@ -27,11 +29,17 @@ import com.narsha.wave_android.viewmodel.MainViewModel;
 public class PlayListFragment extends Fragment {
 
     private MainViewModel model;
+    private NavController navController;
 
     public static PlayListFragment newInstance(String param1, String param2) {
         PlayListFragment fragment = new PlayListFragment();
         return fragment;
     }
+
+    private OnItemClickListener listener =  (position, playList)->{
+        model.playList.setValue(playList);
+        navController.navigate(R.id.action_navigation_home_to_songListFragment);
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,17 +57,9 @@ public class PlayListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         model = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
-        TextView title = view.findViewById(R.id.textViewPlayListTitle);
-        PlayList playList = model.playList.getValue();
 
-
-        if(playList!=null){
-            title.setText(playList.getTitle());
-
-            RecyclerView list = view.findViewById(R.id.selectedPlayList);
-            PlaylistAdapter adapter = new PlaylistAdapter(playList.getSongs());
-            list.setAdapter(adapter);
-            list.setLayoutManager(new LinearLayoutManager(requireContext()));
-        }
+        // 서버에서 내 플레이리스트 받기
+        // 응답 받으면  Adapter 초기화하기 (List<Playlist>, listener)
+        // 각 항목이 클릭 되면 SongList로 가기
     }
 }

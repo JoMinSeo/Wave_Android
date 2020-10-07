@@ -11,17 +11,18 @@ import com.bumptech.glide.Glide
 import com.narsha.wave_android.R
 import com.narsha.wave_android.data.Songs
 import com.narsha.wave_android.data.response.music.PlayList
+import com.narsha.wave_android.data.response.music.Song
 import com.narsha.wave_android.view.activity.song.SongActivity
 import com.narsha.wave_android.view.activity.song.SongListActivity
 
-class SongListAdapter(var list : ArrayList<Songs>):
+class SongListAdapter(var list : List<Song>):
         RecyclerView.Adapter<SongListAdapter.Holder>(){
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val title = itemView?.findViewById<TextView>(R.id.item_song_title)
         val img = itemView?.findViewById<ImageView>(R.id.item_song_img)
 
-        fun bind(songs: Songs) {
+        fun bind(songs: Song) {
             title.text = songs.title
 
             itemView.setOnClickListener {
@@ -31,7 +32,7 @@ class SongListAdapter(var list : ArrayList<Songs>):
                     i.putExtra("title", title)
                     i.putExtra("artist", artistid)
                     i.putExtra("album", albumid)
-                    i.putExtra("lyric", lyric)
+                    //i.putExtra("lyric", lyric)
                     i.putExtra("url", songurl)
                 }
                 itemView.context.startActivity(i)

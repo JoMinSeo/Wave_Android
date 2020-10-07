@@ -10,8 +10,8 @@
         android:label="Home"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_navigation_home_to_navigation_playlist"
-            app:destination="@id/navigation_playlist" />
+            android:id="@+id/action_navigation_home_to_songListFragment"
+            app:destination="@id/songListFragment" />
     </fragment>
 
     <fragment
@@ -30,5 +30,14 @@
         android:id="@+id/navigation_playlist"
         android:name="com.narsha.wave_android.view.fragment.playlist.PlayListFragment"
         android:label="Playlist"
-        tools:layout="@layout/fragment_play_list" />
+        tools:layout="@layout/fragment_play_list" >
+        <action
+            android:id="@+id/action_navigation_playlist_to_songListFragment"
+            app:destination="@id/songListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/songListFragment"
+        android:name="com.narsha.wave_android.view.fragment.playlist.SongListFragment"
+        android:label="fragment_song_list"
+        tools:layout="@layout/fragment_song_list" />
 </navigation>
