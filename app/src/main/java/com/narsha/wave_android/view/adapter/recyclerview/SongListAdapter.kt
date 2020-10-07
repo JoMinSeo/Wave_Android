@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.narsha.wave_android.R
 import com.narsha.wave_android.data.Songs
 import com.narsha.wave_android.data.response.playlist.playList
+import com.narsha.wave_android.view.activity.song.SongActivity
 import com.narsha.wave_android.view.activity.song.SongListActivity
 
 class SongListAdapter(var list : ArrayList<Songs>):
@@ -22,10 +23,18 @@ class SongListAdapter(var list : ArrayList<Songs>):
 
         fun bind(songs: Songs) {
             title.text = songs.title
-            Glide.with(itemView.context).load(songs.songurl).into(img)
 
             itemView.setOnClickListener {
-                //song액티비티로 넘겨야함함
+                val i = Intent(itemView.context, SongActivity::class.java)
+                with(songs){
+                    i.putExtra("id", songid)
+                    i.putExtra("title", title)
+                    i.putExtra("artist", artistid)
+                    i.putExtra("album", albumid)
+                    i.putExtra("lyric", lyric)
+                    i.putExtra("url", songurl)
+                }
+                itemView.context.startActivity(i)
             }
        }
     }

@@ -69,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             User user = new User(idEdit, pwEdit);
+
             request = Server.getInstance().getApi().login(user);
             request.enqueue(new Callback<Result>() {
                 @Override
