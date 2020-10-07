@@ -6,6 +6,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,11 +20,13 @@ import android.widget.TextView;
 import com.narsha.wave_android.R;
 import com.narsha.wave_android.data.response.music.RecommendList;
 import com.narsha.wave_android.data.response.music.Song;
+import com.narsha.wave_android.data.response.music.PlayList;
 import com.narsha.wave_android.data.slider.SliderItem;
 import com.narsha.wave_android.network.Server;
 import com.narsha.wave_android.view.adapter.imageslider.MainImageSlider;
 import com.narsha.wave_android.view.adapter.listener.OnItemClickListener;
 import com.narsha.wave_android.view.adapter.recyclerview.MainSongAdapter;
+import com.narsha.wave_android.viewmodel.MainViewModel;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -40,6 +45,8 @@ public class MainFragment extends Fragment {
     private Call<List<RecommendList>> listmusic;
     private List<RecommendList> list_musics;
     private TextView genre1, genre2, genre3;
+    private MainViewModel model;
+    private NavController navController;
     public MainFragment() {
         // Required empty public constructor
     }
@@ -49,9 +56,17 @@ public class MainFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    private void onItemClick(int index, int position, PlayList playList){
+        model.playList.setValue(playList);
+        navController.navigate(R.id.action_navigation_home_to_navigation_playlist);
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        model = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
+        navController = Navigation.findNavController(view);
 
         recycler_first = view.findViewById(R.id.recycler_first);
         recycler_second = view.findViewById(R.id.recycler_second);
@@ -61,24 +76,11 @@ public class MainFragment extends Fragment {
         genre2 = view.findViewById(R.id.genre2);
         genre3 = view.findViewById(R.id.genre3);
 
-        adapter_main = new MainSongAdapter(getContext(), new OnItemClickListener() {
-            @Override
-            public void OnItemClick(int position) {
+        adapter_main = new MainSongAdapter(getContext(),((position, playList) -> onItemClick(1, position, playList)));
+        adapter_main2 = new MainSongAdapter(getContext(), ((position, playList) -> onItemClick(2, position, playList)));
+        adapter_main3 = new MainSongAdapter(getContext(), ((position, playList) -> onItemClick(3, position, playList)));
 
-            }
-        });
-        adapter_main2 = new MainSongAdapter(getContext(), new OnItemClickListener() {
-            @Override
-            public void OnItemClick(int position) {
 
-            }
-        });
-        adapter_main3 = new MainSongAdapter(getContext(), new OnItemClickListener() {
-            @Override
-            public void OnItemClick(int position) {
-
-            }
-        });
 
         recycler_first.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         recycler_second.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
