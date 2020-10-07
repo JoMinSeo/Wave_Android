@@ -37,6 +37,7 @@ public class SongSelectFragment1 extends Fragment {
     private SongSelectAdapter1 adapter;
     private Call<List<SelectGenre>> selectGenre;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

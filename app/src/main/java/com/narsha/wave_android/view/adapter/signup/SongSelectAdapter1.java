@@ -6,19 +6,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.narsha.wave_android.R;
 import com.narsha.wave_android.data.request.signup.SelectGenre;
 import com.narsha.wave_android.view.adapter.listener.OnItemClickListener;
+import com.narsha.wave_android.viewmodel.MainViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SongSelectAdapter1 extends RecyclerView.Adapter<SongSelectAdapter1.SongSelectViewHolder> {
     private List<SelectGenre> selectGenreList;
     Context mContext;
+    int clickPos = -1;
+
+
 
     public void setData(List<SelectGenre> selectGenreList){
         this.selectGenreList = selectGenreList;
@@ -42,11 +49,21 @@ public class SongSelectAdapter1 extends RecyclerView.Adapter<SongSelectAdapter1.
         SelectGenre selectGenre = selectGenreList.get(position);
         holder.button.setText(selectGenre.getName());
 
-        holder.btn_select.setOnClickListener(v->{
-            holder.btn_select.setBackgroundColor(mContext.getColor(R.color.colorBlue));
+        holder.btn_select.setOnClickListener(v-> {
+            if(clickPos != position){
+                clickPos = position;
+            }else{
+                clickPos = -1;
+            }
+            notifyDataSetChanged();
         });
-    }
 
+        if(clickPos == position){
+            holder.btn_select.setBackground(mContext.getDrawable(R.color.colorBlue));
+        }else{
+            holder.btn_select.setBackground(mContext.getDrawable(R.drawable.select_boarder));
+        }
+    }
     @Override
     public int getItemCount() {
         return selectGenreList == null ? 0 : selectGenreList.size();
