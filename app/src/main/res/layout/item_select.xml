@@ -12,6 +12,7 @@
         android:layout_margin="20dp"
         android:background="@drawable/select_boarder"
         android:text="노래"
+        android:fontFamily="@font/nanum_squarer"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

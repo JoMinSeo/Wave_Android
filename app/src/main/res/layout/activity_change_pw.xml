@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="비밀번호 바꾸기"
+        android:fontFamily="@font/nanum_squarer"
         android:textColor="#0080FF"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,9 +25,8 @@
         android:layout_width="300dp"
         android:layout_height="70dp"
         android:layout_margin="70dp"
-        app:layout_constraintBottom_toTopOf="@+id/id_Et"
+        app:layout_constraintBottom_toTopOf="@+id/changePw_newpw_Et"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:layout_constraintVertical_bias="1.0">
@@ -34,6 +34,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/nanum_squarer"
             android:hint="기존 비밀번호"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -44,7 +45,7 @@
         android:layout_height="70dp"
         android:layout_margin="50dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/changePw_pw_Et"
         app:layout_constraintVertical_bias="1.0">
@@ -52,6 +53,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/nanum_squarer"
             android:hint="새 비밀번호"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -60,10 +62,11 @@
         android:layout_width="297dp"
         android:layout_height="60dp"
         android:text="완료"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/colorWhite"
         android:textSize="22sp"
         android:background="#0080FF"
         android:layout_marginTop="280dp"
+        android:fontFamily="@font/nanum_squarer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
