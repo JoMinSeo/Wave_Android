@@ -7,4 +7,5 @@ data class Listitem(
         var genreName: String? = null,
         var subGenreId: String? = null,
         var subGenreName: String? = null,
-        var playLists: List<PlayList>? = null)
+        var playLists: List<PlayList>? = null
+)
