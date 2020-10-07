@@ -14,7 +14,7 @@
         android:textColor="@color/colorLightBlue"
         android:textSize="64sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <ImageView
         android:id="@+id/imageView4"
@@ -65,7 +65,6 @@
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginTop="50dp"
-        android:background="#2174BD"
         android:text="로그인"
         android:background="@color/colorLightBlue"
         android:textStyle="bold"
@@ -84,7 +83,6 @@
         android:layout_height="wrap_content"
         android:textColor="@color/colorLightBlue"
         android:text="아직 회원이 아니신가요?"
-        android:textColor="#2174BD"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
