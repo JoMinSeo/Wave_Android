@@ -1,7 +1,6 @@
 package com.narsha.wave_android.view.fragment.playlist;
 
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
 
@@ -17,7 +16,6 @@ import android.view.ViewGroup;
 
 import com.narsha.wave_android.R;
 import com.narsha.wave_android.data.response.music.PlayList;
-import com.narsha.wave_android.view.adapter.recyclerview.PlaylistAdapter;
 import com.narsha.wave_android.view.adapter.recyclerview.SongListAdapter;
 import com.narsha.wave_android.viewmodel.MainViewModel;
 

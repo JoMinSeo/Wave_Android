@@ -15,13 +15,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.narsha.wave_android.R;
 import com.narsha.wave_android.data.response.music.PlayList;
-import com.narsha.wave_android.data.response.music.RecommendList;
 import com.narsha.wave_android.network.Server;
-import com.narsha.wave_android.network.ServerAPI;
 import com.narsha.wave_android.view.adapter.listener.OnItemClickListener;
 import com.narsha.wave_android.view.adapter.recyclerview.PlaylistAdapter;
 import com.narsha.wave_android.viewmodel.MainViewModel;

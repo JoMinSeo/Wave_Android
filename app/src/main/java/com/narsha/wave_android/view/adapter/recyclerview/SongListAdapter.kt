@@ -7,13 +7,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.narsha.wave_android.R
-import com.narsha.wave_android.data.Songs
-import com.narsha.wave_android.data.response.music.PlayList
 import com.narsha.wave_android.data.response.music.Song
 import com.narsha.wave_android.view.activity.song.SongActivity
-import com.narsha.wave_android.view.activity.song.SongListActivity
 
 class SongListAdapter(var list : List<Song>):
         RecyclerView.Adapter<SongListAdapter.Holder>(){

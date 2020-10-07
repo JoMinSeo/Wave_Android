@@ -1,6 +1,5 @@
 package com.narsha.wave_android.view.adapter.recyclerview
 
-import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.narsha.wave_android.R
 import com.narsha.wave_android.data.response.music.PlayList
-import com.narsha.wave_android.data.response.music.Song
-import com.narsha.wave_android.view.activity.song.SongListActivity
 import com.narsha.wave_android.view.adapter.listener.OnItemClickListener
 
 class PlaylistAdapter(val list : List<PlayList>, val listener: OnItemClickListener) :
