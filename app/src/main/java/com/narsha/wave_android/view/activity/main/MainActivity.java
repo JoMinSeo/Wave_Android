@@ -13,6 +13,7 @@ import android.os.Bundle;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.narsha.wave_android.R;
 import com.narsha.wave_android.data.User;
+import com.narsha.wave_android.view.activity.login.LoginActivity;
 import com.narsha.wave_android.viewmodel.MainViewModel;
 
 public class MainActivity extends AppCompatActivity {
@@ -39,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(KEY_USER, MODE_PRIVATE);
         userId = sharedPreferences.getString("userId", null);
 
-        if(userId == null){
-            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-        }else{
+        if(userId == null) {
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class);
+        } else{
             User user = new User();
             user.setUserId(userId);
             mainViewModel.user.setValue(user);
