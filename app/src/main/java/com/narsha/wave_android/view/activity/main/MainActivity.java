@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         userId = sharedPreferences.getString("userId", null);
 
         if(userId == null) {
-            startActivity(new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         } else{
             User user = new User();
             user.setUserId(userId);
