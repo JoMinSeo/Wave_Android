@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
@@ -14,7 +13,6 @@ import android.os.Bundle;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.narsha.wave_android.R;
 import com.narsha.wave_android.data.User;
-import com.narsha.wave_android.view.activity.login.LoginActivity;
 import com.narsha.wave_android.viewmodel.MainViewModel;
 
 public class MainActivity extends AppCompatActivity {
