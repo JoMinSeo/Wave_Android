@@ -1,14 +1,11 @@
 package com.narsha.wave_android.view.fragment.signup;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,11 +16,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import com.narsha.wave_android.R;
 import com.narsha.wave_android.data.Result;
-import com.narsha.wave_android.data.User;
 import com.narsha.wave_android.data.request.signup.UserSignUp;
 import com.narsha.wave_android.network.Server;
-import com.narsha.wave_android.view.activity.main.MainActivity;
-import com.narsha.wave_android.view.activity.signup.SignUpActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
