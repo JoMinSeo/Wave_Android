@@ -19,12 +19,10 @@ import android.widget.TextView;
 
 import com.narsha.wave_android.R;
 import com.narsha.wave_android.data.response.music.RecommendList;
-import com.narsha.wave_android.data.response.music.Song;
 import com.narsha.wave_android.data.response.music.PlayList;
 import com.narsha.wave_android.data.slider.SliderItem;
 import com.narsha.wave_android.network.Server;
 import com.narsha.wave_android.view.adapter.imageslider.MainImageSlider;
-import com.narsha.wave_android.view.adapter.listener.OnItemClickListener;
 import com.narsha.wave_android.view.adapter.recyclerview.MainSongAdapter;
 import com.narsha.wave_android.viewmodel.MainViewModel;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
@@ -64,6 +62,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
 
         model = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
         navController = Navigation.findNavController(view);
