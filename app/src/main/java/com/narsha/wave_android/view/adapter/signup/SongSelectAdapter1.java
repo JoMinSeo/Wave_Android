@@ -47,7 +47,7 @@ public class SongSelectAdapter1 extends RecyclerView.Adapter<SongSelectAdapter1.
     @Override
     public void onBindViewHolder(@NonNull SongSelectViewHolder holder, int position) {
         SelectGenre selectGenre = selectGenreList.get(position);
-        holder.button.setText(selectGenre.getName());
+        holder.button.setText(selectGenre.getMainGenreName());
 
         holder.btn_select.setOnClickListener(v-> {
             if(clickPos != position){
