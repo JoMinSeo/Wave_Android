@@ -44,7 +44,7 @@ public class SongListFragment extends Fragment {
 
         if(playList!=null){
             RecyclerView list = view.findViewById(R.id.songs);
-            SongListAdapter adapter = new SongListAdapter(playList.getSongs());
+            SongListAdapter adapter = new SongListAdapter(playList.getSong());
             list.setAdapter(adapter);
             list.setLayoutManager(new LinearLayoutManager(requireContext()));
         }

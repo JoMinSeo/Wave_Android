@@ -26,6 +26,7 @@
         android:layout_marginEnd="20dp"
         android:background="@drawable/edittext_back"
         android:fontFamily="@font/nanum_squarer"
+        android:elevation="8dp"
         android:hint="이름"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
@@ -33,7 +34,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintTop_toBottomOf="@+id/titleText" />
 
     <EditText
         android:id="@+id/id_regi"
@@ -43,6 +44,7 @@
         android:background="@drawable/edittext_back"
         android:fontFamily="@font/nanum_squarer"
         android:hint="아이디"
+        android:elevation="8dp"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:textColorHint="@color/colorGrey"
@@ -58,6 +60,7 @@
         android:background="@drawable/edittext_back"
         android:fontFamily="@font/nanum_squarer"
         android:hint="이메일"
+        android:elevation="8dp"
         android:inputType="textEmailAddress"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
@@ -74,6 +77,7 @@
         android:layout_marginBottom="104dp"
         android:background="@drawable/edittext_back"
         android:hint="비밀번호"
+        android:elevation="8dp"
         android:inputType="textPassword"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
@@ -91,6 +95,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/edittext_back"
         android:hint="비밀번호 확인"
+        android:elevation="8dp"
         android:inputType="textPassword"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
@@ -117,15 +122,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.976" />
 
-    <ImageView
-        android:id="@+id/imageView3"
+    <TextView
+        android:id="@+id/titleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="wave"
+        android:textSize="50sp"
+        android:textColor="#2174BD"
+        android:textStyle="bold"
         android:layout_marginTop="56dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
