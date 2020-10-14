@@ -11,4 +11,5 @@ import java.util.List;
 public class MainViewModel extends ViewModel {
     public MutableLiveData<User> user = new MutableLiveData<>();
     public MutableLiveData<PlayList> playList = new MutableLiveData<>();
+    public MutableLiveData<Integer> mainGenreId = new MutableLiveData<>();
 }

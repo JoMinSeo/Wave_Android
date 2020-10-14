@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.narsha.wave_android.R
 import com.narsha.wave_android.data.response.music.PlayList
-import com.narsha.wave_android.view.adapter.listener.OnItemClickListener
+import com.narsha.wave_android.view.adapter.listener.OnPlaylistItemClickListener
 
-class PlaylistAdapter(val list : List<PlayList>, val listener: OnItemClickListener) :
+class PlaylistAdapter(val list : List<PlayList>, val listener: OnPlaylistItemClickListener) :
         RecyclerView.Adapter<PlaylistAdapter.Holder>(){
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView){

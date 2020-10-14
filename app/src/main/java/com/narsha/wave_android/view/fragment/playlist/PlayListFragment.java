@@ -19,7 +19,7 @@ import android.view.ViewGroup;
 import com.narsha.wave_android.R;
 import com.narsha.wave_android.data.response.music.PlayList;
 import com.narsha.wave_android.network.Server;
-import com.narsha.wave_android.view.adapter.listener.OnItemClickListener;
+import com.narsha.wave_android.view.adapter.listener.OnPlaylistItemClickListener;
 import com.narsha.wave_android.view.adapter.recyclerview.PlaylistAdapter;
 import com.narsha.wave_android.viewmodel.MainViewModel;
 
@@ -47,7 +47,7 @@ public class PlayListFragment extends Fragment {
         return fragment;
     }
 
-    private OnItemClickListener listener =  (position, playList)->{
+    private OnPlaylistItemClickListener listener =  (position, playList)->{
         model.playList.setValue(playList);
         navController.navigate(R.id.action_navigation_playlist_to_songListFragment);
     };

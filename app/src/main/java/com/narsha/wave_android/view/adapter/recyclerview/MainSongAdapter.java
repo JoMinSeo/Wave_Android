@@ -12,20 +12,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.narsha.wave_android.R;
 import com.narsha.wave_android.data.response.music.PlayList;
-import com.narsha.wave_android.view.adapter.listener.OnItemClickListener;
+import com.narsha.wave_android.view.adapter.listener.OnPlaylistItemClickListener;
 
 import java.util.List;
 
 public class MainSongAdapter extends RecyclerView.Adapter<MainSongAdapter.MainSongViewHolder> {
     private List<PlayList> mainList;
     Context mContext;
-    OnItemClickListener onItemClickListener;
+    OnPlaylistItemClickListener onItemClickListener;
 
     public void setData(List<PlayList> Songs){
         this.mainList = Songs;
         notifyDataSetChanged();
     }
-    public MainSongAdapter(Context mContext, OnItemClickListener onItemClickListener){
+    public MainSongAdapter(Context mContext, OnPlaylistItemClickListener onItemClickListener){
         this.mContext = mContext;
         this.onItemClickListener = onItemClickListener;
     }

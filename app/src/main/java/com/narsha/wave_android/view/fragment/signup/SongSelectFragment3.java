@@ -10,23 +10,31 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.narsha.wave_android.R;
-import com.narsha.wave_android.data.request.signup.SelectGenre;
+import com.narsha.wave_android.data.request.genre.Genre;
+import com.narsha.wave_android.network.Server;
 import com.narsha.wave_android.view.adapter.signup.SongSelectAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class SongSelectFragment3 extends Fragment {
     private RecyclerView select_Recycler;
-    private List<SelectGenre> selectGenreList;
+    private List<Genre> selectGenreList;
     private SongSelectAdapter adapter;
+    private Call<List<Genre>> selectGenre;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,14 +47,32 @@ public class SongSelectFragment3 extends Fragment {
         return inflater.inflate(R.layout.fragment_song_select3, container, false);
     }
     public void addList(){
-        selectGenreList = new ArrayList<SelectGenre>();
+        selectGenre = Server.getInstance().getApi().getGenre2(0);
+
+        selectGenre.enqueue(new Callback<List<Genre>>() {
+            @Override
+            public void onResponse(Call<List<Genre>> call, Response<List<Genre>> response) {
+                if(response.code() == 200){
+                    selectGenreList = response.body();
+                    adapter.setData(selectGenreList);
+                }else{
+                    Log.i("E",response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Genre>> call, Throwable t) {
+
+            }
+
+        });
 
         adapter.setData(selectGenreList);
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        adapter = new SongSelectAdapter(getContext());
+        adapter = new SongSelectAdapter(getContext(), ((position, id) -> {}));
         addList();
 
         select_Recycler = view.findViewById(R.id.recyclers_3);

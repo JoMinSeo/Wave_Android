@@ -3,7 +3,8 @@ package com.narsha.wave_android.network;
 import com.narsha.wave_android.data.Result;
 import com.narsha.wave_android.data.SongList;
 import com.narsha.wave_android.data.User;
-import com.narsha.wave_android.data.request.signup.SelectGenre;
+import com.narsha.wave_android.data.request.genre.Genre;
+import com.narsha.wave_android.data.request.genre.SubGenre;
 import com.narsha.wave_android.data.request.signup.UserSignUp;
 import com.narsha.wave_android.data.response.music.PlayList;
 import com.narsha.wave_android.data.response.music.RecommendList;
@@ -16,6 +17,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface ServerAPI {
     @POST("login.api")
@@ -25,7 +27,10 @@ public interface ServerAPI {
     Call<Result> signUp(@Body UserSignUp user);
 
     @GET("taste1.api")
-    Call<List<SelectGenre>> getGenre1();
+    Call<List<Genre>> getGenre1();
+
+    @POST("taste2.api")
+    Call<List<SubGenre>> getGenre2(@Body int mainGenreId);
 
     @GET("list.api")
     Call<List<RecommendList>> getList();

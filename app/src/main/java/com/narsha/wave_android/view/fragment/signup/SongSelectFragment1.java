@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -17,9 +18,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.narsha.wave_android.R;
-import com.narsha.wave_android.data.request.signup.SelectGenre;
+import com.narsha.wave_android.data.request.genre.Genre;
 import com.narsha.wave_android.network.Server;
 import com.narsha.wave_android.view.adapter.signup.SongSelectAdapter;
+import com.narsha.wave_android.viewmodel.MainViewModel;
 
 import java.util.List;
 
@@ -30,9 +32,10 @@ import retrofit2.Response;
 
 public class SongSelectFragment1 extends Fragment {
     private RecyclerView select_Recycler;
-    private List<SelectGenre> selectGenreList;
+    private List<Genre> selectGenreList;
     private SongSelectAdapter adapter;
-    private Call<List<SelectGenre>> selectGenre;
+    private Call<List<Genre>> selectGenre;
+    private MainViewModel model;
 
 
     @Override
@@ -51,9 +54,9 @@ public class SongSelectFragment1 extends Fragment {
     public void addList(){
         selectGenre = Server.getInstance().getApi().getGenre1();
 
-        selectGenre.enqueue(new Callback<List<SelectGenre>>() {
+        selectGenre.enqueue(new Callback<List<Genre>>() {
             @Override
-            public void onResponse(Call<List<SelectGenre>> call, Response<List<SelectGenre>> response) {
+            public void onResponse(Call<List<Genre>> call, Response<List<Genre>> response) {
                 if(response.code() == 200){
                     selectGenreList = response.body();
                     adapter.setData(selectGenreList);
@@ -63,7 +66,7 @@ public class SongSelectFragment1 extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<SelectGenre>> call, Throwable t) {
+            public void onFailure(Call<List<Genre>> call, Throwable t) {
 
             }
 
@@ -72,7 +75,7 @@ public class SongSelectFragment1 extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        adapter = new SongSelectAdapter(getContext());
+        adapter = new SongSelectAdapter(getContext(), ((position, id) -> saveSelected(id)));
 
         addList();
 
@@ -81,9 +84,15 @@ public class SongSelectFragment1 extends Fragment {
         select_Recycler.setLayoutManager(new GridLayoutManager(getContext(), 3));
         Button next = view.findViewById(R.id.next_2);
 
+        model = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
+
         next.setOnClickListener(view1 ->{
             NavController controller = Navigation.findNavController(view);
             controller.navigate(R.id.action_songSelectFragment1_to_songSelectFragment2);
         });
+    }
+
+    private void saveSelected(int id){
+        model.mainGenreId.setValue(id);
     }
 }
