@@ -15,15 +15,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.narsha.wave_android.R;
-import com.narsha.wave_android.data.Result;
 import com.narsha.wave_android.data.request.signup.SelectGenre;
 import com.narsha.wave_android.network.Server;
-import com.narsha.wave_android.view.adapter.signup.SongSelectAdapter1;
+import com.narsha.wave_android.view.adapter.signup.SongSelectAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -34,7 +31,7 @@ import retrofit2.Response;
 public class SongSelectFragment1 extends Fragment {
     private RecyclerView select_Recycler;
     private List<SelectGenre> selectGenreList;
-    private SongSelectAdapter1 adapter;
+    private SongSelectAdapter adapter;
     private Call<List<SelectGenre>> selectGenre;
 
 
@@ -75,7 +72,7 @@ public class SongSelectFragment1 extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        adapter = new SongSelectAdapter1(getContext());
+        adapter = new SongSelectAdapter(getContext());
 
         addList();
 
