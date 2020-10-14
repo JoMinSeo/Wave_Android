@@ -6,7 +6,7 @@ data class PlayList(
         var date: String? = null,
         var title: String? = null,
         var jacket: String? = null,
-        var songs: List<Song>? = null,
+        var song: List<Song>? = null,
         var maingenre: String? = null,
         var subgenre: String? = null
 )
