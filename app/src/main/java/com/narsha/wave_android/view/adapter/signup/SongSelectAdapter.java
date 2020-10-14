@@ -5,22 +5,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.narsha.wave_android.R;
 import com.narsha.wave_android.data.request.signup.SelectGenre;
-import com.narsha.wave_android.view.adapter.listener.OnItemClickListener;
-import com.narsha.wave_android.viewmodel.MainViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class SongSelectAdapter1 extends RecyclerView.Adapter<SongSelectAdapter1.SongSelectViewHolder> {
+public class SongSelectAdapter extends RecyclerView.Adapter<SongSelectAdapter.SongSelectViewHolder> {
     private List<SelectGenre> selectGenreList;
     Context mContext;
     int clickPos = -1;
@@ -31,7 +26,7 @@ public class SongSelectAdapter1 extends RecyclerView.Adapter<SongSelectAdapter1.
         this.selectGenreList = selectGenreList;
         notifyDataSetChanged();
     }
-    public SongSelectAdapter1(Context mContext){
+    public SongSelectAdapter(Context mContext){
         this.mContext = mContext;
     }
 
@@ -47,7 +42,7 @@ public class SongSelectAdapter1 extends RecyclerView.Adapter<SongSelectAdapter1.
     @Override
     public void onBindViewHolder(@NonNull SongSelectViewHolder holder, int position) {
         SelectGenre selectGenre = selectGenreList.get(position);
-        holder.button.setText(selectGenre.getName());
+        holder.button.setText(selectGenre.getMainGenreName());
 
         holder.btn_select.setOnClickListener(v-> {
             if(clickPos != position){
@@ -59,9 +54,9 @@ public class SongSelectAdapter1 extends RecyclerView.Adapter<SongSelectAdapter1.
         });
 
         if(clickPos == position){
-            holder.btn_select.setBackground(mContext.getDrawable(R.color.colorBlue));
+            holder.btn_select.setBackground(ContextCompat.getDrawable(mContext, R.color.colorBlue));
         }else{
-            holder.btn_select.setBackground(mContext.getDrawable(R.drawable.select_boarder));
+            holder.btn_select.setBackground(ContextCompat.getDrawable(mContext, R.drawable.select_boarder));
         }
     }
     @Override

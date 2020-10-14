@@ -17,7 +17,7 @@ import android.widget.Button;
 
 import com.narsha.wave_android.R;
 import com.narsha.wave_android.data.request.signup.SelectGenre;
-import com.narsha.wave_android.view.adapter.signup.SongSelectAdapter1;
+import com.narsha.wave_android.view.adapter.signup.SongSelectAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ import java.util.List;
 public class SongSelectFragment3 extends Fragment {
     private RecyclerView select_Recycler;
     private List<SelectGenre> selectGenreList;
-    private SongSelectAdapter1 adapter;
+    private SongSelectAdapter adapter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +46,7 @@ public class SongSelectFragment3 extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        adapter = new SongSelectAdapter1(getContext());
+        adapter = new SongSelectAdapter(getContext());
         addList();
 
         select_Recycler = view.findViewById(R.id.recyclers_3);
