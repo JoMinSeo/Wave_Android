@@ -34,7 +34,7 @@ import retrofit2.Response;
 
 public class SongSelectFragment2 extends Fragment {
     private RecyclerView select_Recycler;
-    private List<Genre> selectGenreList;
+    private List<SubGenre> selectGenreList;
     private SongSelectAdapter adapter;
     private Call<List<SubGenre>> selectGenre;
     private MainViewModel model;
@@ -54,23 +54,23 @@ public class SongSelectFragment2 extends Fragment {
     public void addList(){
         selectGenre = Server.getInstance().getApi().getGenre2(genreId);
 
-//        selectGenre.enqueue(new Callback<List<Genre>>() {
-//            @Override
-//            public void onResponse(Call<List<Genre>> call, Response<List<Genre>> response) {
-//                if(response.code() == 200){
-//                    selectGenreList = response.body();
-//                    adapter.setData(selectGenreList);
-//                }else{
-//                    Log.i("E",response.message());
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<Genre>> call, Throwable t) {
-//
-//            }
-//
-//        });
+        selectGenre.enqueue(new Callback<List<SubGenre>>() {
+            @Override
+            public void onResponse(Call<List<SubGenre>> call, Response<List<SubGenre>> response) {
+                if(response.code() == 200){
+                    selectGenreList = response.body();
+                    adapter.setSubGenreData(selectGenreList);
+                }else{
+                    Log.i("E",response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<SubGenre>> call, Throwable t) {
+
+            }
+
+        });
     }
 
     @Override

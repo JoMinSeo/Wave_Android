@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.narsha.wave_android.R;
 import com.narsha.wave_android.data.request.genre.Genre;
+import com.narsha.wave_android.data.request.genre.SubGenre;
 import com.narsha.wave_android.view.adapter.listener.OnGenreItemClickListener;
 import com.narsha.wave_android.view.adapter.listener.OnPlaylistItemClickListener;
 
@@ -20,14 +21,21 @@ import java.util.List;
 
 public class SongSelectAdapter extends RecyclerView.Adapter<SongSelectAdapter.SongSelectViewHolder> {
     private List<Genre> selectGenreList;
+    private List<SubGenre> subGenreList;
     OnGenreItemClickListener listener;
     Context mContext;
     int clickPos = -1;
 
-    public void setData(List<Genre> selectGenreList){
+    public void setGenreData(List<Genre> selectGenreList){
         this.selectGenreList = selectGenreList;
         notifyDataSetChanged();
     }
+
+    public void setSubGenreData(List<SubGenre> subGenreList){
+        this.subGenreList = subGenreList;
+        notifyDataSetChanged();
+    }
+
     public SongSelectAdapter(Context mContext, OnGenreItemClickListener listener){
         this.mContext = mContext;
         this.listener = listener;
@@ -44,17 +52,25 @@ public class SongSelectAdapter extends RecyclerView.Adapter<SongSelectAdapter.So
 
     @Override
     public void onBindViewHolder(@NonNull SongSelectViewHolder holder, int position) {
-        Genre selectGenre = selectGenreList.get(position);
-        holder.button.setText(String.valueOf(selectGenre.getMainGenreName()));
+        Integer id = -1;
+        if(selectGenreList!=null) {
+            Genre selectGenre = selectGenreList.get(position);
+            holder.button.setText(String.valueOf(selectGenre.getMainGenreName()));
+            id = selectGenre.getMainGenreId();
+        } else if (subGenreList !=null){
+            SubGenre subGenre = subGenreList.get(position);
+            holder.button.setText(String.valueOf(subGenre.getSubGenreName()));
+            id = subGenre.getSubGenreId();
+        }
 
-        Integer id = selectGenre.getMainGenreId();
+        Integer finalId = id;
         holder.btn_select.setOnClickListener(v-> {
             if(clickPos != position){
                 clickPos = position;
             }else{
                 clickPos = -1;
             }
-            listener.OnItemClick(position, id);
+            listener.OnItemClick(position, finalId);
             notifyDataSetChanged();
         });
 

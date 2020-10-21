@@ -59,7 +59,7 @@ public class SongSelectFragment1 extends Fragment {
             public void onResponse(Call<List<Genre>> call, Response<List<Genre>> response) {
                 if(response.code() == 200){
                     selectGenreList = response.body();
-                    adapter.setData(selectGenreList);
+                    adapter.setGenreData(selectGenreList);
                 }else{
                     Log.i("E",response.message());
                 }
