@@ -11,16 +11,17 @@ data class SongList(
 )
 
 data class Songs(
-        var songid : Int,
+        var songId : Int,
         var title : String,
-        var artistid : Int,
-        var maingenreid : Int,
-        var subgenreid : Int,
-        var albumid : Int,
-        var songname : String,
+        var artistId : Int,
+        var maingenreId : Int,
+        var subgenreId : Int,
+        var albumId : Int,
+        var songName : String,
         var lyric : String,
-        var songurl : String,
+        var songUrl : String,
         var gender : String,
         var age : Int,
-        var writer : String
+        var writer : String,
+        var jacket : String
 )
