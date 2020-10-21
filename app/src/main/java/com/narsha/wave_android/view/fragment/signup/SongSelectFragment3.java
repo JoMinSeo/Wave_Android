@@ -18,6 +18,7 @@ import android.widget.Button;
 
 import com.narsha.wave_android.R;
 import com.narsha.wave_android.data.request.genre.Genre;
+import com.narsha.wave_android.data.request.genre.SubGenre;
 import com.narsha.wave_android.network.Server;
 import com.narsha.wave_android.view.adapter.signup.SongSelectAdapter;
 
@@ -31,9 +32,9 @@ import retrofit2.Response;
 
 public class SongSelectFragment3 extends Fragment {
     private RecyclerView select_Recycler;
-    private List<Genre> selectGenreList;
+    private List<SubGenre> selectGenreList;
     private SongSelectAdapter adapter;
-    private Call<List<Genre>> selectGenre;
+    private Call<List<SubGenre>> selectGenre;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,27 +48,25 @@ public class SongSelectFragment3 extends Fragment {
         return inflater.inflate(R.layout.fragment_song_select3, container, false);
     }
     public void addList(){
-//        selectGenre = Server.getInstance().getApi().getGenre2(0);
+        selectGenre = Server.getInstance().getApi().getGenre2(0);
 
-        selectGenre.enqueue(new Callback<List<Genre>>() {
+        selectGenre.enqueue(new Callback<List<SubGenre>>() {
             @Override
-            public void onResponse(Call<List<Genre>> call, Response<List<Genre>> response) {
+            public void onResponse(Call<List<SubGenre>> call, Response<List<SubGenre>> response) {
                 if(response.code() == 200){
                     selectGenreList = response.body();
-                    adapter.setData(selectGenreList);
+                    adapter.setSubGenreData(selectGenreList);
                 }else{
                     Log.i("E",response.message());
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Genre>> call, Throwable t) {
+            public void onFailure(Call<List<SubGenre>> call, Throwable t) {
 
             }
 
         });
-
-        adapter.setData(selectGenreList);
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

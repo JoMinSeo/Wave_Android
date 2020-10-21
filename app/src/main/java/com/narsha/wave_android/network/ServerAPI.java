@@ -1,5 +1,6 @@
 package com.narsha.wave_android.network;
 
+import com.narsha.wave_android.data.RequestUser;
 import com.narsha.wave_android.data.Result;
 import com.narsha.wave_android.data.SongList;
 import com.narsha.wave_android.data.User;
@@ -39,5 +40,5 @@ public interface ServerAPI {
     Call<ArrayList<SongList>> getSongList();
 
     @GET("mylist.api")
-    Call<List<PlayList>> getMyPlayList();
+    Call<List<PlayList>> getMyPlayList(@Body RequestUser user);
 }

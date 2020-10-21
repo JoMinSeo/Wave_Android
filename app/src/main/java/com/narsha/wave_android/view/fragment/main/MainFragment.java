@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.narsha.wave_android.R;
 import com.narsha.wave_android.data.response.music.RecommendList;
@@ -105,6 +106,8 @@ public class MainFragment extends Fragment {
                     genre2.setText("#"+list_musics.get(1).getGenreName());
                     genre3.setText("#"+list_musics.get(2).getGenreName());
 
+                } else {
+                    Toast.makeText(requireContext(), "오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
                 }
             }
 

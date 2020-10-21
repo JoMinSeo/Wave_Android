@@ -15,8 +15,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.narsha.wave_android.R;
+import com.narsha.wave_android.data.RequestUser;
 import com.narsha.wave_android.data.response.music.PlayList;
 import com.narsha.wave_android.network.Server;
 import com.narsha.wave_android.view.adapter.listener.OnPlaylistItemClickListener;
@@ -76,25 +78,28 @@ public class PlayListFragment extends Fragment {
         // 서버에서 내 플레이리스트 받기
         // 응답 받으면  Adapter 초기화하기 (List<Playlist>, listener)
         // 각 항목이 클릭 되면 SongList로 가기
-
-        getMyPlayList = Server.getInstance().getApi().getMyPlayList();
+        RequestUser user= new RequestUser();
+        user.setUserid(model.user.getValue().getUserId());
+        getMyPlayList = Server.getInstance().getApi().getMyPlayList(user);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         getMyPlayList.enqueue(new Callback<List<PlayList>>() {
             @Override
             public void onResponse(Call<List<PlayList>> call, Response<List<PlayList>> response) {
-                List<PlayList> list = response.body();
-                Log.i("list", "list.size" + list.size() + list.get(1).getTitle());
+                if(response.code()==200) {
+                    List<PlayList> list = response.body();
+                    Log.i("list", "list.size" + list.size() + list.get(1).getTitle());
 
-                adapter = new PlaylistAdapter(list, listener);
-                recyclerView.setAdapter(adapter);
-
+                    adapter = new PlaylistAdapter(list, listener);
+                    recyclerView.setAdapter(adapter);
+                } else {
+                    Toast.makeText(requireContext(), "오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
             public void onFailure(Call<List<PlayList>> call, Throwable t) {
-
             }
         });
     }
