@@ -54,23 +54,23 @@ public class SongSelectFragment2 extends Fragment {
     public void addList(){
         selectGenre = Server.getInstance().getApi().getGenre2(genreId);
 
-        selectGenre.enqueue(new Callback<List<Genre>>() {
-            @Override
-            public void onResponse(Call<List<Genre>> call, Response<List<Genre>> response) {
-                if(response.code() == 200){
-                    selectGenreList = response.body();
-                    adapter.setData(selectGenreList);
-                }else{
-                    Log.i("E",response.message());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Genre>> call, Throwable t) {
-
-            }
-
-        });
+//        selectGenre.enqueue(new Callback<List<Genre>>() {
+//            @Override
+//            public void onResponse(Call<List<Genre>> call, Response<List<Genre>> response) {
+//                if(response.code() == 200){
+//                    selectGenreList = response.body();
+//                    adapter.setData(selectGenreList);
+//                }else{
+//                    Log.i("E",response.message());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Genre>> call, Throwable t) {
+//
+//            }
+//
+//        });
     }
 
     @Override

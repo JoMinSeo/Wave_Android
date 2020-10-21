@@ -12,7 +12,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 
 
 class SongActivity : AppCompatActivity() {
-    val arrayPlayDummy = listOf<String>("wKyMIrBClYw", "jO2viLEW-1A", "HCc1UvTQ1Hg")
+    val arrayPlayDummy = listOf<String>("2COAu1l6hUQ", "jO2viLEW-1A", "HCc1UvTQ1Hg")
     var indexNowPlaying : Int = 0;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

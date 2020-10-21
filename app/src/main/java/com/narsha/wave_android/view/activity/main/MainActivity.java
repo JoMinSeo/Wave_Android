@@ -14,6 +14,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.narsha.wave_android.R;
 import com.narsha.wave_android.data.User;
 import com.narsha.wave_android.view.activity.login.LoginActivity;
+import com.narsha.wave_android.view.activity.song.SongActivity;
 import com.narsha.wave_android.viewmodel.MainViewModel;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        startActivity(new Intent(this, SongActivity.class));
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         BottomNavigationView navView = findViewById(R.id.bottomNavigationView);
 

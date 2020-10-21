@@ -47,7 +47,7 @@ public class SongSelectFragment3 extends Fragment {
         return inflater.inflate(R.layout.fragment_song_select3, container, false);
     }
     public void addList(){
-        selectGenre = Server.getInstance().getApi().getGenre2(0);
+//        selectGenre = Server.getInstance().getApi().getGenre2(0);
 
         selectGenre.enqueue(new Callback<List<Genre>>() {
             @Override
