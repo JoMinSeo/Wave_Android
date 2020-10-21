@@ -9,3 +9,7 @@ data class Listitem(
         var subGenreName: String? = null,
         var playLists: List<PlayList>? = null
 )
+
+data class RequestPlayList(
+        var playlistid:Int
+)

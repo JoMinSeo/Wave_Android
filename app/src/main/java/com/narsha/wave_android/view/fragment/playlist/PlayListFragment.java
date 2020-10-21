@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.narsha.wave_android.R;
 import com.narsha.wave_android.data.RequestUser;
+import com.narsha.wave_android.data.User;
 import com.narsha.wave_android.data.response.music.PlayList;
 import com.narsha.wave_android.network.Server;
 import com.narsha.wave_android.view.adapter.listener.OnPlaylistItemClickListener;
@@ -78,8 +79,8 @@ public class PlayListFragment extends Fragment {
         // 서버에서 내 플레이리스트 받기
         // 응답 받으면  Adapter 초기화하기 (List<Playlist>, listener)
         // 각 항목이 클릭 되면 SongList로 가기
-        RequestUser user= new RequestUser();
-        user.setUserid(model.user.getValue().getUserId());
+        User user= new User();
+        user.setUserId(model.user.getValue().getUserId());
         getMyPlayList = Server.getInstance().getApi().getMyPlayList(user);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -89,8 +90,7 @@ public class PlayListFragment extends Fragment {
             public void onResponse(Call<List<PlayList>> call, Response<List<PlayList>> response) {
                 if(response.code()==200) {
                     List<PlayList> list = response.body();
-                    Log.i("list", "list.size" + list.size() + list.get(1).getTitle());
-
+                    Log.i("PL", "title"+list.get(0).getListName());
                     adapter = new PlaylistAdapter(list, listener);
                     recyclerView.setAdapter(adapter);
                 } else {

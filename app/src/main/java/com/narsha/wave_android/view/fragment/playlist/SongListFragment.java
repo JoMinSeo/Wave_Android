@@ -16,13 +16,25 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.narsha.wave_android.R;
+import com.narsha.wave_android.data.User;
 import com.narsha.wave_android.data.response.music.PlayList;
+import com.narsha.wave_android.data.response.music.Song;
+import com.narsha.wave_android.network.Server;
 import com.narsha.wave_android.view.adapter.recyclerview.SongListAdapter;
 import com.narsha.wave_android.viewmodel.MainViewModel;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SongListFragment extends Fragment {
 
     private MainViewModel model;
+    private Call<PlayList> request;
+    private PlayList playList;
+    private List<Song> songs;
 
     public static SongListFragment newInstance() {
         return new SongListFragment();
@@ -39,14 +51,21 @@ public class SongListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         model = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
-        PlayList playList = model.playList.getValue();
 
+        request = Server.getInstance().getApi().getListInfo(model.playList.getValue());
+        request.enqueue(new Callback<PlayList>() {
+            @Override
+            public void onResponse(Call<PlayList> call, Response<PlayList> response) {
+                if(response.code()==200){
+                    playList = response.body();
+                    songs = playList.getSong();
+                }
+            }
 
-        if(playList!=null){
-            RecyclerView list = view.findViewById(R.id.songs);
-            SongListAdapter adapter = new SongListAdapter(playList.getSong());
-            list.setAdapter(adapter);
-            list.setLayoutManager(new LinearLayoutManager(requireContext()));
-        }
+            @Override
+            public void onFailure(Call<PlayList> call, Throwable t) {
+
+            }
+        });
     }
 }

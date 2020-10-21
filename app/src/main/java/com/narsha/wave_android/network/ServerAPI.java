@@ -6,6 +6,7 @@ import com.narsha.wave_android.data.SongList;
 import com.narsha.wave_android.data.User;
 import com.narsha.wave_android.data.request.genre.Genre;
 import com.narsha.wave_android.data.request.genre.SubGenre;
+import com.narsha.wave_android.data.request.list.RequestPlayList;
 import com.narsha.wave_android.data.request.signup.UserSignUp;
 import com.narsha.wave_android.data.response.music.PlayList;
 import com.narsha.wave_android.data.response.music.RecommendList;
@@ -39,6 +40,10 @@ public interface ServerAPI {
     @GET("listInfo.api")
     Call<ArrayList<SongList>> getSongList();
 
-    @GET("mylist.api")
-    Call<List<PlayList>> getMyPlayList(@Body RequestUser user);
+    @POST("mylist.api")
+    Call<List<PlayList>> getMyPlayList(@Body User user);
+
+    @POST("listInfo.api")
+    Call<PlayList> getListInfo(@Body PlayList playList);
+
 }
