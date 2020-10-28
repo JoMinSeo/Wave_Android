@@ -28,22 +28,22 @@ interface Service {
     fun register(@Body register: RegisterBody): Call<ResultModel>
 
     @GET("taste1.api")
-    fun likeGenre(): Call<List<LikeGenreModel>>
+    fun likeGenre(): Call<List<LikeGenreModel?>?>
 
     @POST("taste2.api")
-    fun likeFeel(@Body mainGenreId: Int): Call<List<LikeFeelModel>>
+    fun likeFeel(@Body mainGenreId: Int): Call<List<LikeFeelModel?>?>
 
     @GET("list.api")
-    fun getList(@Body callPlayList: CallPlayListBody): Call<List<CallPlayListModel>>
+    fun getList(@Body callPlayList: CallPlayListBody): Call<List<CallPlayListModel?>?>
 
     @GET("listInfo.api")
-    fun getSongList(@Body playList : PlayListBody): Call<List<PlayListModel>>
+    fun getSongList(@Body playList : PlayListBody): Call<List<PlayListModel?>?>
 
     @GET("songs.api")
-    fun getSong(@Body song : PlaySongBody): Call<SongInfo>
+    fun getSong(@Body song : PlaySongBody): Call<SongInfo?>
 
     @GET("search.api")
-    fun getSearchInfo(@Body search : SearchBody): Call<SearchModel>
+    fun getSearchInfo(@Body search : SearchBody): Call<SearchModel?>
 
     @POST("registerSongs1.api")
     fun likeInfo1(@Body like : LikeInfoMainBody): Call<ResultModel>
@@ -70,7 +70,7 @@ interface Service {
     fun delMyList(@Body myList : MyPlayListBody): Call<ResultModel>
 
     @GET("mylist.api")
-    fun myList(@Body userId : String): Call<MyPlayListModel>
+    fun myList(@Body userId : String): Call<MyPlayListModel?>
 
 
 }

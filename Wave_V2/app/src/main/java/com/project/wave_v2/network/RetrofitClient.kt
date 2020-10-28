@@ -9,7 +9,7 @@ object RetrofitClient {
     fun getInstance(): Retrofit {
         if (instance == null) {
             instance = Retrofit.Builder()
-                .baseUrl("http://34.84.216.214:80/api/v1/")
+                .baseUrl("http://10.80.163.112:8081/Wave_backend/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }
