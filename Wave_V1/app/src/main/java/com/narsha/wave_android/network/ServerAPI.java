@@ -46,4 +46,9 @@ public interface ServerAPI {
     @POST("listInfo.api")
     Call<PlayList> getListInfo(@Body PlayList playList);
 
+    @GET("mylist.api")
+    Call<List<PlayList>> getMyPlayList(@Body RequestUser user);
+
+    @POST("createPlaylist.api")
+    Call<Result> addPlayList(@Body PlayList playList);
 }
