@@ -43,7 +43,7 @@ public class MainSongAdapter extends RecyclerView.Adapter<MainSongAdapter.MainSo
     public void onBindViewHolder(@NonNull MainSongViewHolder holder, int position) {
         if(mainList != null){
             if(mainList.get(position) != null) {
-                        String url = mainList.get(position).getJacket();
+                        String url = mainList.get(position).getSong().get(0).getJacket();
                         Glide.with(mContext).load(url).into(holder.imageView_jacket);
             }
         }

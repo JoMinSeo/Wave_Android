@@ -24,7 +24,7 @@ class PlaylistAdapter(val list : List<PlayList>, val listener: OnPlaylistItemCli
 
         fun bind(position: Int, list: PlayList) {
             title?.text = list.listName
-            Glide.with(itemView.context).load(list.jacket).into(image)
+            Glide.with(itemView.context).load(list.song?.get(position)?.jacket).into(image)
             //user?.text = song.
 
             itemView.setOnClickListener {
