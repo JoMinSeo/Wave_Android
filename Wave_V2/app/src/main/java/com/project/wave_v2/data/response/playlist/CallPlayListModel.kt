@@ -11,6 +11,7 @@ data class ListInfo(
     var listId: Int,
     var userId: String,
     var listName: String,
+    var jacket : String,
     var mainGenre: String,
     var subGenre: String
 )
