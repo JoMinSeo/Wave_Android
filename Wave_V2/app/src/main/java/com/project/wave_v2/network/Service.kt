@@ -34,7 +34,7 @@ interface Service {
     fun likeFeel(@Body mainGenreId: Int): Call<List<LikeFeelModel?>?>
 
     @GET("list.api")
-    fun getList(@Body callPlayList: CallPlayListBody): Call<List<CallPlayListModel?>?>
+    fun getList(@Body callPlayList: CallPlayListBody): Call<List<CallPlayListModel>>
 
     @GET("listInfo.api")
     fun getSongList(@Body playList : PlayListBody): Call<List<PlayListModel?>?>
