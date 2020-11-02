@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.wave_v2.R
 import com.project.wave_v2.data.SliderItem
 import com.project.wave_v2.data.request.playlist.CallPlayListBody
@@ -37,13 +38,15 @@ class MainFragment : Fragment() {
 
     lateinit var navController: NavController
 
-    lateinit var firstAdapter: MainAdapter
-    lateinit var secondAdapter: MainAdapter
-    lateinit var thirdAdapter: MainAdapter
-
     var firstList : ArrayList<ListInfo> = ArrayList<ListInfo>()
     var secondList : ArrayList<ListInfo> = ArrayList<ListInfo>()
     var thirdList : ArrayList<ListInfo> = ArrayList<ListInfo>()
+
+    var firstAdapter: MainAdapter = MainAdapter(firstList)
+    var secondAdapter: MainAdapter = MainAdapter(secondList)
+    var thirdAdapter: MainAdapter = MainAdapter(thirdList)
+
+
 
     lateinit var slideAdapter : MainImageSlider
 
@@ -63,53 +66,53 @@ class MainFragment : Fragment() {
 
         navController = Navigation.findNavController(view)
 
-        firstAdapter = MainAdapter()
-        firstAdapter.setList(firstList)
-        secondAdapter = MainAdapter()
-        secondAdapter.setList(secondList)
-        thirdAdapter = MainAdapter()
-        thirdAdapter.setList(thirdList)
+        rcViewSetting()
 
-        recycler_first.adapter = firstAdapter
-        recycler_second.adapter = secondAdapter
-        recycler_third.adapter = thirdAdapter
-
-        val prefs: SharedPreferences = requireActivity().getSharedPreferences("test", MODE_PRIVATE)
+        val prefs: SharedPreferences = requireActivity().getSharedPreferences("user_info", MODE_PRIVATE)
         var id : String? = prefs.getString("userId", "user")
 
-        genre1.text = "#더미더미"
-        genre2.text = "#더어어미"
-        genre3.text = "#더미이이"
 
         Log.d("ididid", id)
-//        API = retrofit.create(Service::class.java)
-//        API.getList(
-//                CallPlayListBody(
-//                        userId = id
-//                )
-//        ).enqueue(object : Callback<List<CallPlayListModel>> {
-//            override fun onResponse(call: Call<List<CallPlayListModel>>, response: Response<List<CallPlayListModel>>) {
-//                if (response.code() == 200) {
-//                    firstList = response.body()?.get(0)?.list!!
-//                    secondList = response.body()?.get(1)?.list!!
-//                    thirdList = response.body()?.get(2)?.list!!
-//
-//                    genre1.text = "#" + response.body()?.get(0)?.genreName
-//                    genre2.text = "#" + response.body()?.get(1)?.genreName
-//                    genre3.text = "#" + response.body()?.get(2)?.genreName
-//
-//                    firstAdapter.notifyDataSetChanged()
-//                    secondAdapter.notifyDataSetChanged()
-//                    thirdAdapter.notifyDataSetChanged()
-//                } else {
-//                    Log.d("Main List", response.code().toString())
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<List<CallPlayListModel>>, t: Throwable) {
-//
-//            }
-//        })
+        API = retrofit.create(Service::class.java)
+        API.getList(
+                CallPlayListBody(
+                        userId = id
+                )
+        ).enqueue(object : Callback<List<CallPlayListModel>> {
+            override fun onResponse(call: Call<List<CallPlayListModel>>, response: Response<List<CallPlayListModel>>) {
+                if (response.code() == 200) {
+                    firstList.clear()
+                    secondList.clear()
+                    thirdList.clear()
+
+                    for(i in 0 until response.body()?.get(0)?.list?.size!! ){
+                        firstList.add(response.body()?.get(0)?.list!![i])
+                    }
+                    firstAdapter.notifyDataSetChanged()
+                    for(i in 0 until response.body()?.get(1)?.list?.size!! ){
+                        secondList.add(response.body()?.get(1)?.list!![i])
+                    }
+                    secondAdapter.notifyDataSetChanged()
+                    for(i in 0 until response.body()?.get(2)?.list?.size!! ){
+                        thirdList.add(response.body()?.get(2)?.list!![i])
+                    }
+                    thirdAdapter.notifyDataSetChanged()
+
+
+                    genre1.text = "#" + response.body()?.get(0)?.genreName
+                    genre2.text = "#" + response.body()?.get(1)?.genreName
+                    genre3.text = "#" + response.body()?.get(2)?.genreName
+
+
+                } else {
+                    Log.d("Main List", response.code().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<List<CallPlayListModel>>, t: Throwable) {
+
+            }
+        })
 
         slideAdapter = MainImageSlider(context)
         addNewItem()
@@ -129,7 +132,21 @@ class MainFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
-    fun addNewItem() {
+    private fun rcViewSetting(){
+        recycler_first.adapter = firstAdapter
+        recycler_second.adapter = secondAdapter
+        recycler_third.adapter = thirdAdapter
+
+        recycler_first.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        recycler_second.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        recycler_third.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+        recycler_first.setHasFixedSize(true)
+        recycler_second.setHasFixedSize(true)
+        recycler_third.setHasFixedSize(true)
+    }
+
+    private fun addNewItem() {
         val sliderItem1 = SliderItem()
         val sliderItem2 = SliderItem()
         val sliderItem3 = SliderItem()

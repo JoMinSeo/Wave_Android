@@ -34,7 +34,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageSlider">
+        app:layout_constraintTop_toBottomOf="@id/imageSlider"
+        android:overScrollMode="never">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -47,7 +48,8 @@
                 android:layout_marginTop="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:overScrollMode="never"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_second"
@@ -56,7 +58,8 @@
                 android:layout_marginTop="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recycler_first" />
+                app:layout_constraintTop_toBottomOf="@+id/recycler_first"
+                android:overScrollMode="never"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_third"
@@ -65,7 +68,8 @@
                 android:layout_marginTop="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recycler_second" />
+                app:layout_constraintTop_toBottomOf="@+id/recycler_second"
+                android:overScrollMode="never"/>
 
             <TextView
                 android:id="@+id/genre1"
