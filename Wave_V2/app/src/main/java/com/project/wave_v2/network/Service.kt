@@ -28,10 +28,10 @@ interface Service {
     fun register(@Body register: RegisterBody): Call<ResultModel>
 
     @GET("taste1.api")
-    fun likeGenre(): Call<List<LikeGenreModel?>?>
+    fun likeGenre(): Call<List<LikeGenreModel>>
 
     @POST("taste2.api")
-    fun likeFeel(@Body mainGenreId: Int): Call<List<LikeFeelModel?>?>
+    fun likeFeel(@Body mainGenreId: Int): Call<List<LikeFeelModel>>
 
     @GET("list.api")
     fun getList(@Body callPlayList: CallPlayListBody): Call<List<CallPlayListModel>>

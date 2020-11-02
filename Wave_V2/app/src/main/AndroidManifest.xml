@@ -12,9 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Wave_V2">
-        <activity android:name=".view.activity.LoginActivity"></activity>
-        <activity android:name=".view.activity.MainActivity"></activity>
-        <activity android:name=".view.activity.IntroActivity"
+        <activity android:name=".view.activity.SignUpActivity"></activity>
+        <activity android:name=".view.activity.LoginActivity" />
+        <activity android:name=".view.activity.MainActivity" />
+        <activity
+            android:name=".view.activity.IntroActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +24,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
