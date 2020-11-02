@@ -45,12 +45,30 @@ public class SearchFragment extends Fragment {
 
         new TabLayoutMediator(tabLayout, viewPager,
                 (tab, position) -> tab.setText((position + 1) == 1 ? "전체" : (position + 1) == 2 ?  "앨범" : (position + 1) == 3 ? "곡" : "아티스트" )).attach();
+
+        SearchView searchView = view.findViewById(R.id.searchView);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                tabLayout.setVisibility(View.VISIBLE);
+                viewPager.setVisibility(View.VISIBLE);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_search, container, false);
+
         return root;
     }
 }
