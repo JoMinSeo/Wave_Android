@@ -10,6 +10,8 @@
         android:id="@+id/addList_Btn"
         android:layout_width="match_parent"
         android:layout_height="96dp"
+        android:text="ADD MY PLAYLIST"
+        android:textColor="@color/colorBlack"
         android:backgroundTint="@color/colorGrey"
         app:layout_constraintBottom_toTopOf="@id/selectedPlayList"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,6 +27,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/item_playlist" />
+        tools:listitem="@layout/item_playlist"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

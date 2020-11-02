@@ -4,6 +4,7 @@ import com.project.wave_v2.data.request.LoginBody
 import com.project.wave_v2.data.request.PlaySongBody
 import com.project.wave_v2.data.request.RegisterBody
 import com.project.wave_v2.data.request.SearchBody
+import com.project.wave_v2.data.request.like.LikeFeelBody
 import com.project.wave_v2.data.request.like.LikeInfoMainBody
 import com.project.wave_v2.data.request.like.LikeInfoSubBody
 import com.project.wave_v2.data.request.playlist.*
@@ -27,22 +28,22 @@ interface Service {
     @POST("register.api")
     fun register(@Body register: RegisterBody): Call<ResultModel>
 
-    @GET("taste1.api")
+    @POST("taste1.api")
     fun likeGenre(): Call<List<LikeGenreModel>>
 
     @POST("taste2.api")
-    fun likeFeel(@Body mainGenreId: Int): Call<List<LikeFeelModel>>
+    fun likeFeel(@Body likeFeelBody: LikeFeelBody): Call<List<LikeFeelModel>>
 
-    @GET("list.api")
+    @POST("list.api")
     fun getList(@Body callPlayList: CallPlayListBody): Call<List<CallPlayListModel>>
 
-    @GET("listInfo.api")
+    @POST("listInfo.api")
     fun getSongList(@Body playList : PlayListBody): Call<List<PlayListModel?>?>
 
-    @GET("songs.api")
+    @POST("songs.api")
     fun getSong(@Body song : PlaySongBody): Call<SongInfo?>
 
-    @GET("search.api")
+    @POST("search.api")
     fun getSearchInfo(@Body search : SearchBody): Call<SearchModel?>
 
     @POST("registerSongs1.api")
@@ -57,20 +58,20 @@ interface Service {
     @POST("addPlaylistSong.api")
     fun addPlayListSong(@Body playlistSong : PlayListSongBody): Call<ResultModel>
 
-    @DELETE("deletePlaylistSong.api")
+    @POST("deletePlaylistSong.api")
     fun delPlayListSong(@Body playListSong : PlayListSongBody): Call<ResultModel>
 
-    @DELETE("deletePlaylist.api")
+    @POST("deletePlaylist.api")
     fun delPlayList(@Body playList : PlayListBody): Call<ResultModel>
 
     @POST("addMylist.api")
     fun addMyList(@Body myList : MyPlayListBody): Call<ResultModel>
 
-    @DELETE("deleteMylist.api")
+    @POST("deleteMylist.api")
     fun delMyList(@Body myList : MyPlayListBody): Call<ResultModel>
 
-    @GET("mylist.api")
-    fun myList(@Body userId : String): Call<MyPlayListModel?>
+    @POST("mylist.api")
+    fun myList(@Body userId : CallPlayListBody): Call<List<MyPlayListModel>>
 
 
 }
