@@ -23,9 +23,18 @@ class LoginActivity : AppCompatActivity() {
     lateinit var API: Service
     lateinit var retrofit: Retrofit
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        val sharedPreferences = getSharedPreferences(KEY_USER, MODE_PRIVATE)
+        var id = sharedPreferences.getString("userId", "")
+        if(id != ""){
+            startActivity(Intent(applicationContext, MainActivity::class.java))
+            finish()
+        }
 
         retrofit = RetrofitClient.getInstance()
 
@@ -44,6 +53,7 @@ class LoginActivity : AppCompatActivity() {
             if (id.isEmpty() || pw.isEmpty()) {
                 Toast.makeText(applicationContext, "제대로 입력해주시기 바랍니다.", Toast.LENGTH_SHORT).show()
             } else {
+
                 login(id, pw)
             }
         }

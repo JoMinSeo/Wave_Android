@@ -1,5 +1,7 @@
 package com.project.wave_v2.view.fragment
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -25,7 +27,7 @@ class PlayListFragment : Fragment() {
 
     lateinit var navController: NavController
     var playList = ArrayList<MyPlayListModel>()
-    val playListAdapter : PlayListAdapter = PlayListAdapter(playList)
+    val playListAdapter: PlayListAdapter = PlayListAdapter(playList)
 
 
     lateinit var API: Service
@@ -47,12 +49,24 @@ class PlayListFragment : Fragment() {
         selectedPlayList.adapter = playListAdapter
         selectedPlayList.setHasFixedSize(true)
 
+        val prefs: SharedPreferences = requireActivity().getSharedPreferences("user_info", Context.MODE_PRIVATE)
+        var id: String? = prefs.getString("userId", "user")
 
-        API.myList(CallPlayListBody(userId = "user"))
+        callPlayList(id)
+
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_playlist, container, false)
+    }
+
+
+    fun callPlayList(id : String?){
+        API.myList(CallPlayListBody(userId = id))
                 .enqueue(object : Callback<List<MyPlayListModel>> {
                     override fun onResponse(call: Call<List<MyPlayListModel>>, response: Response<List<MyPlayListModel>>) {
                         playList.clear()
-                        for(i in 0 until response.body()?.size!!){
+                        for (i in 0 until response.body()?.size!!) {
                             playList.add(response.body()!![i])
                         }
                         playListAdapter.notifyDataSetChanged()
@@ -63,11 +77,6 @@ class PlayListFragment : Fragment() {
 
 
                 })
-
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_playlist, container, false)
     }
 }
 

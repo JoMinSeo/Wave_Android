@@ -152,10 +152,10 @@ class MainFragment : Fragment() {
         val sliderItem3 = SliderItem()
         val sliderItem4 = SliderItem()
 
-        sliderItem1.ImageUrl = R.drawable.ic_launcher_background
-        sliderItem2.ImageUrl = R.drawable.edittext_back
-        sliderItem3.ImageUrl = R.drawable.intro
-        sliderItem4.ImageUrl = R.drawable.loginback
+        sliderItem1.ImageUrl = R.drawable.slide1
+        sliderItem2.ImageUrl = R.drawable.slide2
+        sliderItem3.ImageUrl = R.drawable.slide3
+        sliderItem4.ImageUrl = R.drawable.slide4
 
         slideAdapter.addItem(sliderItem1)
         slideAdapter.addItem(sliderItem2)

@@ -20,7 +20,8 @@
             <com.smarteist.autoimageslider.SliderView
                 android:id="@+id/imageSlider"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_percent="0.4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -39,34 +40,52 @@
                 app:sliderStartAutoCycle="true">
             </com.smarteist.autoimageslider.SliderView>
 
+            <View
+                android:id="@+id/dividingLine"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorLightBlue"
+                app:layout_constraintTop_toBottomOf="@+id/imageSlider" />
+
+            <TextView
+                android:id="@+id/infoText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="당신을 위한 wave의 추천"
+                android:layout_marginStart="12dp"
+                android:layout_marginBottom="4dp"
+                android:textColor="@color/colorLightBlue"
+                android:textSize="20sp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintTop_toBottomOf="@id/dividingLine"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/genre1"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_first"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginTop="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imageSlider"
+                app:layout_constraintTop_toBottomOf="@id/genre1"
                 android:overScrollMode="never"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_second"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginTop="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recycler_first"
+                app:layout_constraintTop_toBottomOf="@+id/genre2"
                 android:overScrollMode="never"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_third"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginTop="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recycler_second"
+                app:layout_constraintTop_toBottomOf="@+id/genre3"
                 android:overScrollMode="never"/>
 
             <TextView
@@ -74,20 +93,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:text="TextView"
+                android:text="Loading..."
                 android:textSize="18sp"
+                android:layout_marginTop="4dp"
                 app:layout_constraintBottom_toTopOf="@+id/recycler_first"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintTop_toBottomOf="@id/infoText" />
 
             <TextView
                 android:id="@+id/genre2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:text="TextView"
+                android:text="Loading..."
                 android:textSize="18sp"
+                android:layout_marginTop="4dp"
                 app:layout_constraintBottom_toTopOf="@+id/recycler_second"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recycler_first"
@@ -98,8 +118,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:text="TextView"
+                android:text="Loading..."
                 android:textSize="18sp"
+                android:layout_marginTop="4dp"
                 app:layout_constraintBottom_toTopOf="@+id/recycler_third"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recycler_second"

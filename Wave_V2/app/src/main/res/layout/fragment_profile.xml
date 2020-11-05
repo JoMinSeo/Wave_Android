@@ -32,28 +32,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="익명"
+                android:text=""
                 android:textSize="24sp"
                 app:layout_constraintStart_toEndOf="@+id/user_iv"
                 app:layout_constraintTop_toTopOf="@+id/user_iv"
                 app:layout_constraintBottom_toBottomOf="@+id/user_iv"/>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/setting_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/user_iv">
-
-                
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
 
-
+    <Button
+        android:id="@+id/logoutBtn"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_percent="0.8"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.05"
+        android:text="로그아웃"
+        android:textColor="@color/colorWhite"
+        android:textSize="12sp"
+        android:background="@drawable/regi_btn"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 
