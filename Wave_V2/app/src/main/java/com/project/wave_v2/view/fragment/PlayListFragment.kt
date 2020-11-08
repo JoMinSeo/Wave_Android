@@ -1,6 +1,7 @@
 package com.project.wave_v2.view.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +17,7 @@ import com.project.wave_v2.data.request.playlist.CallPlayListBody
 import com.project.wave_v2.data.response.playlist.MyPlayListModel
 import com.project.wave_v2.network.RetrofitClient
 import com.project.wave_v2.network.Service
+import com.project.wave_v2.view.activity.MakePlaylistActivity
 import com.project.wave_v2.widget.PlayListAdapter
 import kotlinx.android.synthetic.main.fragment_playlist.*
 import retrofit2.Call
@@ -53,6 +55,11 @@ class PlayListFragment : Fragment() {
         var id: String? = prefs.getString("userId", "user")
 
         callPlayList(id)
+
+        addList_Btn.setOnClickListener {
+            var intent = Intent(context,MakePlaylistActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 
