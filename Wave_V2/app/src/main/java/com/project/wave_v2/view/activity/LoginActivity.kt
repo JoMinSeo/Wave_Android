@@ -43,7 +43,8 @@ class LoginActivity : AppCompatActivity() {
 
     private fun onClick() {
         noId_Tv.setOnClickListener {
-            Toast.makeText(applicationContext, "아직 안 만들었어 >.<", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this@LoginActivity, SignUpActivity::class.java))
+
         }
 
         btn_login.setOnClickListener {

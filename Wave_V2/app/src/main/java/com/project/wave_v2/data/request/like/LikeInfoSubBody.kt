@@ -4,5 +4,4 @@ package com.project.wave_v2.data.request.like
 data class LikeInfoSubBody(
     var userId : String?,
     var subGenreId : Int?,
-    var rank : Int?
 )
