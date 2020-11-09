@@ -32,11 +32,11 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun clickNext() {
-        val id = id_regi.text.toString()
-        val name = name_regi.text.toString()
-        val pw = pwd_regi.text.toString()
-        val pwCheck = pwd_check.text.toString()
-        val email = email_regi.text.toString()
+        val id = id_regi.text.toString().trim()
+        val name = name_regi.text.toString().trim()
+        val pw = pwd_regi.text.toString().trim()
+        val pwCheck = pwd_check.text.toString().trim()
+        val email = email_regi.text.toString().trim()
         if (id == "" || name == "" || pw == "" || pwCheck == "" || email == "") {
             Toast.makeText(this, "빈칸을 입력해 주세요", Toast.LENGTH_SHORT).show()
         } else {
