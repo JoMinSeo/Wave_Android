@@ -8,7 +8,8 @@ data class SearchModel(
 
 data class ArtistInfo(
     var aritstId : Int?,
-    var artistName : String?
+    var artistName : String?,
+    var viewType : Int?
 )
 
 data class AlbumInfo(
@@ -16,7 +17,8 @@ data class AlbumInfo(
     var albumName: String?,
     var jacket: String?,
     var aritstId: Int?,
-    var artistName: String?
+    var artistName: String?,
+    var viewType : Int?
 )
 
 data class SearchSongInfo(
@@ -29,5 +31,6 @@ data class SearchSongInfo(
     var albumId : Int?,
     var songUrl : String?,
     var age : Int?,
-    var writer : String?
+    var writer : String?,
+    var viewType : Int?
 )

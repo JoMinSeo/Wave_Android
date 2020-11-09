@@ -2,17 +2,24 @@ package com.narsha.wave_android.view.adapter.search
 
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.narsha.wave_android.data.searched.SearchedData
 import com.narsha.wave_android.data.viewtype.SearchedViewType
+import com.narsha.wave_android.view.activity.song.SongActivity
 import com.project.wave_v2.R
+import com.project.wave_v2.data.response.SearchSongInfo
+import com.project.wave_v2.view.fragment.searched.onclick.itemOnClick
 
-class SearchedAllAdapter internal constructor(dataList: ArrayList<SearchedData>?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var myDataList: ArrayList<SearchedData>? = null
+class SearchedAllAdapter internal constructor(context: Context, dataList: java.util.ArrayList<SearchSongInfo>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var myDataList: ArrayList<SearchSongInfo>? = null
+    private var itemOnClick : itemOnClick ?= null
+    private var context : Context? = null
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view: View
@@ -38,11 +45,15 @@ class SearchedAllAdapter internal constructor(dataList: ArrayList<SearchedData>?
         if (viewHolder is MusicBigHolder) {
 
             viewHolder.title.text = myDataList!![position].title
-            viewHolder.content.text = myDataList!![position].description
 
         } else if (viewHolder is MusicHolder) {
 
             viewHolder.title.text = myDataList!![position].title
+            viewHolder.playButton.setOnClickListener {
+                val intent = Intent(context, SongActivity::class.java);
+                intent.putExtra("link", myDataList!![position].songUrl!!.substring(0, 18))
+                context!!.startActivity(intent)
+            }
 
         } else if(viewHolder is ArtistViewHolder) {
 
@@ -81,10 +92,12 @@ class SearchedAllAdapter internal constructor(dataList: ArrayList<SearchedData>?
     inner class MusicHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         var title: TextView = itemView.findViewById(R.id.musicName)
+        var playButton : Button = itemView.findViewById(R.id.playButton)
         var type : TextView = itemView.findViewById(R.id.musicType)
 
     }
     init {
         myDataList = dataList
+        this.context = context
     }
 }

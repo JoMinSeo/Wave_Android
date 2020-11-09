@@ -21,16 +21,16 @@ class ArtistSearchedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arraySerached.add(SearchedData("전상근", null, null, SearchedViewType.ViewType.ARTIST))
-        arraySerached.add(SearchedData("이수", null, null, SearchedViewType.ViewType.ARTIST))
-        arraySerached.add(SearchedData("나얼", null, null, SearchedViewType.ViewType.ARTIST))
-        arraySerached.add(SearchedData("김범수", null, null, SearchedViewType.ViewType.ARTIST))
-        arraySerached.add(SearchedData("임재현", null, null, SearchedViewType.ViewType.ARTIST))
-        arraySerached.add(SearchedData("박효신", null, null, SearchedViewType.ViewType.ARTIST))
-        val recyclerView: RecyclerView = view.findViewById(R.id.recyclerSearchedArtist)
-        val manager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
-        recyclerView.layoutManager = manager // LayoutManager 등록
-        recyclerView.adapter = SearchedAllAdapter(arraySerached) // Adapter 등록
+//        arraySerached.add(SearchedData("전상근", null, null, SearchedViewType.ViewType.ARTIST))
+//        arraySerached.add(SearchedData("이수", null, null, SearchedViewType.ViewType.ARTIST))
+//        arraySerached.add(SearchedData("나얼", null, null, SearchedViewType.ViewType.ARTIST))
+//        arraySerached.add(SearchedData("김범수", null, null, SearchedViewType.ViewType.ARTIST))
+//        arraySerached.add(SearchedData("임재현", null, null, SearchedViewType.ViewType.ARTIST))
+//        arraySerached.add(SearchedData("박효신", null, null, SearchedViewType.ViewType.ARTIST))
+//        val recyclerView: RecyclerView = view.findViewById(R.id.recyclerSearchedArtist)
+//        val manager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+//        recyclerView.layoutManager = manager // LayoutManager 등록
+//        recyclerView.adapter = SearchedAllAdapter(requireContext(), arraySerached) // Adapter 등록
     }
 
     override fun onCreateView(
