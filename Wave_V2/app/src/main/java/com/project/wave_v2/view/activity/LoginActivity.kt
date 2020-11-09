@@ -48,8 +48,8 @@ class LoginActivity : AppCompatActivity() {
         }
 
         btn_login.setOnClickListener {
-            var id = et_id.text.toString()
-            var pw = et_pass.text.toString()
+            var id = et_id.text.toString().trim()
+            var pw = et_pass.text.toString().trim()
 
             if (id.isEmpty() || pw.isEmpty()) {
                 Toast.makeText(applicationContext, "제대로 입력해주시기 바랍니다.", Toast.LENGTH_SHORT).show()
@@ -88,11 +88,12 @@ class LoginActivity : AppCompatActivity() {
                         }
                     }
                 } else{
-                    Toast.makeText(applicationContext, "존재하지 않는 계정입니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "잘못된 계정입니다.", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<ResultModel>, t: Throwable) {
+                Toast.makeText(this@LoginActivity, "잘못된 계정입니다.", Toast.LENGTH_SHORT).show()
                 Log.d("login fail", t.message+"")
             }
 

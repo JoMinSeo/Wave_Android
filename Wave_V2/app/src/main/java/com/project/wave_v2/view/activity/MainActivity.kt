@@ -20,13 +20,4 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onStart() {
-        super.onStart()
-        val sharedPreferences = getSharedPreferences(KEY_USER, MODE_PRIVATE)
-        var userId = sharedPreferences.getString("userId", "")
-
-        if (userId == null) {
-            startActivity(Intent(applicationContext, LoginActivity::class.java))
-        }
-    }
 }
