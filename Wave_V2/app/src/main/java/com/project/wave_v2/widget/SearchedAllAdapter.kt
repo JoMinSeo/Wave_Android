@@ -3,6 +3,7 @@ package com.narsha.wave_android.view.adapter.search
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +11,9 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.narsha.wave_android.data.viewtype.SearchedViewType
-import com.narsha.wave_android.view.activity.song.SongActivity
 import com.project.wave_v2.R
 import com.project.wave_v2.data.response.SearchSongInfo
+import com.project.wave_v2.view.activity.SongActivity
 import com.project.wave_v2.view.fragment.searched.onclick.itemOnClick
 
 class SearchedAllAdapter internal constructor(context: Context, dataList: java.util.ArrayList<SearchSongInfo>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -51,7 +52,8 @@ class SearchedAllAdapter internal constructor(context: Context, dataList: java.u
             viewHolder.title.text = myDataList!![position].title
             viewHolder.playButton.setOnClickListener {
                 val intent = Intent(context, SongActivity::class.java);
-                intent.putExtra("link", myDataList!![position].songUrl!!.substring(0, 18))
+                Log.d("link", myDataList!![position].songUrl!!.substring(17, myDataList!![position].songUrl!!.length))
+                intent.putExtra("link", myDataList!![position].songUrl!!.substring(17, myDataList!![position].songUrl!!.length))
                 context!!.startActivity(intent)
             }
 

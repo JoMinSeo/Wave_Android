@@ -17,7 +17,7 @@
         <activity android:name=".view.activity.SignUpActivity" />
         <activity android:name=".view.activity.LoginActivity" />
         <activity android:name=".view.activity.MainActivity" />
-        <activity android:name="" />
+        <activity android:name=".view.activity.SongActivity" />
         <activity
             android:name=".view.activity.IntroActivity"
             android:theme="@style/SplashTheme">

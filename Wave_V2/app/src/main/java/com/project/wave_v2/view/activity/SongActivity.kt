@@ -1,4 +1,4 @@
-package com.narsha.wave_android.view.activity.song
+package com.project.wave_v2.view.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,7 +14,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.views.YouTubePlay
 import com.project.wave_v2.R
 
 
-class SongActivity() : AppCompatActivity() {
+class SongActivity : AppCompatActivity() {
     val arrayPlayDummy = listOf<String>("2COAu1l6hUQ", "jO2viLEW-1A", "HCc1UvTQ1Hg")
     var indexNowPlaying : Int = 0;
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,6 +69,7 @@ class SongActivity() : AppCompatActivity() {
         }
         youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
+                Log.d("link", intent.getStringExtra("link")!!)
                 youTubePlayer.loadVideo(intent.getStringExtra("link")!!, 0F) // 여기에 비디오 아이디 입력.
                 Log.d("?", youtubePlayerSeekBar.toString())
                 youTubePlayer.addListener(youtubePlayerSeekBar)

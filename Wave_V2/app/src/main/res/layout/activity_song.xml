@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#201B1B"
-    tools:context=".view.activity.song.SongActivity">
+    android:background="#201B1B">
 
     <TextView
         android:id="@+id/song_name"
