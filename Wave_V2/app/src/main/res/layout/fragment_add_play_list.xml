@@ -14,10 +14,10 @@
         android:layout_marginTop="44dp"
         android:text="메인장르를 선택해주세요"
         android:textColor="#000000"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/playlistTitle_Et" />
 
     <Spinner
         android:id="@+id/mainGenre_Sp"
@@ -37,7 +37,7 @@
         android:layout_marginTop="40dp"
         android:text="서브장르를 선택해주세요"
         android:textColor="#000000"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mainGenre_Sp" />
@@ -51,4 +51,14 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/subGenreTitle_Tv" />
+
+    <EditText
+        android:id="@+id/playlistTitle_Et"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="플레이리스트 이름을 입력해 주세요"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
