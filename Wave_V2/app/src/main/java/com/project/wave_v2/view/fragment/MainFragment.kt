@@ -33,7 +33,7 @@ import retrofit2.Retrofit
 
 class MainFragment : Fragment() {
 
-    lateinit var API : Service
+    var API : Service? = null
     lateinit var retrofit : Retrofit
 
     lateinit var navController: NavController
@@ -46,14 +46,7 @@ class MainFragment : Fragment() {
     var secondAdapter: MainAdapter = MainAdapter(secondList)
     var thirdAdapter: MainAdapter = MainAdapter(thirdList)
 
-
-
     lateinit var slideAdapter : MainImageSlider
-
-
-    private fun onItemClick(index: Int, position: Int, playList: ListInfo) {
-        navController.navigate(R.id.action_navigation_home_to_songListFragment)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +56,7 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         retrofit = RetrofitClient.getInstance()
+        API = RetrofitClient.getService()
 
         navController = Navigation.findNavController(view)
 
@@ -73,12 +67,11 @@ class MainFragment : Fragment() {
 
 
         Log.d("ididid", id)
-        API = retrofit.create(Service::class.java)
-        API.getList(
+        API?.getList(
                 CallPlayListBody(
                         userId = id
                 )
-        ).enqueue(object : Callback<List<CallPlayListModel>> {
+        )?.enqueue(object : Callback<List<CallPlayListModel>> {
             override fun onResponse(call: Call<List<CallPlayListModel>>, response: Response<List<CallPlayListModel>>) {
                 if (response.code() == 200) {
                     firstList.clear()

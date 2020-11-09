@@ -5,6 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
     private var instance: Retrofit? = null
+    private var API : Service? = null
 
     fun getInstance(): Retrofit {
         if (instance == null) {
@@ -14,5 +15,12 @@ object RetrofitClient {
                 .build()
         }
         return instance!!
+    }
+
+    fun getService() : Service?{
+        if(API == null){
+            API = instance?.create(Service::class.java)
+        }
+        return API
     }
 }

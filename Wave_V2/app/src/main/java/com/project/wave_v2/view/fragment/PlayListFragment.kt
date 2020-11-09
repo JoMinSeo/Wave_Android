@@ -32,7 +32,7 @@ class PlayListFragment : Fragment() {
     val playListAdapter: PlayListAdapter = PlayListAdapter(playList)
 
 
-    lateinit var API: Service
+    var API: Service? = null
     lateinit var retrofit: Retrofit
 
 
@@ -46,7 +46,7 @@ class PlayListFragment : Fragment() {
         navController = Navigation.findNavController(view)
 
         retrofit = RetrofitClient.getInstance()
-        API = retrofit.create(Service::class.java)
+        API = RetrofitClient.getService()
 
         selectedPlayList.adapter = playListAdapter
         selectedPlayList.setHasFixedSize(true)
@@ -69,8 +69,8 @@ class PlayListFragment : Fragment() {
 
 
     fun callPlayList(id : String?){
-        API.myList(CallPlayListBody(userId = id))
-                .enqueue(object : Callback<List<MyPlayListModel>> {
+        API?.myList(CallPlayListBody(userId = id))
+                ?.enqueue(object : Callback<List<MyPlayListModel>> {
                     override fun onResponse(call: Call<List<MyPlayListModel>>, response: Response<List<MyPlayListModel>>) {
                         playList.clear()
                         for (i in 0 until response.body()?.size!!) {

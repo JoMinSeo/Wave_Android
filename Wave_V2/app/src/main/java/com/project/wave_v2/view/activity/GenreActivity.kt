@@ -38,7 +38,7 @@ class GenreActivity : AppCompatActivity() {
     var subGenreId1 : Int = -1
     var subGenreId2 : Int = -1
 
-    lateinit var API: Service
+    var API: Service? = null
     lateinit var retrofit: Retrofit
 
     var check : Boolean = false
@@ -48,7 +48,7 @@ class GenreActivity : AppCompatActivity() {
         setContentView(R.layout.activity_genre)
 
         retrofit = RetrofitClient.getInstance()
-        API = retrofit.create(Service::class.java)
+        API = RetrofitClient.getService()
 
         insertMain()
 
@@ -142,8 +142,8 @@ class GenreActivity : AppCompatActivity() {
     }
 
     private fun callSubGenre(genreId : Int){
-        API.likeFeel(LikeFeelBody(genreId))
-            .enqueue(object : Callback<List<LikeFeelModel>>{
+        API?.likeFeel(LikeFeelBody(genreId))
+            ?.enqueue(object : Callback<List<LikeFeelModel>>{
                 override fun onResponse(
                     call: Call<List<LikeFeelModel>>,
                     response: Response<List<LikeFeelModel>>
@@ -166,8 +166,8 @@ class GenreActivity : AppCompatActivity() {
     }
 
     private fun mainInfoSetting(){
-        API.likeInfo1(LikeInfoMainBody(userId,mainGenreId))
-            .enqueue(object : Callback<ResultModel>{
+        API?.likeInfo1(LikeInfoMainBody(userId,mainGenreId))
+            ?.enqueue(object : Callback<ResultModel>{
                 override fun onResponse(call: Call<ResultModel>, response: Response<ResultModel>) {
                     if(response.code() == 200){
                         if(response.body()?.result == "ok"){
@@ -184,8 +184,8 @@ class GenreActivity : AppCompatActivity() {
     }
 
     private fun subInfoSetting(subId : Int){
-        API.likeInfo2(LikeInfoSubBody(userId,subId))
-            .enqueue(object : Callback<ResultModel>{
+        API?.likeInfo2(LikeInfoSubBody(userId,subId))
+            ?.enqueue(object : Callback<ResultModel>{
                 override fun onResponse(call: Call<ResultModel>, response: Response<ResultModel>) {
                     if(response.code() == 200){
                         if(response.body()?.result == "ok"){

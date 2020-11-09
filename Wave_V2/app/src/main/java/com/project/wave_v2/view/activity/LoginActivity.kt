@@ -20,7 +20,7 @@ class LoginActivity : AppCompatActivity() {
 
     private val KEY_USER = "user_info"
 
-    lateinit var API: Service
+    var API: Service? = null
     lateinit var retrofit: Retrofit
 
 
@@ -37,6 +37,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         retrofit = RetrofitClient.getInstance()
+        API = RetrofitClient.getService()
 
         onClick()
     }
@@ -44,7 +45,6 @@ class LoginActivity : AppCompatActivity() {
     private fun onClick() {
         noId_Tv.setOnClickListener {
             startActivity(Intent(this@LoginActivity, SignUpActivity::class.java))
-
         }
 
         btn_login.setOnClickListener {
@@ -61,14 +61,12 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun login(id: String, pw: String) {
-
-        API = retrofit.create(Service::class.java)
-        API.login(
+        API?.login(
                 LoginBody(
                         userId = id,
                         password = pw
                 )
-        ).enqueue(object : Callback<ResultModel> {
+        )?.enqueue(object : Callback<ResultModel> {
             override fun onResponse(call: Call<ResultModel>, response: Response<ResultModel>) {
                 Log.d("login success", response.code().toString())
                 if(response.code() == 200){
@@ -80,7 +78,7 @@ class LoginActivity : AppCompatActivity() {
                             val editor = sharedPreferences.edit()
                             editor.putString("userId", id)
                             editor.putString("userPassword", pw)
-                            editor.commit()
+                            editor.apply()
 
                             val intent = Intent(applicationContext, MainActivity::class.java)
                             startActivity(intent)

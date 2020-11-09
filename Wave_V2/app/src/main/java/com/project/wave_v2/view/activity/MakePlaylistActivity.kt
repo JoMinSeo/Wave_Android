@@ -30,7 +30,7 @@ class MakePlaylistActivity : AppCompatActivity() {
     lateinit var subAdapter1 : ArrayAdapter<*>
     lateinit var subAdapter2 : ArrayAdapter<*>
 
-    lateinit var API: Service
+    var API: Service? = null
     lateinit var retrofit: Retrofit
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +40,7 @@ class MakePlaylistActivity : AppCompatActivity() {
         var userInfo = getSharedPreferences("user_info", Context.MODE_PRIVATE)
 
         retrofit = RetrofitClient.getInstance()
-        API = retrofit.create(Service::class.java)
+        API = RetrofitClient.getService()
 
         insertMainList()
 
@@ -79,8 +79,8 @@ class MakePlaylistActivity : AppCompatActivity() {
     }
 
     private fun callSubGenre(genreId : Int){
-        API.likeFeel(LikeFeelBody(genreId))
-            .enqueue(object : Callback<List<LikeFeelModel>> {
+        API?.likeFeel(LikeFeelBody(genreId))
+            ?.enqueue(object : Callback<List<LikeFeelModel>> {
                 override fun onResponse(
                     call: Call<List<LikeFeelModel>>,
                     response: Response<List<LikeFeelModel>>
@@ -101,7 +101,6 @@ class MakePlaylistActivity : AppCompatActivity() {
     }
 
     private fun insertMainList(){
-
         mainGenreList.add("팝")
         mainGenreList.add("아이돌")
         mainGenreList.add("발라드")

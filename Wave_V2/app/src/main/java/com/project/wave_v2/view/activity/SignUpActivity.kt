@@ -17,7 +17,7 @@ import retrofit2.Retrofit
 
 class SignUpActivity : AppCompatActivity() {
 
-    lateinit var API: Service
+    var API: Service? = null
     lateinit var retrofit: Retrofit
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +25,7 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sign_up)
 
         retrofit = RetrofitClient.getInstance()
+        API = RetrofitClient.getService()
         next.setOnClickListener {
             clickNext()
         }
@@ -40,9 +41,8 @@ class SignUpActivity : AppCompatActivity() {
             Toast.makeText(this, "빈칸을 입력해 주세요", Toast.LENGTH_SHORT).show()
         } else {
             if(pw == pwCheck){
-                API = retrofit.create(Service::class.java)
-                API.register(RegisterBody(id,pw, email,name))
-                        .enqueue(object : Callback<ResultModel>{
+                API?.register(RegisterBody(id,pw, email,name))
+                        ?.enqueue(object : Callback<ResultModel>{
                             override fun onResponse(call: Call<ResultModel>, response: Response<ResultModel>) {
                                 if(response.code() == 200){
                                     if(response.body()?.result == "ok"){
