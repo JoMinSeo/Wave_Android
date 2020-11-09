@@ -4,7 +4,7 @@ package com.project.wave_v2.data.request.playlist
 data class CreatePlayListBody(
     var userId: String?,
     var listName: String?,
-    var mainGenre: Int?,
-    var subGenre: Int?
+    var mainGenre: String?,
+    var subGenre: String?
 
 )
