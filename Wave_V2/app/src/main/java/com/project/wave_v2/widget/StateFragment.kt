@@ -2,10 +2,10 @@ package com.project.wave_v2.widget
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.project.wave_v2.view.fragment.searched.AlbumSearchedFragment
-import com.project.wave_v2.view.fragment.searched.AllSearchedFragment
-import com.project.wave_v2.view.fragment.searched.ArtistSearchedFragment
-import com.project.wave_v2.view.fragment.searched.MusicSearchedFragment
+import com.project.wave_v2.view.fragment.searched.searched.AlbumSearchedFragment
+import com.project.wave_v2.view.fragment.searched.searched.AllSearchedFragment
+import com.project.wave_v2.view.fragment.searched.searched.ArtistSearchedFragment
+import com.project.wave_v2.view.fragment.searched.searched.MusicSearchedFragment
 
 class StateFragment(fragment: Fragment) : FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int {
