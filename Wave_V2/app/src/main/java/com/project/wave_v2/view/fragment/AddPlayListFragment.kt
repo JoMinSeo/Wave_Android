@@ -174,7 +174,7 @@ class AddPlayListFragment : DialogFragment() {
     private fun mainInfoSetting(listName : String) {
 
         API = RetrofitClient.getService()
-        val data = CreatePlayListBody(userId, listName, mainGenreId.toString(), subGenreId.toString())
+        val data = CreatePlayListBody(userId, listName, mainGenreId, subGenreId)
         API?.createPlayList(data)
             ?.enqueue(object : Callback<ResultModel> {
                 override fun onResponse(call: Call<ResultModel>, response: Response<ResultModel>) {
@@ -198,6 +198,8 @@ class AddPlayListFragment : DialogFragment() {
                         mainInfoSetting(listName.text.toString())
                     }
                     Log.d("Logd", "확인버튼입력됨")
+
+
                 }
                 DialogInterface.BUTTON_NEGATIVE -> { // 취소 버튼
                 }
