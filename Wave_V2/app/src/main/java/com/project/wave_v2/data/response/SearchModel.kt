@@ -1,16 +1,19 @@
 package com.project.wave_v2.data.response
 
+open class SearchObject(open var viewType: Int?)
+
 data class SearchModel(
     var artist : List<ArtistInfo?>?,
     var album : List<AlbumInfo?>?,
-    var song : List<SearchSongInfo?>?
+    var song : List<SearchSongInfo?>?,
+    var category: List<Category>?
 )
 
 data class ArtistInfo(
     var aritstId : Int?,
     var artistName : String?,
-    var viewType : Int?
-)
+    override var viewType:Int?
+):SearchObject(viewType)
 
 data class AlbumInfo(
     var albumId: Int?,
@@ -18,8 +21,8 @@ data class AlbumInfo(
     var jacket: String?,
     var aritstId: Int?,
     var artistName: String?,
-    var viewType : Int?
-)
+    override var viewType:Int?
+):SearchObject(viewType)
 
 data class SearchSongInfo(
     var songId : Int?,
@@ -32,5 +35,10 @@ data class SearchSongInfo(
     var songUrl : String?,
     var age : Int?,
     var writer : String?,
-    var viewType : Int?
-)
+    override var viewType:Int?
+):SearchObject(viewType)
+
+data class Category(
+    var title : String?,
+    override var viewType:Int?
+):SearchObject(viewType)

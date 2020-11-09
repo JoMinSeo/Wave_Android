@@ -7,14 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.narsha.wave_android.data.searched.SearchedData
 import com.narsha.wave_android.data.viewtype.SearchedViewType
 import com.narsha.wave_android.view.adapter.search.SearchedAllAdapter
 import com.project.wave_v2.R
 import java.util.*
 
 class ArtistSearchedFragment : Fragment() {
-    var arraySerached: ArrayList<SearchedData> = ArrayList<SearchedData>()
+//    var arraySerached: ArrayList<SearchedData> = ArrayList<SearchedData>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
