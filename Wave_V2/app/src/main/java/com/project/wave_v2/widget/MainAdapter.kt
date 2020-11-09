@@ -19,7 +19,7 @@ class MainAdapter(val playList : ArrayList<ListInfo>) : RecyclerView.Adapter<Mai
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView){
         var img = itemView.findViewById<ImageView>(R.id.img_title)
 
-        fun bind(list : ListInfo) {
+        fun bind(list : ListInfo){
             if(list.jacket == ""){
                 img.setImageResource(R.drawable.def_music)
             }else{

@@ -1,16 +1,20 @@
 package com.project.wave_v2.widget
 
+import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.project.wave_v2.R
 import com.project.wave_v2.data.response.playlist.ListInfo
 import com.project.wave_v2.data.response.playlist.MyPlayListModel
+import com.project.wave_v2.view.activity.SongListActivity
 
 class PlayListAdapter(val playList : ArrayList<MyPlayListModel>) : RecyclerView.Adapter<PlayListAdapter.Holder>(){
 
@@ -24,7 +28,10 @@ class PlayListAdapter(val playList : ArrayList<MyPlayListModel>) : RecyclerView.
             glide.load(Uri.parse(list.jacket)).into(img)
 
             itemView.setOnClickListener {
-
+                var intent = Intent(itemView.context, SongListActivity::class.java)
+                intent.putExtra("listId", list.listId)
+                intent.putExtra("listName", list.listName)
+                itemView.context.startActivity(intent)
             }
         }
     }

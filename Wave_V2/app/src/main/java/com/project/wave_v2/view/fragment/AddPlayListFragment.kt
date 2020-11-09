@@ -17,6 +17,7 @@ import com.project.wave_v2.data.response.like.LikeFeelModel
 import com.project.wave_v2.data.response.like.LikeGenreModel
 import com.project.wave_v2.network.RetrofitClient
 import com.project.wave_v2.network.Service
+import com.project.wave_v2.view.activity.MainActivity
 import kotlinx.android.synthetic.main.fragment_add_play_list.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -130,6 +131,8 @@ class AddPlayListFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         userId = requireActivity().getSharedPreferences("user_info", Context.MODE_PRIVATE)
             .getString("userId", "").toString()
+
+
 
         initWidgets()
         var listener = DialogListener()
