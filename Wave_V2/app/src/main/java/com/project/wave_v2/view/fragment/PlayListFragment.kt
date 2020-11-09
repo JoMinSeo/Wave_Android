@@ -40,6 +40,11 @@ class PlayListFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
+    override fun onPause() {
+        super.onPause()
+        Log.d("Logd", "PlayListFragment onPause")
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -57,8 +62,6 @@ class PlayListFragment : Fragment() {
         callPlayList(id)
 
         addList_Btn.setOnClickListener {
-            //var intent = Intent(context,MakePlaylistActivity::class.java)
-            //startActivity(intent)
             var dialog=AddPlayListFragment()
             fragmentManager?.let { it1 -> dialog.show(it1, "addPlayList") }
         }
@@ -70,7 +73,7 @@ class PlayListFragment : Fragment() {
     }
 
 
-    fun callPlayList(id : String?){
+    private fun callPlayList(id : String?){
         API?.myList(CallPlayListBody(userId = id))
                 ?.enqueue(object : Callback<List<MyPlayListModel>> {
                     override fun onResponse(call: Call<List<MyPlayListModel>>, response: Response<List<MyPlayListModel>>) {
