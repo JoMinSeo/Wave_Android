@@ -57,8 +57,10 @@ class PlayListFragment : Fragment() {
         callPlayList(id)
 
         addList_Btn.setOnClickListener {
-            var intent = Intent(context,MakePlaylistActivity::class.java)
-            startActivity(intent)
+            //var intent = Intent(context,MakePlaylistActivity::class.java)
+            //startActivity(intent)
+            var dialog=AddPlayListFragment()
+            fragmentManager?.let { it1 -> dialog.show(it1, "addPlayList") }
         }
 
     }
