@@ -18,31 +18,31 @@ class AlbumSearchedFragment : Fragment() {
     var arraySerached: ArrayList<SearchedData> = ArrayList<SearchedData>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arraySerached.add(
-            SearchedData(
-                "진짜 죽여주는 노래",
-                null,
-                "ㅎㅇ",
-                SearchedViewType.ViewType.MUSIC_BIG
-            )
-        )
-        arraySerached.add(SearchedData("아티스트", null, null, SearchedViewType.ViewType.CATEGORY))
-        arraySerached.add(SearchedData("전상근", null, null, SearchedViewType.ViewType.ARTIST))
-        arraySerached.add(SearchedData("곡", null, null, SearchedViewType.ViewType.CATEGORY))
-        arraySerached.add(SearchedData("사랑이란 멜로는 없어", null, null, SearchedViewType.ViewType.MUSIC))
-        arraySerached.add(SearchedData("그대 행복해야 해요", null, null, SearchedViewType.ViewType.MUSIC))
-        arraySerached.add(
-            SearchedData(
-                "사랑은 지날수록 더욱 선명하게 남아",
-                null,
-                null,
-                SearchedViewType.ViewType.MUSIC
-            )
-        )
-        val recyclerView: RecyclerView = view.findViewById(R.id.recyclerSearchedAlbum)
-        val manager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
-        recyclerView.layoutManager = manager // LayoutManager 등록
-        recyclerView.adapter = SearchedAllAdapter(arraySerached) // Adapter 등록
+//        arraySerached.add(
+//            SearchedData(
+//                "진짜 죽여주는 노래",
+//                null,
+//                "ㅎㅇ",
+//                SearchedViewType.ViewType.MUSIC_BIG
+//            )
+//        )
+//        arraySerached.add(SearchedData("아티스트", null, null, SearchedViewType.ViewType.CATEGORY))
+//        arraySerached.add(SearchedData("전상근", null, null, SearchedViewType.ViewType.ARTIST))
+//        arraySerached.add(SearchedData("곡", null, null, SearchedViewType.ViewType.CATEGORY))
+//        arraySerached.add(SearchedData("사랑이란 멜로는 없어", null, null, SearchedViewType.ViewType.MUSIC))
+//        arraySerached.add(SearchedData("그대 행복해야 해요", null, null, SearchedViewType.ViewType.MUSIC))
+//        arraySerached.add(
+//            SearchedData(
+//                "사랑은 지날수록 더욱 선명하게 남아",
+//                null,
+//                null,
+//                SearchedViewType.ViewType.MUSIC
+//            )
+//        )
+//        val recyclerView: RecyclerView = view.findViewById(R.id.recyclerSearchedAlbum)
+//        val manager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+//        recyclerView.layoutManager = manager // LayoutManager 등록
+//        recyclerView.adapter = SearchedAllAdapter(requireContext(), arraySerached) // Adapter 등록
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
