@@ -11,7 +11,7 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Wave_V2">
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".view.activity.SongListActivity"></activity>
         <activity android:name=".view.activity.MakePlaylistActivity" />
         <activity android:name=".view.activity.GenreActivity" />

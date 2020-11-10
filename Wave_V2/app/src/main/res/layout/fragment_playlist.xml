@@ -6,17 +6,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.fragment.PlayListFragment">
 
+    <TextView
+        android:id="@+id/gondback"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/selectedPlayList" />
+
     <Button
         android:id="@+id/addList_Btn"
-        android:layout_width="match_parent"
-        android:layout_height="96dp"
-        android:text="ADD MY PLAYLIST"
-        android:textColor="@color/colorBlack"
-        android:backgroundTint="@color/colorGrey"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@drawable/add_playlist_image"
         app:layout_constraintBottom_toTopOf="@id/selectedPlayList"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.047"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.592" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/selectedPlayList"
@@ -25,7 +34,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addList_Btn"
+        app:layout_constraintTop_toBottomOf="@+id/gondback"
         tools:listitem="@layout/item_playlist"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
