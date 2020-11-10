@@ -8,19 +8,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.narsha.wave_android.data.viewtype.SearchedViewType
 import com.narsha.wave_android.view.adapter.search.SearchedAllAdapter
 import com.project.wave_v2.R
-import com.project.wave_v2.data.response.SearchModel
-import com.project.wave_v2.data.response.SearchSongInfo
+import com.project.wave_v2.data.response.search.SearchModel
 import com.project.wave_v2.view.viewmodel.SearchedViewModel
-import java.util.*
-import kotlin.collections.ArrayList
 
 class MusicSearchedFragment : Fragment() {
 
     var viewModel : SearchedViewModel = SearchedViewModel()
-    var searchModel : SearchModel ?= null
+    var searchModel : SearchModel?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

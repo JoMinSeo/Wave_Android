@@ -11,9 +11,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.narsha.wave_android.data.viewtype.SearchedViewType
+import com.narsha.wave_android.view.adapter.search.SearchedAllAdapter
 import com.project.wave_v2.R
 import com.project.wave_v2.data.request.SearchBody
-import com.project.wave_v2.data.response.*
+import com.project.wave_v2.data.response.playlist.SongInfo
+import com.project.wave_v2.data.response.search.*
 import com.project.wave_v2.network.RetrofitClient
 import com.project.wave_v2.network.Service
 import com.project.wave_v2.view.viewmodel.SearchedViewModel
@@ -28,12 +31,12 @@ class SearchFragment : Fragment() {
     var retrofit : Retrofit? = null
 
     var viewModel : SearchedViewModel = SearchedViewModel()
-    var arraySerached: List<SearchSongInfo> ?= arrayListOf()
-    var arrayArtist : List<ArtistInfo> ?= arrayListOf()
-    var arrayAlbum : List<AlbumInfo> ?= arrayListOf()
-    var arrayCategory : List<Category> ?= arrayListOf()
+    var arraySearched: List<SearchSongInfo> ?= ArrayList()
+    var arrayArtist : List<ArtistInfo> ?= ArrayList()
+    var arrayAlbum : List<AlbumInfo> ?= ArrayList()
+    var arrayCategory : List<Category> ?= ArrayList()
 
-    var searched : SearchModel = SearchModel(arrayArtist, arrayAlbum, arraySerached, arrayCategory)
+    var searched : SearchModel = SearchModel(arrayArtist, arrayAlbum, arraySearched, arrayCategory)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,8 +48,6 @@ class SearchFragment : Fragment() {
 
         retrofit = RetrofitClient.getInstance()
         API = RetrofitClient.getService()
-
-        Log.d("log", "${API}")
 
         val viewPager: ViewPager2 = view.findViewById(R.id.pager)
         val adapter = StateFragment(this)
@@ -74,13 +75,37 @@ class SearchFragment : Fragment() {
     }
 
     fun getAPI(s : String){
-        API!!.getSearchInfo(SearchBody(s))!!.enqueue(object : Callback<SearchModel?> {
-            override fun onResponse(call: Call<SearchModel?>, response: Response<SearchModel?>) {
+        API!!.getSearchInfo(SearchBody(s))!!.enqueue(object : Callback<SearchModelI?> {
+            override fun onResponse(call: Call<SearchModelI?>, response: Response<SearchModelI?>) {
+                if(response.code() == 200){
+                    val search = response.body()
+                    Log.d("log", response.body().toString())
 
+                    (arraySearched as ArrayList).clear()
+                    (arrayArtist as ArrayList).clear()
+                    (arrayAlbum as ArrayList).clear()
+
+                    for(i in search!!.song!!.indices){
+                        (arraySearched as ArrayList).add(SearchSongInfo(search.song!![i], SearchedViewType.ViewType.MUSIC))
+                    }
+                    for(i in search.artist!!.indices){
+                        (arrayArtist as ArrayList).add(ArtistInfo(search.artist!![i], SearchedViewType.ViewType.ARTIST))
+                    }
+                    for(i in search.album!!.indices){
+                        (arrayAlbum as ArrayList).add(AlbumInfo(search.album!![i], SearchedViewType.ViewType.ALBUM))
+                    }
+                    Log.d("log", arraySearched.toString())
+                    Log.d("log", arrayAlbum.toString())
+                    Log.d("log", arrayArtist.toString())
+                    viewModel.searchModel.value = SearchModel(arrayArtist,arrayAlbum,arraySearched,arrayCategory)
+
+                }else{
+                    Log.d("log", response.message())
+                }
             }
 
-            override fun onFailure(call: Call<SearchModel?>, t: Throwable) {
-
+            override fun onFailure(call: Call<SearchModelI?>, t: Throwable) {
+                Log.d("log", t.message)
             }
 
         })

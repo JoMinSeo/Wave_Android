@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.narsha.wave_android.data.viewtype.SearchedViewType
 import com.project.wave_v2.R
 import com.project.wave_v2.data.response.*
+import com.project.wave_v2.data.response.search.*
 import com.project.wave_v2.view.activity.SongActivity
 import com.project.wave_v2.view.fragment.searched.onclick.itemOnClick
 import java.util.*
@@ -55,16 +56,16 @@ class SearchedAllAdapter internal constructor(context: Context, data : SearchMod
         if (type == SearchedViewType.ViewType.MUSIC) {
             val musicInfo = allData[position] as SearchSongInfo
             viewHolder as MusicHolder
-            viewHolder.title.text = musicInfo.title
+            viewHolder.title.text = musicInfo.song?.title
             viewHolder.playButton.setOnClickListener {
                 val intent = Intent(context, SongActivity::class.java);
-                intent.putExtra("link", musicInfo.songUrl!!.substring(17, musicInfo.songUrl!!.length))
+                intent.putExtra("link", musicInfo.song!!.songUrl!!.substring(17, musicInfo.song!!.songUrl!!.length))
                 context!!.startActivity(intent)
             }
         } else if( type == SearchedViewType.ViewType.ARTIST) {
             val artistInfo = allData[position] as ArtistInfo
             viewHolder as ArtistViewHolder
-            viewHolder.title.text = artistInfo.artistName
+            viewHolder.title.text = artistInfo.artist!!.artistName
         } else if(type == SearchedViewType.ViewType.CATEGORY){
             val category = allData[position] as Category
             viewHolder as CategoryHolder
@@ -72,7 +73,7 @@ class SearchedAllAdapter internal constructor(context: Context, data : SearchMod
         }else if( type == SearchedViewType.ViewType.ALBUM) {
             val albumInfo = allData[position] as AlbumInfo
             viewHolder as AlbumHolder
-            viewHolder.title.text = albumInfo.artistName
+            viewHolder.title.text = albumInfo.album!!.artistName
         } else if(viewHolder is ErrorHolder){
             viewHolder.error.text = "에러 발생"
         }
@@ -122,37 +123,37 @@ class SearchedAllAdapter internal constructor(context: Context, data : SearchMod
             it.artist?.let{ a->
                 if(a.isNotEmpty()) {
                     val category = Category("ARTIST", SearchedViewType.ViewType.CATEGORY)
-                    allData.add(category)
+                    //allData.add(category)
                     val iterator = a.iterator()
                     while (iterator.hasNext()) {
                         val artistInfo = iterator.next()
                         artistInfo!!.viewType = SearchedViewType.ViewType.ARTIST
-                        allData.add(artistInfo)
+                       // allData.add(artistInfo)
                     }
                 }
             }
             it.album?.let{a->
                 if(a.isNotEmpty()) {
                     val category= Category("ALBUM", SearchedViewType.ViewType.CATEGORY)
-                    allData.add(category)
+                    //allData.add(category)
                     val iterator = a.iterator()
                     while (iterator.hasNext()) {
                         val artistInfo = iterator.next()
                         artistInfo!!.viewType = SearchedViewType.ViewType.ALBUM
-                        allData.add(artistInfo)
+                        //allData.add(artistInfo)
                     }
                 }
             }
             it.song?.let{a->
                 if(a.isNotEmpty()) {
                     val category= Category("SONG", SearchedViewType.ViewType.CATEGORY)
-                    allData.add(category)
+                    //allData.add(category)
                     val iterator = a.iterator()
                     var index = 0
                     while (iterator.hasNext()) {
                         val artistInfo = iterator.next()
                         artistInfo!!.viewType = SearchedViewType.ViewType.MUSIC
-                        allData.add(artistInfo)
+                        //allData.add(artistInfo)
                         index ++
                     }
                 }
