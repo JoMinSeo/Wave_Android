@@ -222,7 +222,7 @@ class AddPlayListFragment : DialogFragment() {
             .setConfirmText("플레이리스트 보러가기")
             .setConfirmClickListener {
                 callPlayList()
-                dismiss()
+
             }
             .show()
     }
