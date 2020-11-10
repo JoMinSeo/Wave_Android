@@ -17,6 +17,7 @@ import com.project.wave_v2.data.request.playlist.CallPlayListBody
 import com.project.wave_v2.data.response.playlist.MyPlayListModel
 import com.project.wave_v2.network.RetrofitClient
 import com.project.wave_v2.network.Service
+import com.project.wave_v2.view.activity.MainActivity
 import com.project.wave_v2.view.activity.MakePlaylistActivity
 import com.project.wave_v2.widget.PlayListAdapter
 import kotlinx.android.synthetic.main.fragment_playlist.*
@@ -28,8 +29,6 @@ import retrofit2.Retrofit
 class PlayListFragment : Fragment() {
 
     lateinit var navController: NavController
-    var playList = ArrayList<MyPlayListModel>()
-    val playListAdapter: PlayListAdapter = PlayListAdapter(playList)
 
 
     var API: Service? = null
@@ -53,7 +52,7 @@ class PlayListFragment : Fragment() {
         retrofit = RetrofitClient.getInstance()
         API = RetrofitClient.getService()
 
-        selectedPlayList.adapter = playListAdapter
+        selectedPlayList.adapter = (activity as MainActivity).playListAdapter
         selectedPlayList.setHasFixedSize(true)
 
         val prefs: SharedPreferences = requireActivity().getSharedPreferences("user_info", Context.MODE_PRIVATE)
@@ -77,11 +76,11 @@ class PlayListFragment : Fragment() {
         API?.myList(CallPlayListBody(userId = id))
                 ?.enqueue(object : Callback<List<MyPlayListModel>> {
                     override fun onResponse(call: Call<List<MyPlayListModel>>, response: Response<List<MyPlayListModel>>) {
-                        playList.clear()
+                        (activity as MainActivity).playList.clear()
                         for (i in 0 until response.body()?.size!!) {
-                            playList.add(response.body()!![i])
+                            (activity as MainActivity).playList.add(response.body()!![i])
                         }
-                        playListAdapter.notifyDataSetChanged()
+                        (activity as MainActivity).playListAdapter.notifyDataSetChanged()
                     }
 
                     override fun onFailure(call: Call<List<MyPlayListModel>>, t: Throwable) {

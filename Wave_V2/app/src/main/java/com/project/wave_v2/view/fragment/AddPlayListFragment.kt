@@ -9,12 +9,15 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.fragment.app.DialogFragment
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.project.wave_v2.R
 import com.project.wave_v2.data.request.like.LikeFeelBody
+import com.project.wave_v2.data.request.playlist.CallPlayListBody
 import com.project.wave_v2.data.request.playlist.CreatePlayListBody
 import com.project.wave_v2.data.response.ResultModel
 import com.project.wave_v2.data.response.like.LikeFeelModel
 import com.project.wave_v2.data.response.like.LikeGenreModel
+import com.project.wave_v2.data.response.playlist.MyPlayListModel
 import com.project.wave_v2.network.RetrofitClient
 import com.project.wave_v2.network.Service
 import com.project.wave_v2.view.activity.MainActivity
@@ -47,6 +50,7 @@ class AddPlayListFragment : DialogFragment() {
 
     var mainGenreId = 0
     var subGenreId = 0
+
 
     var mainSpinnerListener = object : AdapterView.OnItemSelectedListener {
         override fun onItemSelected(
@@ -202,6 +206,7 @@ class AddPlayListFragment : DialogFragment() {
                     }
                     Log.d("Logd", "확인버튼입력됨")
 
+                    sweetDialog()
 
                 }
                 DialogInterface.BUTTON_NEGATIVE -> { // 취소 버튼
@@ -209,4 +214,37 @@ class AddPlayListFragment : DialogFragment() {
             }
         }
     }
+
+    fun sweetDialog(){
+        SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
+            .setTitleText("플레이리스트를 만들었습니다!")
+            .setContentText("만들어진 플레이리스트를 보러가시죠!")
+            .setConfirmText("플레이리스트 보러가기")
+            .setConfirmClickListener {
+                callPlayList()
+                dismiss()
+            }
+            .show()
+    }
+
+    fun callPlayList(){
+        API?.myList(CallPlayListBody(userId = userId))
+            ?.enqueue(object : Callback<List<MyPlayListModel>> {
+                override fun onResponse(call: Call<List<MyPlayListModel>>, response: Response<List<MyPlayListModel>>) {
+                    Log.d("Logd", response.body()?.size.toString())
+
+//                    (activity as MainActivity).playList.clear()
+//                    for (i in 0 until response.body()?.size!!) {
+//                        (activity as MainActivity).playList.add(response.body()!![i])
+//                    }
+//                    (activity as MainActivity).playListAdapter.notifyDataSetChanged()
+                }
+
+                override fun onFailure(call: Call<List<MyPlayListModel>>, t: Throwable) {
+                }
+
+
+            })
+    }
+
 }

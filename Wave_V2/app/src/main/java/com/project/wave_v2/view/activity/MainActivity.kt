@@ -7,11 +7,13 @@ import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.project.wave_v2.R
 import com.project.wave_v2.data.response.playlist.MyPlayListModel
+import com.project.wave_v2.widget.PlayListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     val KEY_USER = "user_info"
     var playList = ArrayList<MyPlayListModel>()
+    val playListAdapter: PlayListAdapter = PlayListAdapter(playList)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
