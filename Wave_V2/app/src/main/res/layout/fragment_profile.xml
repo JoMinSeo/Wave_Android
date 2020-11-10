@@ -23,7 +23,9 @@
                 android:id="@+id/user_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:src="@drawable/user_profile"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,14 +33,14 @@
                 android:id="@+id/profile_id_Tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:text=""
+                android:textColor="#000000"
                 android:textSize="24sp"
-                app:layout_constraintStart_toEndOf="@+id/user_iv"
-                app:layout_constraintTop_toTopOf="@+id/user_iv"
-                app:layout_constraintBottom_toBottomOf="@+id/user_iv"/>
-
-
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/user_iv" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
