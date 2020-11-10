@@ -206,7 +206,7 @@ class AddPlayListFragment : DialogFragment() {
                     }
                     Log.d("Logd", "확인버튼입력됨")
 
-                    sweetDialog()
+                    callPlayList()
 
                 }
                 DialogInterface.BUTTON_NEGATIVE -> { // 취소 버튼
@@ -215,29 +215,19 @@ class AddPlayListFragment : DialogFragment() {
         }
     }
 
-    fun sweetDialog(){
-        SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
-            .setTitleText("플레이리스트를 만들었습니다!")
-            .setContentText("만들어진 플레이리스트를 보러가시죠!")
-            .setConfirmText("플레이리스트 보러가기")
-            .setConfirmClickListener {
-                callPlayList()
-
-            }
-            .show()
-    }
 
     fun callPlayList(){
         API?.myList(CallPlayListBody(userId = userId))
             ?.enqueue(object : Callback<List<MyPlayListModel>> {
                 override fun onResponse(call: Call<List<MyPlayListModel>>, response: Response<List<MyPlayListModel>>) {
                     Log.d("Logd", response.body()?.size.toString())
-
+                    Log.d("Logd", (activity as MainActivity).playList.size.toString())
 //                    (activity as MainActivity).playList.clear()
 //                    for (i in 0 until response.body()?.size!!) {
 //                        (activity as MainActivity).playList.add(response.body()!![i])
 //                    }
 //                    (activity as MainActivity).playListAdapter.notifyDataSetChanged()
+//                    Log.d("Logd",(activity as MainActivity).playList.size.toString())
                 }
 
                 override fun onFailure(call: Call<List<MyPlayListModel>>, t: Throwable) {
