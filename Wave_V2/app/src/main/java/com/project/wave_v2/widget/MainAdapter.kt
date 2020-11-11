@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.transition.Hold
 import com.project.wave_v2.R
 import com.project.wave_v2.data.response.playlist.ListInfo
+import com.project.wave_v2.view.activity.SongListActivity
 
 class MainAdapter(val playList : ArrayList<ListInfo>) : RecyclerView.Adapter<MainAdapter.Holder>(){
 
@@ -28,7 +29,10 @@ class MainAdapter(val playList : ArrayList<ListInfo>) : RecyclerView.Adapter<Mai
             }
 
             itemView.setOnClickListener {
-
+                var intent = Intent(itemView.context, SongListActivity::class.java)
+                intent.putExtra("listId", list.listId)
+                intent.putExtra("listName", list.listName)
+                itemView.context.startActivity(intent)
             }
         }
     }

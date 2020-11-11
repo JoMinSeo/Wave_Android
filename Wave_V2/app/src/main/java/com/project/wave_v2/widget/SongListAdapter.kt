@@ -1,6 +1,7 @@
 package com.project.wave_v2.widget
 
 import android.net.Uri
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +11,17 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.project.wave_v2.R
+import com.project.wave_v2.data.request.playlist.PlayListSongBody
+import com.project.wave_v2.data.response.ResultModel
 import com.project.wave_v2.data.response.playlist.ListInfo
 import com.project.wave_v2.data.response.playlist.PlayListModel
 import com.project.wave_v2.data.response.playlist.SongInfo
+import com.project.wave_v2.network.RetrofitClient
+import com.project.wave_v2.network.Service
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
 
 class SongListAdapter(val songList : ArrayList<SongInfo>) : RecyclerView.Adapter<SongListAdapter.Holder>(){
 
@@ -24,7 +33,10 @@ class SongListAdapter(val songList : ArrayList<SongInfo>) : RecyclerView.Adapter
 
         fun bind(song : SongInfo){
             title.text = song.title
+
             singer.text = song.artistName
+
+
 
             if(song.jacket == ""){
                 img.setImageResource(R.drawable.def_music)
@@ -34,6 +46,7 @@ class SongListAdapter(val songList : ArrayList<SongInfo>) : RecyclerView.Adapter
             }
 
             delete.setOnClickListener {
+
                 Log.d("Logd", "삭제삭제삭제")
             }
 
@@ -55,5 +68,6 @@ class SongListAdapter(val songList : ArrayList<SongInfo>) : RecyclerView.Adapter
     override fun getItemCount(): Int {
         return songList.size
     }
+
 
 }

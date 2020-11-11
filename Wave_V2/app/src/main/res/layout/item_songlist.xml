@@ -22,7 +22,8 @@
             app:layout_constraintBottom_toTopOf="@id/item_singer_text"
             app:layout_constraintStart_toEndOf="@+id/item_image_IV"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"/>
+            app:layout_constraintVertical_chainStyle="packed"
+             />
 
         <TextView
             android:id="@+id/item_singer_text"
