@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +21,8 @@ import com.project.wave_v2.network.RetrofitClient
 import com.project.wave_v2.network.Service
 import com.project.wave_v2.view.activity.MainActivity
 import com.project.wave_v2.view.activity.MakePlaylistActivity
+import com.project.wave_v2.view.viewmodel.CallPlayListViewModel
+import com.project.wave_v2.view.viewmodel.SearchedViewModel
 import com.project.wave_v2.widget.PlayListAdapter
 import kotlinx.android.synthetic.main.fragment_playlist.*
 import retrofit2.Call
@@ -33,10 +37,10 @@ class PlayListFragment : Fragment() {
     var API: Service? = null
     lateinit var retrofit: Retrofit
 
+    lateinit var viewModel: CallPlayListViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    var playList = ArrayList<MyPlayListModel>()
+    val playListAdapter: PlayListAdapter = PlayListAdapter(playList)
 
     override fun onPause() {
         super.onPause()
@@ -46,22 +50,30 @@ class PlayListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel = ViewModelProvider(requireActivity()).get(CallPlayListViewModel::class.java)
+
+        val prefs: SharedPreferences = requireActivity().getSharedPreferences("user_info", Context.MODE_PRIVATE)
+        var id: String? = prefs.getString("userId", "user")
+
         navController = Navigation.findNavController(view)
 
         retrofit = RetrofitClient.getInstance()
         API = RetrofitClient.getService()
 
-        selectedPlayList.adapter = (activity as MainActivity).playListAdapter
+        selectedPlayList.adapter = playListAdapter
         selectedPlayList.setHasFixedSize(true)
-
-        val prefs: SharedPreferences = requireActivity().getSharedPreferences("user_info", Context.MODE_PRIVATE)
-        var id: String? = prefs.getString("userId", "user")
 
         callPlayList(id)
 
         addList_Btn.setOnClickListener {
-            var dialog=AddPlayListFragment()
+            var dialog = AddPlayListFragment()
             fragmentManager?.let { it1 -> dialog.show(it1, "addPlayList") }
+        }
+
+        with(viewModel) {
+            addFinish.observe(viewLifecycleOwner, Observer {
+                callPlayList(id)
+            })
         }
 
     }
@@ -71,15 +83,15 @@ class PlayListFragment : Fragment() {
     }
 
 
-    private fun callPlayList(id : String?){
+    private fun callPlayList(id: String?) {
         API?.myList(CallPlayListBody(userId = id))
                 ?.enqueue(object : Callback<List<MyPlayListModel>> {
                     override fun onResponse(call: Call<List<MyPlayListModel>>, response: Response<List<MyPlayListModel>>) {
-                        (activity as MainActivity).playList.clear()
+                        playList.clear()
                         for (i in 0 until response.body()?.size!!) {
-                            (activity as MainActivity).playList.add(response.body()!![i])
+                            playList.add(response.body()!![i])
                         }
-                        (activity as MainActivity).playListAdapter.notifyDataSetChanged()
+                        playListAdapter.notifyDataSetChanged()
                     }
 
                     override fun onFailure(call: Call<List<MyPlayListModel>>, t: Throwable) {

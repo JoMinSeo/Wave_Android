@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.ViewModelProvider
 import com.project.wave_v2.R
 import com.project.wave_v2.data.request.like.LikeFeelBody
 import com.project.wave_v2.data.request.playlist.CallPlayListBody
@@ -20,6 +21,7 @@ import com.project.wave_v2.data.response.playlist.MyPlayListModel
 import com.project.wave_v2.network.RetrofitClient
 import com.project.wave_v2.network.Service
 import com.project.wave_v2.view.activity.MainActivity
+import com.project.wave_v2.view.viewmodel.CallPlayListViewModel
 import kotlinx.android.synthetic.main.fragment_add_play_list.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -49,6 +51,8 @@ class AddPlayListFragment : DialogFragment() {
 
     var mainGenreId = 0
     var subGenreId = 0
+
+    lateinit var viewModel : CallPlayListViewModel
 
 
     var mainSpinnerListener = object : AdapterView.OnItemSelectedListener {
@@ -81,8 +85,6 @@ class AddPlayListFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         userId = requireActivity().getSharedPreferences("user_info", Context.MODE_PRIVATE)
                 .getString("userId", "").toString()
-
-
 
         initWidgets()
         var listener = DialogListener()
@@ -148,8 +150,6 @@ class AddPlayListFragment : DialogFragment() {
         })
     }
 
-
-
     private fun initWidgets() {
         dialogView = layoutInflater.inflate(R.layout.fragment_add_play_list, null)
         mainSpinner = dialogView.findViewById(R.id.mainGenre_Sp)
@@ -179,14 +179,17 @@ class AddPlayListFragment : DialogFragment() {
     }
 
     private fun mainInfoSetting(listName : String) {
+        viewModel = ViewModelProvider(requireActivity()).get(CallPlayListViewModel::class.java)
 
         API = RetrofitClient.getService()
         val data = CreatePlayListBody(userId, listName, mainGenreId, subGenreId)
         API?.createPlayList(data)
             ?.enqueue(object : Callback<ResultModel> {
                 override fun onResponse(call: Call<ResultModel>, response: Response<ResultModel>) {
-                    if (response.code() == 200) {
+                    if (response.body()?.result == "ok") {
                         dismiss()
+                        viewModel.addFinish.value = !viewModel.addFinish.value!!
+
                     }
                 }
                 override fun onFailure(call: Call<ResultModel>, t: Throwable) {
@@ -206,35 +209,13 @@ class AddPlayListFragment : DialogFragment() {
                     }
                     Log.d("Logd", "확인버튼입력됨")
 
-                    callPlayList()
+
 
                 }
                 DialogInterface.BUTTON_NEGATIVE -> { // 취소 버튼
                 }
             }
         }
-    }
-
-
-    fun callPlayList(){
-        API?.myList(CallPlayListBody(userId = userId))
-            ?.enqueue(object : Callback<List<MyPlayListModel>> {
-                override fun onResponse(call: Call<List<MyPlayListModel>>, response: Response<List<MyPlayListModel>>) {
-                    Log.d("Logd", response.body()?.size.toString())
-                    Log.d("Logd", (activity as MainActivity).playList.size.toString())
-//                    (activity as MainActivity).playList.clear()
-//                    for (i in 0 until response.body()?.size!!) {
-//                        (activity as MainActivity).playList.add(response.body()!![i])
-//                    }
-//                    (activity as MainActivity).playListAdapter.notifyDataSetChanged()
-//                    Log.d("Logd",(activity as MainActivity).playList.size.toString())
-                }
-
-                override fun onFailure(call: Call<List<MyPlayListModel>>, t: Throwable) {
-                }
-
-
-            })
     }
 
 }

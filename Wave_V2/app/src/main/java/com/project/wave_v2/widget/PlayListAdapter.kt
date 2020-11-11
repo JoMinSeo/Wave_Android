@@ -31,6 +31,7 @@ class PlayListAdapter(val playList : ArrayList<MyPlayListModel>) : RecyclerView.
                 var intent = Intent(itemView.context, SongListActivity::class.java)
                 intent.putExtra("listId", list.listId)
                 intent.putExtra("listName", list.listName)
+                intent.putExtra("songCount", list.songCount)
                 itemView.context.startActivity(intent)
             }
         }

@@ -12,8 +12,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     val KEY_USER = "user_info"
-    var playList = ArrayList<MyPlayListModel>()
-    val playListAdapter: PlayListAdapter = PlayListAdapter(playList)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
