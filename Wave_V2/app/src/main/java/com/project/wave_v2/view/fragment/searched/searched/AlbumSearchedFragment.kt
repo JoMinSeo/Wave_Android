@@ -21,8 +21,8 @@ class AlbumSearchedFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        viewModel = ViewModelProvider(this).get(SearchedViewModel::class.java)
-        searched = viewModel!!.searchModel.value
+        viewModel = ViewModelProvider(requireActivity()).get(SearchedViewModel::class.java)
+        searched = viewModel!!.searchModel!!.value
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerSearchedAlbum)
         val manager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)

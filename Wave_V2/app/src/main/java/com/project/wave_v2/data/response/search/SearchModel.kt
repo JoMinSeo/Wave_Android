@@ -9,7 +9,7 @@ data class SearchModel(
     var category: List<Category>?
 )
 
-data class SearchModelI(
+data class SearchResult(
     var artist : List<Artist>?,
     var album : List<Album>?,
     var song : List<Song>?
@@ -17,21 +17,21 @@ data class SearchModelI(
 
 data class ArtistInfo(
     var artist : Artist?,
-    override var viewType:Int?=null
+    override var viewType:Int?=0
 ):SearchObject(viewType)
 
 data class AlbumInfo(
     var album: Album?,
-    override var viewType:Int?=null
+    override var viewType:Int?=0
 ):SearchObject(viewType)
 data class SearchSongInfo(
     var song : Song?,
-    override var viewType:Int?=null
+    override var viewType:Int?=0
 ):SearchObject(viewType)
 
 data class Category(
     var title : String?,
-    override var viewType:Int?=null
+    override var viewType:Int?=0
 ):SearchObject(viewType)
 
 data class Song(

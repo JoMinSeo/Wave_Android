@@ -31,10 +31,10 @@ class SearchFragment : Fragment() {
     var retrofit : Retrofit? = null
 
     var viewModel : SearchedViewModel = SearchedViewModel()
-    var arraySearched: List<SearchSongInfo> ?= ArrayList()
-    var arrayArtist : List<ArtistInfo> ?= ArrayList()
-    var arrayAlbum : List<AlbumInfo> ?= ArrayList()
-    var arrayCategory : List<Category> ?= ArrayList()
+    var arraySearched: List<SearchSongInfo> = ArrayList()
+    var arrayArtist : List<ArtistInfo> = ArrayList()
+    var arrayAlbum : List<AlbumInfo> = ArrayList()
+    var arrayCategory : List<Category> = ArrayList()
 
     var searched : SearchModel = SearchModel(arrayArtist, arrayAlbum, arraySearched, arrayCategory)
 
@@ -44,10 +44,12 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(SearchedViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(SearchedViewModel::class.java)
 
         retrofit = RetrofitClient.getInstance()
         API = RetrofitClient.getService()
+
+        viewModel.searchModel!!.value = null
 
         val viewPager: ViewPager2 = view.findViewById(R.id.pager)
         val adapter = StateFragment(this)
@@ -64,6 +66,7 @@ class SearchFragment : Fragment() {
             override fun onQueryTextSubmit(s: String): Boolean {
                 tabLayout.visibility = View.VISIBLE
                 viewPager.visibility = View.VISIBLE
+                Log.d("log", searched.toString())
                 getAPI(s)
                 return false
             }
@@ -75,8 +78,8 @@ class SearchFragment : Fragment() {
     }
 
     fun getAPI(s : String){
-        API!!.getSearchInfo(SearchBody(s))!!.enqueue(object : Callback<SearchModelI?> {
-            override fun onResponse(call: Call<SearchModelI?>, response: Response<SearchModelI?>) {
+        API!!.getSearchInfo(SearchBody(s))!!.enqueue(object : Callback<SearchResult?> {
+            override fun onResponse(call: Call<SearchResult?>, response: Response<SearchResult?>) {
                 if(response.code() == 200){
                     val search = response.body()
                     Log.d("log", response.body().toString())
@@ -88,23 +91,28 @@ class SearchFragment : Fragment() {
                     for(i in search!!.song!!.indices){
                         (arraySearched as ArrayList).add(SearchSongInfo(search.song!![i], SearchedViewType.ViewType.MUSIC))
                     }
-                    for(i in search.artist!!.indices){
-                        (arrayArtist as ArrayList).add(ArtistInfo(search.artist!![i], SearchedViewType.ViewType.ARTIST))
-                    }
+
                     for(i in search.album!!.indices){
                         (arrayAlbum as ArrayList).add(AlbumInfo(search.album!![i], SearchedViewType.ViewType.ALBUM))
                     }
+
+                    for(i in search.artist!!.indices){
+                        (arrayArtist as ArrayList).add(ArtistInfo(search.artist!![i], SearchedViewType.ViewType.ARTIST))
+                    }
+
                     Log.d("log", arraySearched.toString())
                     Log.d("log", arrayAlbum.toString())
                     Log.d("log", arrayArtist.toString())
-                    viewModel.searchModel.value = SearchModel(arrayArtist,arrayAlbum,arraySearched,arrayCategory)
+
+                    viewModel.searchModel!!.value = searched
+                    Log.d("log", "SearchFragment- ${searched.toString()} : ${viewModel.searchModel!!.value}")
 
                 }else{
                     Log.d("log", response.message())
                 }
             }
 
-            override fun onFailure(call: Call<SearchModelI?>, t: Throwable) {
+            override fun onFailure(call: Call<SearchResult?>, t: Throwable) {
                 Log.d("log", t.message)
             }
 

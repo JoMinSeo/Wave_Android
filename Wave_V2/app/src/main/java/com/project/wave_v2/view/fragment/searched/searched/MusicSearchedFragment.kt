@@ -33,9 +33,9 @@ class MusicSearchedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this).get(SearchedViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(SearchedViewModel::class.java)
 
-        searchModel = viewModel.searchModel.value
+        searchModel = viewModel.searchModel!!.value
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerSearchedMusic)
         val manager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)

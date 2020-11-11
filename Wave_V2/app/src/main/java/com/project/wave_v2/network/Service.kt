@@ -16,7 +16,7 @@ import com.project.wave_v2.data.response.playlist.MyPlayListModel
 import com.project.wave_v2.data.response.playlist.PlayListModel
 import com.project.wave_v2.data.response.playlist.SongInfo
 import com.project.wave_v2.data.response.search.SearchModel
-import com.project.wave_v2.data.response.search.SearchModelI
+import com.project.wave_v2.data.response.search.SearchResult
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -44,7 +44,7 @@ interface Service {
     fun getSong(@Body song : PlaySongBody): Call<SongInfo?>
 
     @POST("search.api")
-    fun getSearchInfo(@Body search : SearchBody): Call<SearchModelI?>
+    fun getSearchInfo(@Body search : SearchBody): Call<SearchResult?>
 
     @POST("registerSongs1.api")
     fun likeInfo1(@Body like : LikeInfoMainBody): Call<ResultModel>
