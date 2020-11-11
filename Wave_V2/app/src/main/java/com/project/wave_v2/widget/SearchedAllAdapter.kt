@@ -69,6 +69,7 @@ class SearchedAllAdapter internal constructor(context: Context, data : SearchMod
         if (type == SearchedViewType.ViewType.MUSIC) {
             val musicInfo = allData[position] as SearchSongInfo
             viewHolder as MusicHolder
+            viewHolder.artist.text = musicInfo.song?.artistName
             viewHolder.title.text = musicInfo.song?.title
             viewHolder.playButton.setOnClickListener {
                 val intent = Intent(context, SongActivity::class.java);
@@ -129,7 +130,7 @@ class SearchedAllAdapter internal constructor(context: Context, data : SearchMod
 
         var title: TextView = itemView.findViewById(R.id.musicName)
         var playButton : Button = itemView.findViewById(R.id.playButton)
-        var type : TextView = itemView.findViewById(R.id.musicType)
+        var artist : TextView = itemView.findViewById(R.id.artistName)
 
     }
     inner class ErrorHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
