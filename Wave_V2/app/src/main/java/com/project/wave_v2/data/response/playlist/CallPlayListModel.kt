@@ -2,7 +2,7 @@ package com.project.wave_v2.data.response.playlist
 
 data class CallPlayListModel(
     var list: ArrayList<ListInfo>,
-    var genreName: String,
+    var genreName: String? = null,
     var genreId: Int
 
 )

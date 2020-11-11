@@ -59,3 +59,8 @@ data class Artist(
     var aritstId : Int?,
     var artistName : String?,
 )
+
+data class Cover(
+        var albumId: Int?,
+        var jacket: String?
+)

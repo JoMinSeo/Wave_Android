@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.narsha.wave_android.view.adapter.search.SearchedAllAdapter
 import com.project.wave_v2.R
 import com.project.wave_v2.data.response.search.SearchModel
+import com.project.wave_v2.data.viewtype.ReturnViewType
 import com.project.wave_v2.view.viewmodel.SearchedViewModel
 
 class AlbumSearchedFragment : Fragment() {
@@ -27,7 +28,7 @@ class AlbumSearchedFragment : Fragment() {
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerSearchedAlbum)
         val manager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = manager // LayoutManager 등록
-        recyclerView.adapter = SearchedAllAdapter(requireContext(), searched) // Adapter 등록
+        recyclerView.adapter = SearchedAllAdapter(requireContext(), searched, ReturnViewType.ReturnType.ALBUM) // Adapter 등록
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

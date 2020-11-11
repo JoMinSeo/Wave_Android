@@ -1,6 +1,7 @@
 package com.project.wave_v2.view.fragment.searched.searched
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.narsha.wave_android.view.adapter.search.SearchedAllAdapter
 import com.project.wave_v2.R
 import com.project.wave_v2.data.response.search.SearchModel
+import com.project.wave_v2.data.viewtype.ReturnViewType
 import com.project.wave_v2.view.viewmodel.SearchedViewModel
 
 class MusicSearchedFragment : Fragment() {
@@ -37,9 +39,15 @@ class MusicSearchedFragment : Fragment() {
 
         searchModel = viewModel.searchModel!!.value
 
+
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerSearchedMusic)
         val manager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = manager // LayoutManager 등록
-        recyclerView.adapter = SearchedAllAdapter(requireContext(), searchModel) // Adapter 등록
+        recyclerView.adapter = SearchedAllAdapter(requireContext(), searchModel, ReturnViewType.ReturnType.MUSIC) // Adapter 등록
+
+        viewModel.searchModel!!.observe(viewLifecycleOwner, {
+            val searchingMusic = SearchedAllAdapter(requireContext(), viewModel.searchModel!!.value, ReturnViewType.ReturnType.MUSIC)
+            recyclerView.adapter = searchingMusic
+        })
     }
 }

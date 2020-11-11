@@ -16,6 +16,7 @@ import com.narsha.wave_android.view.adapter.search.SearchedAllAdapter
 import com.project.wave_v2.R
 import com.project.wave_v2.data.response.*
 import com.project.wave_v2.data.response.search.SearchModel
+import com.project.wave_v2.data.viewtype.ReturnViewType
 import com.project.wave_v2.view.viewmodel.SearchedViewModel
 import java.util.*
 import kotlin.collections.ArrayList
@@ -31,7 +32,7 @@ class AllSearchedFragment : Fragment() {
         viewModel = ViewModelProvider(requireActivity()).get(SearchedViewModel::class.java)
 
 
-        val searched = SearchedAllAdapter(requireContext(), viewModel.searchModel!!.value)
+        val searched = SearchedAllAdapter(requireContext(), viewModel.searchModel!!.value, ReturnViewType.ReturnType.ALL)
 
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerSearched)
@@ -42,7 +43,6 @@ class AllSearchedFragment : Fragment() {
         viewModel.searchModel!!.observe(viewLifecycleOwner, {
             Log.d("log", "AllSearched -${viewModel.searchModel!!.value}")
             searched.setDataModel(viewModel.searchModel!!.value)
-            searched.notifyDataSetChanged()
         })
     }
 

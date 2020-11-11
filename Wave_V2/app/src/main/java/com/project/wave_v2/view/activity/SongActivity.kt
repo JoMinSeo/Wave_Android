@@ -3,7 +3,9 @@ package com.project.wave_v2.view.activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
@@ -15,7 +17,6 @@ import com.project.wave_v2.R
 
 
 class SongActivity : AppCompatActivity() {
-    val arrayPlayDummy = listOf<String>("2COAu1l6hUQ", "jO2viLEW-1A", "HCc1UvTQ1Hg")
     var indexNowPlaying : Int = 0;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,10 +26,12 @@ class SongActivity : AppCompatActivity() {
 
         val youtubePlayerSeekBar : YouTubePlayerSeekBar = findViewById(R.id.youtube_player_seekbar)
         val youTubePlayerView: YouTubePlayerView = findViewById(R.id.youtube_player_view)
+        val song : ImageView = findViewById(R.id.song_img)
+
 
         lifecycle.addObserver(youTubePlayerView)
 
-
+        Log.d("jacket_log",intent.getStringExtra("jacket")!!)
         val listener = object : YouTubePlayerListener {
             override fun onApiChange(youTubePlayer: YouTubePlayer) {
             }
@@ -51,7 +54,6 @@ class SongActivity : AppCompatActivity() {
             override fun onStateChange(youTubePlayer: YouTubePlayer, state: PlayerConstants.PlayerState) {
                 if (state == PlayerConstants.PlayerState.ENDED) {
                     Log.d("DONE","ENDED")
-                    dataPlaying(youTubePlayer, indexNowPlaying, youtubePlayerSeekBar)
                 }else if(state == PlayerConstants.PlayerState.PLAYING){
                     Log.d("DONE","STARTING")
                     youTubePlayer.addListener(youtubePlayerSeekBar)
@@ -76,13 +78,5 @@ class SongActivity : AppCompatActivity() {
             }
         })
         youTubePlayerView.addYouTubePlayerListener(listener)
-    }
-
-    fun dataPlaying(youTubePlayer : YouTubePlayer, index : Int, youtubePlayerSeekBar : YouTubePlayerSeekBar) {
-        if(index < arrayPlayDummy.size){
-            val videoId = intent.getStringExtra("link")
-            youTubePlayer.loadVideo(videoId, 0F)
-            youTubePlayer.addListener(youtubePlayerSeekBar)
-        }
     }
 }

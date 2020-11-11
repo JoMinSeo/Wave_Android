@@ -5,31 +5,39 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.narsha.wave_android.data.viewtype.SearchedViewType
 import com.narsha.wave_android.view.adapter.search.SearchedAllAdapter
 import com.project.wave_v2.R
+import com.project.wave_v2.data.response.search.SearchModel
+import com.project.wave_v2.data.viewtype.ReturnViewType
+import com.project.wave_v2.view.viewmodel.SearchedViewModel
 import java.util.*
 
 class ArtistSearchedFragment : Fragment() {
-//    var arraySerached: ArrayList<SearchedData> = ArrayList<SearchedData>()
+    private var viewModel : SearchedViewModel ?= null
+    var searchModel : SearchModel?= null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        arraySerached.add(SearchedData("전상근", null, null, SearchedViewType.ViewType.ARTIST))
-//        arraySerached.add(SearchedData("이수", null, null, SearchedViewType.ViewType.ARTIST))
-//        arraySerached.add(SearchedData("나얼", null, null, SearchedViewType.ViewType.ARTIST))
-//        arraySerached.add(SearchedData("김범수", null, null, SearchedViewType.ViewType.ARTIST))
-//        arraySerached.add(SearchedData("임재현", null, null, SearchedViewType.ViewType.ARTIST))
-//        arraySerached.add(SearchedData("박효신", null, null, SearchedViewType.ViewType.ARTIST))
-//        val recyclerView: RecyclerView = view.findViewById(R.id.recyclerSearchedArtist)
-//        val manager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
-//        recyclerView.layoutManager = manager // LayoutManager 등록
-//        recyclerView.adapter = SearchedAllAdapter(requireContext(), arraySerached) // Adapter 등록
+        viewModel = ViewModelProvider(requireActivity()).get(SearchedViewModel::class.java)
+
+        searchModel = viewModel!!.searchModel!!.value
+
+        val recyclerView: RecyclerView = view.findViewById(R.id.recyclerSearchedArtist)
+        val manager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+        recyclerView.layoutManager = manager // LayoutManager 등록
+        recyclerView.adapter = SearchedAllAdapter(requireContext(), searchModel, ReturnViewType.ReturnType.ARTIST) // Adapter 등록
+
+        viewModel!!.searchModel!!.observe(viewLifecycleOwner, {
+            val searchingMusic = SearchedAllAdapter(requireContext(), viewModel!!.searchModel!!.value, ReturnViewType.ReturnType.ARTIST)
+            recyclerView.adapter = searchingMusic
+        })
     }
 
     override fun onCreateView(

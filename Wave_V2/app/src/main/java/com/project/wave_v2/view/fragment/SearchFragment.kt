@@ -17,6 +17,7 @@ import com.project.wave_v2.R
 import com.project.wave_v2.data.request.SearchBody
 import com.project.wave_v2.data.response.playlist.SongInfo
 import com.project.wave_v2.data.response.search.*
+import com.project.wave_v2.data.viewtype.ReturnViewType
 import com.project.wave_v2.network.RetrofitClient
 import com.project.wave_v2.network.Service
 import com.project.wave_v2.view.viewmodel.SearchedViewModel
@@ -87,24 +88,31 @@ class SearchFragment : Fragment() {
                     (arraySearched as ArrayList).clear()
                     (arrayArtist as ArrayList).clear()
                     (arrayAlbum as ArrayList).clear()
-
-                    for(i in search!!.song!!.indices){
-                        (arraySearched as ArrayList).add(SearchSongInfo(search.song!![i], SearchedViewType.ViewType.MUSIC))
+                    if(search?.song!! != null){
+                        for(i in search?.song!!.indices){
+                            (arraySearched as ArrayList).add(SearchSongInfo(search.song!![i], SearchedViewType.ViewType.MUSIC))
+                        }
+                    }
+                    if(search?.album!! != null){
+                        for(i in search.album!!.indices){
+                            (arrayAlbum as ArrayList).add(AlbumInfo(search.album!![i], SearchedViewType.ViewType.ALBUM))
+                        }
+                    }
+                    if(search?.artist!! != null){
+                        for(i in search.artist!!.indices){
+                            (arrayArtist as ArrayList).add(ArtistInfo(search.artist!![i], SearchedViewType.ViewType.ARTIST))
+                        }
                     }
 
-                    for(i in search.album!!.indices){
-                        (arrayAlbum as ArrayList).add(AlbumInfo(search.album!![i], SearchedViewType.ViewType.ALBUM))
-                    }
-
-                    for(i in search.artist!!.indices){
-                        (arrayArtist as ArrayList).add(ArtistInfo(search.artist!![i], SearchedViewType.ViewType.ARTIST))
-                    }
 
                     Log.d("log", arraySearched.toString())
                     Log.d("log", arrayAlbum.toString())
                     Log.d("log", arrayArtist.toString())
 
                     viewModel.searchModel!!.value = searched
+
+                    val searching = SearchedAllAdapter(requireContext(), viewModel.searchModel!!.value, ReturnViewType.ReturnType.ALL)
+                    searching.setDataModel(viewModel.searchModel!!.value)
                     Log.d("log", "SearchFragment- ${searched.toString()} : ${viewModel.searchModel!!.value}")
 
                 }else{
