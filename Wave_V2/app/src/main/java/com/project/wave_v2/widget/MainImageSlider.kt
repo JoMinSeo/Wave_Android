@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.Target.SIZE_ORIGINAL
 import com.project.wave_v2.R
 import com.project.wave_v2.data.SliderItem
 import com.smarteist.autoimageslider.SliderViewAdapter
@@ -39,6 +40,7 @@ class MainImageSlider(private val context: Context?) : SliderViewAdapter<MainIma
         Glide.with(viewHolder.itemView)
                 .load(sliderItem.ImageUrl)
                 .fitCenter()
+                .dontTransform()
                 .into(viewHolder.imageViewBackground)
         viewHolder.itemView.setOnClickListener { Toast.makeText(context, "This is item in position $position", Toast.LENGTH_SHORT).show() }
     }
