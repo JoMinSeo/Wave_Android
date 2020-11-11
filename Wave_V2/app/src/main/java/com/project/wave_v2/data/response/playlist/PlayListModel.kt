@@ -4,7 +4,7 @@ data class PlayListModel(
     var listId : Int?,
     var userId : String?,
     var listName : String?,
-    var song : ArrayList<SongInfo?>?,
+    var song : ArrayList<SongInfo>,
     var mainGenre : String?,
     var subGenre : String?
 )

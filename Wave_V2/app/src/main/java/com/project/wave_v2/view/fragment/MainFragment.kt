@@ -154,5 +154,6 @@ class MainFragment : Fragment() {
         slideAdapter.addItem(sliderItem2)
         slideAdapter.addItem(sliderItem3)
         slideAdapter.addItem(sliderItem4)
+
     }
 }

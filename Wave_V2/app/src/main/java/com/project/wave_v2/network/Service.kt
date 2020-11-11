@@ -38,7 +38,7 @@ interface Service {
     fun getList(@Body callPlayList: CallPlayListBody): Call<List<CallPlayListModel>>
 
     @POST("listInfo.api")
-    fun getSongList(@Body playList : PlayListBody): Call<List<PlayListModel?>?>
+    fun getSongList(@Body playList : PlayListBody): Call<PlayListModel>
 
     @POST("songs.api")
     fun getSong(@Body song : PlaySongBody): Call<SongInfo?>

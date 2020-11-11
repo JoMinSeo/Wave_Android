@@ -9,7 +9,6 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.fragment.app.DialogFragment
-import cn.pedant.SweetAlert.SweetAlertDialog
 import com.project.wave_v2.R
 import com.project.wave_v2.data.request.like.LikeFeelBody
 import com.project.wave_v2.data.request.playlist.CallPlayListBody
@@ -79,6 +78,23 @@ class AddPlayListFragment : DialogFragment() {
         override fun onNothingSelected(parent: AdapterView<*>?) {}
     }
 
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        userId = requireActivity().getSharedPreferences("user_info", Context.MODE_PRIVATE)
+                .getString("userId", "").toString()
+
+
+
+        initWidgets()
+        var listener = DialogListener()
+
+        val builder = AlertDialog.Builder(requireActivity())
+                .setTitle("플레이리스트 추가하기")
+                .setView(dialogView)
+                .setPositiveButton("확인", listener)
+                .setNegativeButton("취소", listener)
+        return builder.create()
+    }
+
     private fun callMainGenre() {
         mainRequest = RetrofitClient.getService()?.likeGenre()!!
         mainRequest.enqueue(object : Callback<List<LikeGenreModel>> {
@@ -132,23 +148,7 @@ class AddPlayListFragment : DialogFragment() {
         })
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        userId = requireActivity().getSharedPreferences("user_info", Context.MODE_PRIVATE)
-            .getString("userId", "").toString()
 
-
-
-        initWidgets()
-        var listener = DialogListener()
-
-        val builder = AlertDialog.Builder(requireActivity())
-            .setTitle("플레이리스트 추가하기")
-            .setView(dialogView)
-            .setPositiveButton("확인", listener)
-            .setNegativeButton("취소", listener)
-        val alert = builder.create()
-        return alert
-    }
 
     private fun initWidgets() {
         dialogView = layoutInflater.inflate(R.layout.fragment_add_play_list, null)

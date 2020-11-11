@@ -30,7 +30,6 @@ class PlayListFragment : Fragment() {
 
     lateinit var navController: NavController
 
-
     var API: Service? = null
     lateinit var retrofit: Retrofit
 
