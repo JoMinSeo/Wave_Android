@@ -122,6 +122,7 @@
                     android:id="@+id/artistName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="노래 정보 없음"
                     android:textColor="@color/colorBlack"
                     android:textSize="10sp" />
             </LinearLayout>
