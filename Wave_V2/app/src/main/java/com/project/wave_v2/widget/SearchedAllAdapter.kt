@@ -2,7 +2,6 @@ package com.narsha.wave_android.view.adapter.search
 
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -19,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.narsha.wave_android.data.viewtype.SearchedViewType
 import com.project.wave_v2.R
+import com.project.wave_v2.data.response.play.PlayModel
 import com.project.wave_v2.data.response.search.*
 import com.project.wave_v2.data.viewtype.ReturnViewType
 import com.project.wave_v2.view.activity.SongActivity
@@ -28,7 +28,12 @@ import com.project.wave_v2.widget.sheet.BottomSheet
 import java.util.regex.Pattern
 
 
-class SearchedAllAdapter internal constructor(activity : ViewModelStoreOwner, context: Context, data: SearchModel?, returnType: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SearchedAllAdapter internal constructor(
+    activity: ViewModelStoreOwner,
+    context: Context,
+    data: SearchModel?,
+    returnType: Int
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var data: SearchModel? = null
     private var itemOnClick: itemOnClick? = null
     private var context: Context? = null
@@ -111,50 +116,43 @@ class SearchedAllAdapter internal constructor(activity : ViewModelStoreOwner, co
                             bottomSheet.tag
                         )
                     }
+
+                    Log.d("linkOfyoutube", musicInfo.song!!.songUrl!!)
                     viewHolder.playButton.setOnClickListener {
-                        val intent = Intent(context, SongActivity::class.java);
                         if (Pattern.matches(
                                 youtube_link,
-                                musicInfo.song!!.songUrl.toString()
+                                musicInfo.song!!.songUrl!!
                             )
                         ) {
-                            intent.putExtra("jacket", musicInfo.song!!.jacket)
-                            intent.putExtra(
-                                "link",
-                                musicInfo.song!!.songUrl!!.substring(
-                                    32,
-                                    musicInfo.song!!.songUrl!!.length
-                                )
-                            )
+
+                            viewModel!!.playingModel!!.value = PlayModel(musicInfo.song!!.jacket,
+                                musicInfo.song!!.songUrl!!.substring(32, musicInfo.song!!.songUrl!!.length),
+                                musicInfo.song!!.title!!,
+                                musicInfo.song!!.artistName!!)
+
                         } else if (Pattern.matches(
                                 youtube_link_sec,
-                                musicInfo.song!!.songUrl.toString()
+                                musicInfo.song!!.songUrl!!
                             )
                         ) {
-                            intent.putExtra("jacket", musicInfo.song!!.jacket)
-                            intent.putExtra(
-                                "link",
-                                musicInfo.song!!.songUrl!!.substring(
-                                    49,
-                                    musicInfo.song!!.songUrl!!.length
-                                )
-                            )
+                            viewModel!!.playingModel!!.value = PlayModel(musicInfo.song!!.jacket,
+                                musicInfo.song!!.songUrl!!.substring(17, musicInfo.song!!.songUrl!!.length),
+                                musicInfo.song!!.title!!,
+                                musicInfo.song!!.artistName!!)
                         } else if (Pattern.matches(
                                 youtube_link_thr,
-                                musicInfo.song!!.songUrl.toString()
+                                musicInfo.song!!.songUrl!!
                             )
                         ) {
-                            intent.putExtra("jacket", musicInfo.song!!.jacket)
-                            intent.putExtra(
-                                "link",
-                                musicInfo.song!!.songUrl!!.substring(
-                                    32,
-                                    musicInfo.song!!.songUrl!!.length - 23
-                                )
-                            )
+
+                            viewModel!!.playingModel!!.value = PlayModel(musicInfo.song!!.jacket,
+                                musicInfo.song!!.songUrl!!.substring(32, musicInfo.song!!.songUrl!!.length - 23),
+                                musicInfo.song!!.title!!,
+                                musicInfo.song!!.artistName!!)
+
                         }
                         viewModel!!.isViewing!!.value = true
-                        context!!.startActivity(intent)
+                       // context!!.startActivity(intent)
                     }
                 }
             }
@@ -191,6 +189,8 @@ class SearchedAllAdapter internal constructor(activity : ViewModelStoreOwner, co
 
 
     }
+
+
 
     override fun getItemCount(): Int {
         return allData.size

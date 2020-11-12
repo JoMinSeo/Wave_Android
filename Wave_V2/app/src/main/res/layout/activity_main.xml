@@ -6,121 +6,138 @@
     android:layout_height="match_parent"
     tools:context=".view.activity.MainActivity">
 
+    <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+        android:id="@+id/youtube_player_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:showFullScreenButton="false"
+        tools:visibility="gone" />
+
     <fragment
         android:id="@+id/fragment_host"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:defaultNavHost="true"
-        app:layout_constraintBottom_toTopOf="@+id/playingDock"
+        app:layout_constraintBottom_toTopOf="@+id/liBottom"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/navigation" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/playingDock"
+    <LinearLayout
+        android:id="@+id/liBottom"
         android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:background="@color/colorDarkBlue"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        android:layout_height="110dp"
+        android:background="@color/colorWhite"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
 
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="9dp"
-            android:background="@drawable/ic_baseline_playlist_play_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/linearLayout4"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.812" />
-
-        <LinearLayout
-            android:id="@+id/linearLayout4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="50dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/linearLayout2"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.52">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/playingDock"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@android:color/white"
+            android:visibility="visible">
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/button4"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginEnd="10dp"
-                android:background="@drawable/ic_baseline_skip_previous_24" />
+                android:layout_marginBottom="9dp"
+                android:background="@drawable/ic_baseline_playlist_play_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/linearLayout4"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.812" />
 
-            <Button
-                android:id="@+id/button"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/ic_baseline_play" />
-
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:background="@drawable/ic_baseline_skip_next_24" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.017"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/textView"
+            <LinearLayout
+                android:id="@+id/linearLayout4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView"
-                android:textColor="@color/colorWhite"
-                android:textSize="12sp" />
+                android:layout_marginEnd="50dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/linearLayout2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.52">
 
-            <TextView
-                android:id="@+id/textView2"
+                <Button
+                    android:id="@+id/button3"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/ic_baseline_skip_previous_24" />
+
+                <Button
+                    android:id="@+id/playing"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/ic_baseline_play_arrow_24" />
+
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/ic_baseline_skip_next_24" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView"
-                android:textColor="@color/colorWhite"
-                android:textSize="10sp" />
-        </LinearLayout>
+                android:layout_marginStart="10dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.017"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/songTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="곡 없음"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="12sp" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:labelVisibilityMode="unlabeled"
-        android:background="@android:color/white"
-        app:itemTextColor="@color/bottom_navigation_selector"
-        app:itemIconTint="@color/bottom_navigation_selector"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/menu" />
+                <TextView
+                    android:id="@+id/artistName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="10sp" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            app:itemIconTint="@color/bottom_navigation_selector"
+            app:itemTextColor="@color/bottom_navigation_selector"
+            app:labelVisibilityMode="unlabeled"
+            app:menu="@menu/menu" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

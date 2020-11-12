@@ -76,6 +76,9 @@ class SongActivity : AppCompatActivity() {
         }
         youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
+                Glide.with(applicationContext)
+                    .load(intent.getStringExtra("jacket")!!)
+                    .into(song)
                 Log.d("link", intent.getStringExtra("link")!!)
                 youTubePlayer.loadVideo(intent.getStringExtra("link")!!, 0F) // 여기에 비디오 아이디 입력.
                 Log.d("?", youtubePlayerSeekBar.toString())
