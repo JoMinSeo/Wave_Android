@@ -8,5 +8,7 @@ class SearchedViewType {
         const val MUSIC_BIG = 3
         const val CATEGORY = 4
         const val ERROR = 5
+        const val SMALL_ARTIST = 6
+        const val SMALL_ALBUM = 7
     }
 }

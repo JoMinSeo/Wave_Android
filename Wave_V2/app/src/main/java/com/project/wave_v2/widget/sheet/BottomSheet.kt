@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.project.wave_v2.R
 import com.project.wave_v2.data.request.playlist.CallPlayListBody
+import com.project.wave_v2.data.request.playlist.PlayListSongBody
+import com.project.wave_v2.data.response.ResultModel
 import com.project.wave_v2.data.response.playlist.MyPlayListModel
 import com.project.wave_v2.network.RetrofitClient
 import com.project.wave_v2.network.Service
@@ -25,10 +27,11 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 
-class BottomSheet() : BottomSheetDialogFragment() {
+class BottomSheet(songId : Int) : BottomSheetDialogFragment() {
 
     var API: Service? = null
     lateinit var retrofit: Retrofit
+    var songId : Int ?= 0
 
     var playList = ArrayList<MyPlayListModel>()
     val playListAdapter: PlayListCheckAdapter = PlayListCheckAdapter(playList)
@@ -62,6 +65,7 @@ class BottomSheet() : BottomSheetDialogFragment() {
 
         val view = LayoutInflater.from(context).inflate(R.layout.dialog_playlist, null)
         val recyclerPlaylist = view.findViewById<RecyclerView>(R.id.recyclerViewPlaylist)
+        var addButton = view.findViewById<Button>(R.id.addPlaylist)
 
         Log.d("call", id)
 
@@ -73,6 +77,18 @@ class BottomSheet() : BottomSheetDialogFragment() {
         val alertDialogBuilder = AlertDialog.Builder(context)
             .setView(view)
             .create()
+
+        addButton.setOnClickListener{
+            for(i in playList.indices){
+                if(playList[i].check == true){
+                    addPlaylist(playList[i].listId, songId)
+                }
+            }
+            alertDialogBuilder.dismiss()
+            dismiss()
+
+        }
+
 
         alertDialogBuilder.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         alertDialogBuilder.show()
@@ -94,6 +110,26 @@ class BottomSheet() : BottomSheetDialogFragment() {
                     Log.d("listOF", t.message)
                 }
             })
+    }
+    private fun addPlaylist(listID: Int?, songId: Int?) {
+        val addPlayList  = PlayListSongBody(listID, songId)
+        API?.addPlayListSong(addPlayList)!!.enqueue( object : Callback<ResultModel> {
+            override fun onResponse(call: Call<ResultModel>, response: Response<ResultModel>) {
+                if(response.code() == 200){
+                    Log.d("song","success ${response.body()}")
+                }else{
+                    Log.d("song","failed")
+                }
+            }
+
+            override fun onFailure(call: Call<ResultModel>, t: Throwable) {
+                Log.d("song","failed ${t.message}")
+            }
+
+        })
+    }
+    init {
+        this.songId = songId
     }
 
 }

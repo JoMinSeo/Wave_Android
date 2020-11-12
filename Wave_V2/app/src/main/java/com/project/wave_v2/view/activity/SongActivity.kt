@@ -5,6 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import com.bumptech.glide.Glide
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
@@ -14,10 +17,12 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.views.YouTubePlayerSeekBar
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.views.YouTubePlayerSeekBarListener
 import com.project.wave_v2.R
+import com.project.wave_v2.view.viewmodel.SearchedViewModel
 
 
 class SongActivity : AppCompatActivity() {
     var indexNowPlaying : Int = 0;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_song)
@@ -78,5 +83,9 @@ class SongActivity : AppCompatActivity() {
             }
         })
         youTubePlayerView.addYouTubePlayerListener(listener)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 }

@@ -4,5 +4,6 @@ data class MyPlayListModel(
     var listId: Int,
     var songCount: Int,
     var jacket: String,
-    var listName: String
+    var listName: String,
+    var check : Boolean? = false
 )

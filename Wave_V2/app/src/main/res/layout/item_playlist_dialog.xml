@@ -46,7 +46,7 @@
         </androidx.cardview.widget.CardView>
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/radioAddButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"

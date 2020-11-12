@@ -111,7 +111,7 @@ class SearchFragment : Fragment() {
 
                     viewModel.searchModel!!.value = searched
 
-                    val searching = SearchedAllAdapter(requireContext(), viewModel.searchModel!!.value, ReturnViewType.ReturnType.ALL)
+                    val searching = SearchedAllAdapter(requireActivity(), requireContext(), viewModel.searchModel!!.value, ReturnViewType.ReturnType.ALL)
                     searching.setDataModel(viewModel.searchModel!!.value)
                     Log.d("log", "SearchFragment- ${searched.toString()} : ${viewModel.searchModel!!.value}")
 

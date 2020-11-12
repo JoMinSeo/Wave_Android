@@ -28,7 +28,12 @@ class AlbumSearchedFragment : Fragment() {
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerSearchedAlbum)
         val manager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = manager // LayoutManager 등록
-        recyclerView.adapter = SearchedAllAdapter(requireContext(), searched, ReturnViewType.ReturnType.ALBUM) // Adapter 등록
+        recyclerView.adapter = SearchedAllAdapter(requireActivity(), requireContext(), searched, ReturnViewType.ReturnType.SMALL_ALBUM) // Adapter 등록
+
+        viewModel!!.searchModel!!.observe(viewLifecycleOwner, {
+            val searchingAlbum = SearchedAllAdapter(requireActivity(), requireContext(), viewModel!!.searchModel!!.value, ReturnViewType.ReturnType.SMALL_ALBUM)
+            recyclerView.adapter = searchingAlbum
+        })
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -32,7 +32,7 @@ class AllSearchedFragment : Fragment() {
         viewModel = ViewModelProvider(requireActivity()).get(SearchedViewModel::class.java)
 
 
-        val searched = SearchedAllAdapter(requireContext(), viewModel.searchModel!!.value, ReturnViewType.ReturnType.ALL)
+        val searched = SearchedAllAdapter(requireActivity() ,requireContext(), viewModel.searchModel!!.value, ReturnViewType.ReturnType.ALL)
 
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerSearched)

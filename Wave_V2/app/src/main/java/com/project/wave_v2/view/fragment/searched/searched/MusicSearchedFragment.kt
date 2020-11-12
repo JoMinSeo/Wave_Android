@@ -43,10 +43,10 @@ class MusicSearchedFragment : Fragment() {
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerSearchedMusic)
         val manager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = manager // LayoutManager 등록
-        recyclerView.adapter = SearchedAllAdapter(requireContext(), searchModel, ReturnViewType.ReturnType.MUSIC) // Adapter 등록
+        recyclerView.adapter = SearchedAllAdapter(requireActivity(), requireContext(), searchModel, ReturnViewType.ReturnType.MUSIC) // Adapter 등록
 
         viewModel.searchModel!!.observe(viewLifecycleOwner, {
-            val searchingMusic = SearchedAllAdapter(requireContext(), viewModel.searchModel!!.value, ReturnViewType.ReturnType.MUSIC)
+            val searchingMusic = SearchedAllAdapter(requireActivity(), requireContext(), viewModel.searchModel!!.value, ReturnViewType.ReturnType.MUSIC)
             recyclerView.adapter = searchingMusic
         })
     }

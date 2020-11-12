@@ -45,6 +45,7 @@ data class Song(
     var songUrl : String?,
     var age : Int?,
     var writer : String?,
+    var jacket:String?
 )
 
 data class Album(

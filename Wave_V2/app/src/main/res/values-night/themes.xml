@@ -10,6 +10,7 @@
         <item name="colorSecondaryVariant">@color/colorLightBlue</item>
         <item name="colorOnSecondary">@color/colorBlack</item>
         <!-- Status bar color. -->
+        <item name="android:fontFamily">@font/nanum_squarer</item>
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
