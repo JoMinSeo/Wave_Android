@@ -10,9 +10,7 @@
         android:name="com.project.wave_v2.view.fragment.MainFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home">
-        <action
-            android:id="@+id/action_navigation_home_to_songListFragment"
-            app:destination="@id/songListFragment" />
+
     </fragment>
 
     <fragment
@@ -32,14 +30,8 @@
         android:name="com.project.wave_v2.view.fragment.PlayListFragment"
         android:label="Playlist"
         tools:layout="@layout/fragment_playlist" >
-        <action
-            android:id="@+id/action_navigation_playlist_to_songListFragment"
-            app:destination="@id/songListFragment" />
+
     </fragment>
-    <fragment
-        android:id="@+id/songListFragment"
-        android:name="com.project.wave_v2.view.fragment.SongListFragment"
-        android:label="fragment_song_list"
-        tools:layout="@layout/fragment_song_list" />
+
 
 </navigation>
