@@ -37,7 +37,6 @@ class SongListAdapter(val songList : ArrayList<SongInfo>) : RecyclerView.Adapter
             singer.text = song.artistName
 
 
-
             if(song.jacket == ""){
                 img.setImageResource(R.drawable.def_music)
             }else{

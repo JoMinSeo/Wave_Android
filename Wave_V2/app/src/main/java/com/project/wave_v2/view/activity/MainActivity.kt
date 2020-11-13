@@ -1,14 +1,10 @@
 package com.project.wave_v2.view.activity
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
-import android.view.View
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
-import android.widget.Button
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -22,19 +18,21 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 import com.project.wave_v2.R
 import com.project.wave_v2.view.viewmodel.SearchedViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
     val KEY_USER = "user_info"
     var viewModel : SearchedViewModel ?= null
     var isPlaying = false
-
+    var durations = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val btnStart : Button = findViewById<Button>(R.id.playing)
         val youTubePlayerView: YouTubePlayerView = findViewById(R.id.youtube_player_view)
+        val progressPlaying : ProgressBar = findViewById<ProgressBar>(R.id.progressPlaying)
         val navController = Navigation.findNavController(this, R.id.fragment_host)
         viewModel = ViewModelProvider(this).get(SearchedViewModel::class.java)
 
@@ -63,7 +61,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onStateChange(youTubePlayer: YouTubePlayer, state: PlayerConstants.PlayerState) {
                 if (state == PlayerConstants.PlayerState.ENDED) {
-                    Log.d("DONE","ENDED")
+                    Log.d("DONE", "ENDED")
                 }else if(state == PlayerConstants.PlayerState.PLAYING){
                     btnStart.background = getDrawable(R.drawable.ic_baseline_pause_24)
                     isPlaying = true
@@ -73,6 +71,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             override fun onVideoDuration(youTubePlayer: YouTubePlayer, duration: Float) {
+                durations = duration.toInt()
+                progressPlaying.max = durations
+
+                initTimer(duration.toLong())
+
             }
 
             override fun onVideoId(youTubePlayer: YouTubePlayer, videoId: String) {
@@ -85,7 +88,8 @@ class MainActivity : AppCompatActivity() {
 
         youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
-               observe(youTubePlayer, btnStart)
+                observe(youTubePlayer, btnStart)
+                youTubePlayer.loadVideo("KhZ5DCd7m6s", 0F)
             }
         })
         youTubePlayerView.addYouTubePlayerListener(listener)
@@ -93,9 +97,24 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupWithNavController(bottomNavigationView, navController)
 
     }
-    fun observe(youTubePlayer: YouTubePlayer, btnStart : Button){
+    fun initTimer(duration : Long){
+        Log.d("progress", duration.toString())
+
+        val youtubeTimer : CountDownTimer = object : CountDownTimer(duration*1000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                progressPlaying.progress ++
+                Log.d("progress", progressPlaying.progress.toString())
+            }
+            override fun onFinish() {
+            }
+        }
+
+        youtubeTimer.start()
+    }
+    fun observe(youTubePlayer: YouTubePlayer, btnStart: Button){
         val titleSong : TextView = findViewById<TextView>(R.id.songTitle)
         val nameArtist : TextView = findViewById<TextView>(R.id.artistName)
+        val coverImage : ImageView = findViewById<ImageView>(R.id.coverImage)
 
         btnStart.setOnClickListener {
             if(isPlaying){
@@ -105,13 +124,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
         viewModel!!.isViewing!!.observe(this,
-            Observer<Boolean> {
-                if (viewModel!!.isViewing!!.value!!) {
-                    titleSong.text = viewModel!!.playingModel!!.value!!.title!!
-                    nameArtist.text = viewModel!!.playingModel!!.value!!.singer!!
-                    youTubePlayer.loadVideo(viewModel!!.playingModel!!.value!!.link!!, 0F)
-                }
-            })
+                Observer<Boolean> {
+                    if (viewModel!!.isViewing!!.value!!) {
+                        titleSong.text = viewModel!!.playingModel!!.value!!.title!!
+                        nameArtist.text = viewModel!!.playingModel!!.value!!.singer!!
+                        Glide.with(applicationContext).load(viewModel!!.playingModel!!.value!!.jacket).into(coverImage)
+                        youTubePlayer.loadVideo(viewModel!!.playingModel!!.value!!.link!!, 0F)
+                    }
+                })
         }
 
 }

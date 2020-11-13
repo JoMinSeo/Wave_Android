@@ -81,6 +81,7 @@ class BottomSheet(songId : Int) : BottomSheetDialogFragment() {
         addButton.setOnClickListener{
             for(i in playList.indices){
                 if(playList[i].check == true){
+                    Log.d("log_progress", playList[i].toString())
                     addPlaylist(playList[i].listId, songId)
                 }
             }
@@ -112,6 +113,7 @@ class BottomSheet(songId : Int) : BottomSheetDialogFragment() {
             })
     }
     private fun addPlaylist(listID: Int?, songId: Int?) {
+        Log.d("d_song",songId.toString())
         val addPlayList  = PlayListSongBody(listID, songId)
         API?.addPlayListSong(addPlayList)!!.enqueue( object : Callback<ResultModel> {
             override fun onResponse(call: Call<ResultModel>, response: Response<ResultModel>) {

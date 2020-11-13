@@ -42,12 +42,6 @@
                 android:text="TextView"
                 android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/artistType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                android:textSize="12sp" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -167,6 +167,7 @@ class SearchedAllAdapter internal constructor(
         } else if (type == SearchedViewType.ViewType.ALBUM) {
             val albumInfo = allData[position] as AlbumInfo
             viewHolder as AlbumHolder
+            viewHolder.artistTitle.text = albumInfo.album!!.artistName
             viewHolder.title.text = albumInfo.album!!.albumName
             Glide.with(viewHolder.itemView)
                 .load(albumInfo.album!!.jacket)
@@ -175,6 +176,7 @@ class SearchedAllAdapter internal constructor(
             val albumInfo = allData[position] as AlbumInfo
             viewHolder as SmallAlbumHolder
             viewHolder.title.text = albumInfo.album!!.albumName
+            viewHolder.artistTitle.text = albumInfo.album!!.artistName
             Glide.with(viewHolder.itemView)
                 .load(albumInfo.album!!.jacket)
                 .into(viewHolder.imageCover)
@@ -203,15 +205,13 @@ class SearchedAllAdapter internal constructor(
     inner class AlbumHolder internal constructor(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
         var title: TextView = itemView.findViewById(R.id.musicName)
-        var content: TextView = itemView.findViewById(R.id.musicDescription)
-        var type: TextView = itemView.findViewById(R.id.musicType)
+        var artistTitle : TextView = itemView.findViewById(R.id.artistName)
         var imageCover: ImageView = itemView.findViewById(R.id.imageCover)
     }
     inner class SmallAlbumHolder internal constructor(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
         var title: TextView = itemView.findViewById(R.id.musicName)
-        var content: TextView = itemView.findViewById(R.id.musicDescription)
-        var type: TextView = itemView.findViewById(R.id.musicType)
+        var artistTitle : TextView = itemView.findViewById(R.id.artistName)
         var imageCover: ImageView = itemView.findViewById(R.id.imageCover)
     }
 
@@ -219,7 +219,6 @@ class SearchedAllAdapter internal constructor(
         itemView
     ) {
         var title: TextView = itemView.findViewById(R.id.artistName)
-        var type: TextView = itemView.findViewById(R.id.artistType)
     }
 
     inner class CategoryHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(
@@ -233,7 +232,6 @@ class SearchedAllAdapter internal constructor(
     ) {
 
         var title: TextView = itemView.findViewById(R.id.artistName)
-        var type: TextView = itemView.findViewById(R.id.artistType)
 
     }
 
