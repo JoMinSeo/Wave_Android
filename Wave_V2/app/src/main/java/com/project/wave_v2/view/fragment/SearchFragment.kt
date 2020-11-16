@@ -75,11 +75,14 @@ class SearchFragment : Fragment() {
             }
 
             override fun onQueryTextChange(s: String): Boolean {
+                if(s.isEmpty()){
+                    getAll()
+                }
                 return false
             }
         })
     }
-    fun getAll(){
+    private fun getAll(){
         API!!.getAll().enqueue(object : Callback<SearchResult> {
             override fun onResponse(call: Call<SearchResult>, response: Response<SearchResult>) {
                 val search = response.body()
@@ -93,13 +96,11 @@ class SearchFragment : Fragment() {
                         (arraySearched as ArrayList).add(SearchSongInfo(search.song!![i], SearchedViewType.ViewType.MUSIC))
                     }
                 }
-
                 if(search?.album!! != null){
                     for(i in search.album!!.indices){
                         (arrayAlbum as ArrayList).add(AlbumInfo(search.album!![i], SearchedViewType.ViewType.ALBUM))
                     }
                 }
-
                 if(search?.artist!! != null){
                     for(i in search.artist!!.indices){
                         (arrayArtist as ArrayList).add(ArtistInfo(search.artist!![i], SearchedViewType.ViewType.ARTIST))
@@ -107,9 +108,6 @@ class SearchFragment : Fragment() {
                 }
 
 
-                Log.d("log", arraySearched.toString())
-                Log.d("log", arrayAlbum.toString())
-                Log.d("log", arrayArtist.toString())
 
                 viewModel.searchModel!!.value = searched
             }

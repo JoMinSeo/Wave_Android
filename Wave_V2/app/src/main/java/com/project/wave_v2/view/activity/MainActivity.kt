@@ -1,9 +1,13 @@
 package com.project.wave_v2.view.activity
 
+import android.app.AlertDialog
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
 import android.util.Log
+import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -13,6 +17,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
@@ -20,9 +26,20 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.Abs
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import com.project.wave_v2.R
+import com.project.wave_v2.data.request.playlist.CallPlayListBody
+import com.project.wave_v2.data.request.playlist.PlayListSongBody
+import com.project.wave_v2.data.response.ResultModel
+import com.project.wave_v2.data.response.playlist.MyPlayListModel
+import com.project.wave_v2.network.RetrofitClient
+import com.project.wave_v2.network.Service
 import com.project.wave_v2.view.viewmodel.SearchedViewModel
+import com.project.wave_v2.widget.PlayListCheckAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
 import java.util.*
 
 
@@ -30,9 +47,14 @@ class MainActivity : AppCompatActivity() {
     val KEY_USER = "user_info"
     var viewModel: SearchedViewModel? = null
     var isPlaying = false
-    var durations = 0
     var youtubeTimer : CountDownTimer ?= null
     var initTimer = false
+    var API: Service? = null
+    lateinit var retrofit: Retrofit
+    var songId : Int ?= 0
+    var playList = ArrayList<MyPlayListModel>()
+    val playListAdapter: PlayListCheckAdapter = PlayListCheckAdapter(playList)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -128,7 +150,12 @@ class MainActivity : AppCompatActivity() {
         val titleSong : TextView = findViewById<TextView>(R.id.songTitle)
         val nameArtist : TextView = findViewById<TextView>(R.id.artistName)
         val coverImage : ImageView = findViewById<ImageView>(R.id.coverImage)
+        val playListButton : Button = findViewById(R.id.playListButton)
         titleSong.setSelected(true)
+
+        playListButton.setOnClickListener {
+            showDialog()
+        }
 
         btnStart.setOnClickListener {
             if(isPlaying){
@@ -140,14 +167,93 @@ class MainActivity : AppCompatActivity() {
         viewModel!!.isViewing!!.observe(this,
                 Observer<Boolean> {
                     if (viewModel!!.isViewing!!.value!!) {
+                        progressPlaying.progress = 0
                         titleSong.text = viewModel!!.playingModel!!.value!!.title!!
-                        nameArtist.text = viewModel!!.playingModel!!.value!!.singer!!
                         Glide.with(applicationContext).load(viewModel!!.playingModel!!.value!!.jacket).into(coverImage)
+                        nameArtist.text = viewModel!!.playingModel!!.value!!.singer!!
                         youTubePlayer.loadVideo(viewModel!!.playingModel!!.value!!.link!!, 0F)
                         Log.d("youtube", viewModel!!.playingModel!!.value!!.link!!)
+                        Log.d("artist", viewModel!!.playingModel!!.value!!.singer!!)
                     }
                 })
         }
+    override fun onStop(){
+        super.onStop()
+        if(youtubeTimer != null)
+            youtubeTimer!!.cancel()
+
+    }
+    private fun showDialog(){
+        val prefs: SharedPreferences = getSharedPreferences("user_info", Context.MODE_PRIVATE)
+        var id: String? = prefs.getString("userId", "user")
+
+        retrofit = RetrofitClient.getInstance()
+        API = RetrofitClient.getService()
+
+        val view = LayoutInflater.from(applicationContext).inflate(R.layout.dialog_playlist, null)
+        val recyclerPlaylist = view.findViewById<RecyclerView>(R.id.recyclerViewPlaylist)
+        var addButton = view.findViewById<Button>(R.id.addPlaylist)
+
+        Log.d("call", id)
+
+        callPlayList(id)
+
+        recyclerPlaylist.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
+        recyclerPlaylist.adapter = playListAdapter
+
+        val alertDialogBuilder = AlertDialog.Builder(this)
+                .setView(view)
+                .create()
+
+        addButton.setOnClickListener{
+            for(i in playList.indices){
+                if(playList[i].check == true){
+                    Log.d("log_progress", playList[i].toString())
+                    addPlaylist(playList[i].listId, songId)
+                }
+            }
+            alertDialogBuilder.dismiss()
+
+        }
 
 
+        alertDialogBuilder.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+        alertDialogBuilder.show()
+    }
+    private fun addPlaylist(listID: Int?, songId: Int?) {
+        Log.d("d_song",songId.toString())
+        val addPlayList  = PlayListSongBody(listID, songId)
+        API?.addPlayListSong(addPlayList)!!.enqueue( object : Callback<ResultModel> {
+            override fun onResponse(call: Call<ResultModel>, response: Response<ResultModel>) {
+                if(response.code() == 200){
+                    Log.d("song","success ${response.body()}")
+                }else{
+                    Log.d("song","failed")
+                }
+            }
+
+            override fun onFailure(call: Call<ResultModel>, t: Throwable) {
+                Log.d("song","failed ${t.message}")
+            }
+
+        })
+    }
+    private fun callPlayList(id: String?) {
+        playList.clear()
+        API?.myList(CallPlayListBody(userId = id))
+                ?.enqueue(object : Callback<List<MyPlayListModel>> {
+                    override fun onResponse(call: Call<List<MyPlayListModel>>, response: Response<List<MyPlayListModel>>) {
+                        val listResponse = response.body()
+                        for(i in listResponse!!.indices){
+                            playList.add(listResponse[i])
+                        }
+                        playListAdapter.setData(playList)
+                        Log.d("listOF", response.body().toString())
+                    }
+
+                    override fun onFailure(call: Call<List<MyPlayListModel>>, t: Throwable) {
+                        Log.d("listOF", t.message)
+                    }
+                })
+    }
 }

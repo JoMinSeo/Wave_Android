@@ -88,10 +88,10 @@ class PlayListFragment : Fragment() {
                 ?.enqueue(object : Callback<List<MyPlayListModel>> {
                     override fun onResponse(call: Call<List<MyPlayListModel>>, response: Response<List<MyPlayListModel>>) {
                         playList.clear()
-                        for (i in 0 until response.body()?.size!!) {
-                            playList.add(response.body()!![i])
-                        }
-                        playListAdapter.notifyDataSetChanged()
+                            for (i in 0 until response.body()?.size!!) {
+                                playList.add(response.body()!![i])
+                            }
+                            playListAdapter.notifyDataSetChanged()
                     }
 
                     override fun onFailure(call: Call<List<MyPlayListModel>>, t: Throwable) {

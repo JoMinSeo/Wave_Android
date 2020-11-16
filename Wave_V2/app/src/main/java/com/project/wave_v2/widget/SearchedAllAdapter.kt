@@ -48,6 +48,8 @@ class SearchedAllAdapter internal constructor(
         "[https]+\\:+\\/+\\/+[youtu]+\\.+[be]+\\/+[a-z A-Z 0-9 _ \\- ? !]+"
     private val youtube_link_thr: String =
         "[https:]+\\:+\\/+[www]+\\.+[youtube]+\\.+[com]+\\/+[ watch ]+\\?+[v]+\\=+[a-z A-Z 0-9 _ \\- ? !]+\\&+[list]+\\=+[a-z A-Z 0-9 _ \\- ? !]+"
+    private val youtube_link_fou : String =
+            "[https:]+\\:+\\/+[www]+\\.+[youtube]+\\.+[com]+\\/+[ watch ]+\\?+[v]+\\=+[a-z A-Z 0-9 _ \\- ? !]+\\&+[list]+\\=+[a-z A-Z 0-9 _ \\- ? !]+\\&+[index]+\\=[0-9]+"
 
 
     fun setDataModel(data: SearchModel?) {
@@ -125,8 +127,9 @@ class SearchedAllAdapter internal constructor(
                             )
                         ) {
 
+                            Log.d("debugged" , musicInfo.song!!.songUrl!!.substring(musicInfo!!.song!!.songUrl!!.indexOf('=', 0) + 1, musicInfo.song!!.songUrl!!.length))
                             viewModel!!.playingModel!!.value = PlayModel(musicInfo.song!!.jacket,
-                                musicInfo.song!!.songUrl!!.substring(32, musicInfo.song!!.songUrl!!.length),
+                                musicInfo.song!!.songUrl!!.substring(musicInfo!!.song!!.songUrl!!.indexOf('=', 0) + 1, musicInfo.song!!.songUrl!!.length),
                                 musicInfo.song!!.title!!,
                                 musicInfo.song!!.artistName!!)
 
@@ -136,20 +139,28 @@ class SearchedAllAdapter internal constructor(
                             )
                         ) {
                             viewModel!!.playingModel!!.value = PlayModel(musicInfo.song!!.jacket,
-                                musicInfo.song!!.songUrl!!.substring(17, musicInfo.song!!.songUrl!!.length),
+                                musicInfo.song!!.songUrl!!.substring(musicInfo!!.song!!.songUrl!!.indexOf("e/") + 2, musicInfo!!.song!!.songUrl!!.length),
                                 musicInfo.song!!.title!!,
                                 musicInfo.song!!.artistName!!)
                         } else if (Pattern.matches(
                                 youtube_link_thr,
                                 musicInfo.song!!.songUrl!!
-                            )
+                                )
                         ) {
+                            Log.d("debugged" , musicInfo.song!!.songUrl!!.substring(musicInfo!!.song!!.songUrl!!.indexOf('=', 0)+ 1, musicInfo!!.song!!.songUrl!!.indexOf('&', 0)))
 
                             viewModel!!.playingModel!!.value = PlayModel(musicInfo.song!!.jacket,
-                                musicInfo.song!!.songUrl!!.substring(32, musicInfo.song!!.songUrl!!.length - 23),
+                                musicInfo.song!!.songUrl!!.substring(musicInfo!!.song!!.songUrl!!.indexOf('=', 0)+ 1, musicInfo!!.song!!.songUrl!!.indexOf('&', 0)),
                                 musicInfo.song!!.title!!,
                                 musicInfo.song!!.artistName!!)
 
+                        } else if(Pattern.matches(youtube_link_fou, musicInfo.song!!.songUrl!!)){
+                            Log.d("debugged" , musicInfo.song!!.songUrl!!.substring(musicInfo!!.song!!.songUrl!!.indexOf('=', 0)+ 1, musicInfo!!.song!!.songUrl!!.indexOf('&', 0)))
+
+                            viewModel!!.playingModel!!.value = PlayModel(musicInfo.song!!.jacket,
+                                    musicInfo.song!!.songUrl!!.substring( musicInfo!!.song!!.songUrl!!.indexOf('=', 0)+ 1, musicInfo!!.song!!.songUrl!!.indexOf('&', 0)),
+                                    musicInfo.song!!.title!!,
+                                    musicInfo.song!!.artistName!!)
                         }
                         viewModel!!.isViewing!!.value = true
                        // context!!.startActivity(intent)
