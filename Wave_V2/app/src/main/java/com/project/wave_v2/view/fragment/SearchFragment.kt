@@ -55,6 +55,8 @@ class SearchFragment : Fragment() {
         val viewPager: ViewPager2 = view.findViewById(R.id.pager)
         val adapter = StateFragment(this)
         viewPager.adapter = adapter
+
+        getAll()
         val tabLayout: TabLayout = view.findViewById(R.id.searched_tab)
         TabLayoutMediator(
                 tabLayout, viewPager
@@ -77,7 +79,46 @@ class SearchFragment : Fragment() {
             }
         })
     }
+    fun getAll(){
+        API!!.getAll().enqueue(object : Callback<SearchResult> {
+            override fun onResponse(call: Call<SearchResult>, response: Response<SearchResult>) {
+                val search = response.body()
 
+                (arraySearched as ArrayList).clear()
+                (arrayArtist as ArrayList).clear()
+                (arrayAlbum as ArrayList).clear()
+
+                if(search?.song!! != null){
+                    for(i in search?.song!!.indices){
+                        (arraySearched as ArrayList).add(SearchSongInfo(search.song!![i], SearchedViewType.ViewType.MUSIC))
+                    }
+                }
+
+                if(search?.album!! != null){
+                    for(i in search.album!!.indices){
+                        (arrayAlbum as ArrayList).add(AlbumInfo(search.album!![i], SearchedViewType.ViewType.ALBUM))
+                    }
+                }
+
+                if(search?.artist!! != null){
+                    for(i in search.artist!!.indices){
+                        (arrayArtist as ArrayList).add(ArtistInfo(search.artist!![i], SearchedViewType.ViewType.ARTIST))
+                    }
+                }
+
+
+                Log.d("log", arraySearched.toString())
+                Log.d("log", arrayAlbum.toString())
+                Log.d("log", arrayArtist.toString())
+
+                viewModel.searchModel!!.value = searched
+            }
+
+            override fun onFailure(call: Call<SearchResult>, t: Throwable) {
+            }
+
+        })
+    }
     fun getAPI(s : String){
         API!!.getSearchInfo(SearchBody(s))!!.enqueue(object : Callback<SearchResult?> {
             override fun onResponse(call: Call<SearchResult?>, response: Response<SearchResult?>) {

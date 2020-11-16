@@ -35,6 +35,12 @@ class PlayListCheckAdapter(var playList : ArrayList<MyPlayListModel>) : Recycler
         notifyDataSetChanged()
     }
 
+    fun setDummy(){
+        for(i in 0..9){
+            playList.add(MyPlayListModel(i,i,"","user${i}",false))
+        }
+    }
+
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
         var title: TextView = itemView.findViewById<TextView>(R.id.item_title_text)

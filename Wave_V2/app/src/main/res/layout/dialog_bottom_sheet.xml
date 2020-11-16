@@ -13,19 +13,20 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/titleName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/subTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView" />
@@ -33,9 +34,9 @@
 
         <Button
             android:id="@+id/closeButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:text="Button" />
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/ic_baseline_close_24" />
 
     </LinearLayout>
 

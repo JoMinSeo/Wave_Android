@@ -110,7 +110,7 @@ class SearchedAllAdapter internal constructor(
                         .into(viewHolder.imageCover)
 
                     viewHolder.moreButton.setOnClickListener {
-                        val bottomSheet = BottomSheet(musicInfo.song!!.songId!!)
+                        val bottomSheet = BottomSheet(musicInfo.song!!.songId!!, 0, musicInfo.song!!.title!!, musicInfo.song!!.artistName!!)
                         bottomSheet.show(
                             (context as FragmentActivity).supportFragmentManager,
                             bottomSheet.tag

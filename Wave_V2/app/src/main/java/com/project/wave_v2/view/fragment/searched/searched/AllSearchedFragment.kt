@@ -46,6 +46,7 @@ class AllSearchedFragment : Fragment() {
         })
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }

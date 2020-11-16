@@ -19,6 +19,7 @@ import com.project.wave_v2.data.response.search.SearchModel
 import com.project.wave_v2.data.response.search.SearchResult
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface Service {
@@ -45,6 +46,9 @@ interface Service {
 
     @POST("search.api")
     fun getSearchInfo(@Body search : SearchBody): Call<SearchResult?>
+
+    @GET("searchAll.api")
+    fun getAll() : Call<SearchResult>
 
     @POST("registerSongs1.api")
     fun likeInfo1(@Body like : LikeInfoMainBody): Call<ResultModel>

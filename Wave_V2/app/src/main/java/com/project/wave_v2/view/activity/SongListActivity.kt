@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.wave_v2.R
 import com.project.wave_v2.data.request.playlist.PlayListBody
@@ -13,6 +15,7 @@ import com.project.wave_v2.data.response.playlist.SongInfo
 import com.project.wave_v2.network.RetrofitClient
 import com.project.wave_v2.network.Service
 import com.project.wave_v2.widget.SongListAdapter
+import com.project.wave_v2.widget.sheet.BottomSheet
 import kotlinx.android.synthetic.main.activity_song_list.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -38,6 +41,8 @@ class SongListActivity : AppCompatActivity() {
         retrofit = RetrofitClient.getInstance()
         API = RetrofitClient.getService()
 
+        val importAddButton : Button = findViewById<Button>(R.id.addPlaylistFromPeople)
+
         listId = intent.getIntExtra("listId", -1)
         listName = intent.getStringExtra("listName")
 
@@ -47,6 +52,18 @@ class SongListActivity : AppCompatActivity() {
 
         callSongList()
 
+        importAddButton.setOnClickListener {
+            showSheet()
+        }
+
+    }
+
+    private fun showSheet(){
+        val bottomSheet = BottomSheet(0, 1, "", "")
+        bottomSheet.show(
+                supportFragmentManager,
+                bottomSheet.tag
+        )
     }
 
     private fun rcViewSetting(){
