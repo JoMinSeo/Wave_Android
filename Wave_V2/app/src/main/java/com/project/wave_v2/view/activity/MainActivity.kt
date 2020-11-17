@@ -74,6 +74,9 @@ class MainActivity : AppCompatActivity() {
     var db : RoomDatabase ?= null
     var playListAdapters : PlayingListAdapter ?= null
     var playList : List<Song> = arrayListOf()
+    var modifyList : List<PlayModel> = arrayListOf()
+    var leftMusicTime : Long = 0
+
     private val youtube_link: String =
             "[https:]+\\:+\\/+[www]+\\.+[youtube]+\\.+[com]+\\/+[ watch ]+\\?+[v]+\\=+[a-z A-Z 0-9 _ \\- ? !]+"
     private val youtube_link_sec: String =
@@ -170,6 +173,7 @@ class MainActivity : AppCompatActivity() {
     fun initTimer(duration: Long) {
         youtubeTimer = object : CountDownTimer(duration * 1000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
+                leftMusicTime = millisUntilFinished
                 if(isPlaying){
                     progressPlaying.progress += 1
                     Log.d("progress", progressPlaying.progress.toString())
@@ -185,6 +189,17 @@ class MainActivity : AppCompatActivity() {
         (youtubeTimer as CountDownTimer).start()
     }
 
+    fun onResumeTimer(leftTime : Long){
+        initTimer(leftTime)
+    }
+
+    fun onPauseTimer(){
+        youtubeTimer!!.cancel()
+    }
+
+    fun convertList(){
+
+    }
 
     fun observe(youTubePlayer: YouTubePlayer, btnStart: Button){
         val titleSong : TextView = findViewById<TextView>(R.id.songTitle)
@@ -200,8 +215,10 @@ class MainActivity : AppCompatActivity() {
         btnStart.setOnClickListener {
             if(isPlaying){
                 youTubePlayer.pause()
+                onPauseTimer()
             }else{
                 youTubePlayer.play()
+                onResumeTimer(leftMusicTime)
             }
         }
         viewModel!!.isViewing!!.observe(this,
