@@ -50,4 +50,14 @@
         android:textColor="@android:color/white"
         android:textStyle="bold" />
 
+    <Button
+        android:id="@+id/addMusiclistButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="#1c9d9e"
+        android:text="현재 재생목록에 추가"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
+
 </LinearLayout>

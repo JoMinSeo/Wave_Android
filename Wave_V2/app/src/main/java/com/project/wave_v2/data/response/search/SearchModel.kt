@@ -1,5 +1,8 @@
 package com.project.wave_v2.data.response.search
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
 open class SearchObject(open var viewType: Int?)
 
 data class SearchModel(
@@ -34,8 +37,9 @@ data class Category(
     override var viewType:Int?=0
 ):SearchObject(viewType)
 
+@Entity
 data class Song(
-    var songId : Int?,
+    @PrimaryKey var songId : Int?,
     var title : String?,
     var artistId : Int?,
     var artistName : String?,
@@ -45,7 +49,8 @@ data class Song(
     var songUrl : String?,
     var age : Int?,
     var writer : String?,
-    var jacket:String?
+    var jacket:String?,
+    var isPlaying : Boolean = false
 )
 
 data class Album(

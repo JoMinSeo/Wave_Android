@@ -52,7 +52,6 @@ class PlayListCheckAdapter(var playList : ArrayList<MyPlayListModel>) : Recycler
             retrofit = RetrofitClient.getInstance()
             API = RetrofitClient.getService()
 
-            var mp : MyPlayListModel = playList[position]
 
             title.text = list.listName
 
@@ -60,8 +59,8 @@ class PlayListCheckAdapter(var playList : ArrayList<MyPlayListModel>) : Recycler
             glide.load(Uri.parse(list.jacket)).into(img)
 
             radioCheck.setOnCheckedChangeListener { _, b ->
-                mp.check = true
-                Log.d("mp_log", mp.toString())
+                list.check = true
+                Log.d("mp_log", list.toString())
             }
         }
     }

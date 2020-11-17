@@ -8,6 +8,5 @@ data class PlayModel(
     var jacket : String?,
     var link : String?,
     var title : String?,
-    var singer : String?
-
+    var singer : String?,
 )

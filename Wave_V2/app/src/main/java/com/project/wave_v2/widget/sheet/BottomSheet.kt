@@ -13,24 +13,25 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.project.wave_v2.R
+import com.project.wave_v2.data.dao.playinglist.PlayingRoomDatabase
 import com.project.wave_v2.data.request.playlist.CallPlayListBody
 import com.project.wave_v2.data.request.playlist.PlayListSongBody
 import com.project.wave_v2.data.response.ResultModel
 import com.project.wave_v2.data.response.playlist.MyPlayListModel
+import com.project.wave_v2.data.response.search.Song
 import com.project.wave_v2.network.RetrofitClient
 import com.project.wave_v2.network.Service
-import com.project.wave_v2.view.viewmodel.CallPlayListViewModel
-import com.project.wave_v2.widget.PlayListAdapter
 import com.project.wave_v2.widget.PlayListCheckAdapter
-import org.w3c.dom.Text
+import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 
-class BottomSheet(songId : Int, type : Int, songName : String, songArtist : String) : BottomSheetDialogFragment() {
+class BottomSheet(songId: Int, type: Int, songName: String, songArtist: String, song: Song?) : BottomSheetDialogFragment() {
 
     var API: Service? = null
     lateinit var retrofit: Retrofit
@@ -39,6 +40,7 @@ class BottomSheet(songId : Int, type : Int, songName : String, songArtist : Stri
     var songTitle : String? = null
     var songArtist : String? = null
     var playList = ArrayList<MyPlayListModel>()
+    var song : Song ?= null
     val playListAdapter: PlayListCheckAdapter = PlayListCheckAdapter(playList)
 
 
@@ -54,7 +56,13 @@ class BottomSheet(songId : Int, type : Int, songName : String, songArtist : Stri
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        val db = Room.databaseBuilder(
+            requireContext(),
+            PlayingRoomDatabase::class.java, "PlayingList").build()
+
+
         val addPlaylist = requireView().findViewById<Button>(R.id.addPlaylistButton)
+        val addMusiclist = requireView().findViewById<Button>(R.id.addMusiclistButton)
         val titleName : TextView = requireView().findViewById(R.id.titleName)
         val subTitle : TextView = requireView().findViewById(R.id.subTitle)
         val closeButton : Button = requireView().findViewById(R.id.closeButton)
@@ -68,6 +76,16 @@ class BottomSheet(songId : Int, type : Int, songName : String, songArtist : Stri
             Toast.makeText(context, "오류가 발생했습니다.", Toast.LENGTH_LONG).show()
         }
 
+
+        addMusiclist.setOnClickListener {
+            GlobalScope.launch{
+                async {
+                    db.playingList().songInsert(song!!)
+                    Log.d("async", db.playingList().getAll().toString())
+                }.await()
+            }
+            dismiss()
+        }
         closeButton.setOnClickListener {
             dismiss()
         }
@@ -102,6 +120,8 @@ class BottomSheet(songId : Int, type : Int, songName : String, songArtist : Stri
         val alertDialogBuilder = AlertDialog.Builder(context)
                 .setView(view)
                 .create()
+
+
 
         addButton.setOnClickListener{
             Toast.makeText(context, "성공적으로 플레이리스트가 복사되었습니다.", Toast.LENGTH_LONG).show()
@@ -193,6 +213,7 @@ class BottomSheet(songId : Int, type : Int, songName : String, songArtist : Stri
         this.songId = songId
         this.type = type
         this.songTitle = songName
+        this.song = song
         this.songArtist = songArtist
     }
     companion object{

@@ -1,12 +1,10 @@
 package com.project.wave_v2.view.activity
 
-import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.wave_v2.R
 import com.project.wave_v2.data.request.playlist.PlayListBody
@@ -21,7 +19,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
-import kotlin.properties.Delegates
 
 class SongListActivity : AppCompatActivity() {
 
@@ -59,7 +56,7 @@ class SongListActivity : AppCompatActivity() {
     }
 
     private fun showSheet(){
-        val bottomSheet = BottomSheet(0, 1, "", "")
+        val bottomSheet = BottomSheet(0, 1, "", "", null)
         bottomSheet.show(
                 supportFragmentManager,
                 bottomSheet.tag

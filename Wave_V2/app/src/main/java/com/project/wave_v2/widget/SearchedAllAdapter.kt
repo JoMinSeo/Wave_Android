@@ -1,9 +1,7 @@
 package com.narsha.wave_android.view.adapter.search
 
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,16 +13,20 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import com.bumptech.glide.Glide
 import com.narsha.wave_android.data.viewtype.SearchedViewType
 import com.project.wave_v2.R
+import com.project.wave_v2.data.dao.playinglist.PlayingRoomDatabase
 import com.project.wave_v2.data.response.play.PlayModel
 import com.project.wave_v2.data.response.search.*
 import com.project.wave_v2.data.viewtype.ReturnViewType
-import com.project.wave_v2.view.activity.SongActivity
-import com.project.wave_v2.view.fragment.searched.onclick.itemOnClick
+import com.project.wave_v2.view.fragment.searched.onclick.OnItemClick
 import com.project.wave_v2.view.viewmodel.SearchedViewModel
 import com.project.wave_v2.widget.sheet.BottomSheet
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
 
@@ -35,7 +37,7 @@ class SearchedAllAdapter internal constructor(
     returnType: Int
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var data: SearchModel? = null
-    private var itemOnClick: itemOnClick? = null
+    private var OnItemClick: OnItemClick? = null
     private var context: Context? = null
     private var viewHolder: RecyclerView.ViewHolder? = null
     private var allData: ArrayList<SearchObject> = ArrayList()
@@ -58,6 +60,7 @@ class SearchedAllAdapter internal constructor(
         dataReturn()
         notifyDataSetChanged()
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view: View
@@ -112,7 +115,7 @@ class SearchedAllAdapter internal constructor(
                         .into(viewHolder.imageCover)
 
                     viewHolder.moreButton.setOnClickListener {
-                        val bottomSheet = BottomSheet(musicInfo.song!!.songId!!, 0, musicInfo.song!!.title!!, musicInfo.song!!.artistName!!)
+                        val bottomSheet = BottomSheet(musicInfo.song!!.songId!!, 0, musicInfo.song!!.title!!, musicInfo.song!!.artistName!!, musicInfo.song!!)
                         bottomSheet.show(
                             (context as FragmentActivity).supportFragmentManager,
                             bottomSheet.tag
@@ -121,6 +124,16 @@ class SearchedAllAdapter internal constructor(
 
                     Log.d("linkOfyoutube", musicInfo.song!!.songUrl!!)
                     viewHolder.playButton.setOnClickListener {
+                        val db = Room.databaseBuilder(
+                            context!!,
+                            PlayingRoomDatabase::class.java, "PlayingList").build()
+
+                        GlobalScope.launch {
+                            async {
+                                db.playingList().songInsert(musicInfo.song!!)
+                            }.await()
+                        }
+
                         if (Pattern.matches(
                                 youtube_link,
                                 musicInfo.song!!.songUrl!!
