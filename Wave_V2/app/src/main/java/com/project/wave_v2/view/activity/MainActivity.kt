@@ -131,7 +131,12 @@ class MainActivity : AppCompatActivity() {
 
             override fun onStateChange(youTubePlayer: YouTubePlayer, state: PlayerConstants.PlayerState) {
                 if (state == PlayerConstants.PlayerState.ENDED) {
+                    Log.d("progress", "Finished")
+                    youtubeTimer!!.cancel()
+                    progressPlaying.progress = 0
                     Log.d("DONE", "ENDED")
+                    btnStart.background = getDrawable(R.drawable.ic_baseline_play_arrow_24)
+                    isPlaying = false
                 } else if (state == PlayerConstants.PlayerState.PLAYING) {
                     btnStart.background = getDrawable(R.drawable.ic_baseline_pause_24)
                     isPlaying = true
@@ -173,16 +178,13 @@ class MainActivity : AppCompatActivity() {
     fun initTimer(duration: Long) {
         youtubeTimer = object : CountDownTimer(duration * 1000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                leftMusicTime = millisUntilFinished
                 if(isPlaying){
+                    leftMusicTime = millisUntilFinished
                     progressPlaying.progress += 1
                     Log.d("progress", progressPlaying.progress.toString())
                 }
             }
-
             override fun onFinish() {
-                youtubeTimer!!.cancel()
-                progressPlaying.progress = 0
             }
         }
 
