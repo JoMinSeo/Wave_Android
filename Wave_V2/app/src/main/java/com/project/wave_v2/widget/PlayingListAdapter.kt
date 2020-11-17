@@ -58,6 +58,7 @@ class PlayingListAdapter(var playList: List<Song>, var context: Context, var act
 
                 title.text = song.title
 
+
                 viewModel.songTitle!!.observe(activity, Observer {
                     if(viewModel.songTitle!!.value == song.title){
                         Log.d("observe", "observing now")
@@ -80,13 +81,12 @@ class PlayingListAdapter(var playList: List<Song>, var context: Context, var act
             glide.load(Uri.parse(song.jacket)).into(img)
 
             itemView.setOnClickListener {
-                listener.OnItemClick(song)
-                nowPlaying.setBackgroundColor(context.getColor(R.color.colorPrimary))
-                title.setTextColor(Color.WHITE)
-                isPlayingNow.visibility = View.VISIBLE
-                isPlayingNow.setTextColor(Color.WHITE)
-                viewModel.songTitle!!.value = song.title
-                song.isPlaying = true
+                    listener.OnItemClick(song)
+                    title.setTextColor(Color.CYAN)
+                    isPlayingNow.visibility = View.VISIBLE
+                    isPlayingNow.setTextColor(Color.WHITE)
+                    viewModel.songTitle!!.value = song.title
+
             }
 
             deleteButton.setOnClickListener {

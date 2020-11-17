@@ -9,10 +9,7 @@ import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -64,11 +61,14 @@ class MainActivity : AppCompatActivity() {
     val KEY_USER = "user_info"
     var viewModel: SearchedViewModel? = null
     var isPlaying = false
+    var thisPlaying = false
     var youtubeTimer : CountDownTimer ?= null
     var initTimer = false
     var songId : Int ?= 0
     var API: Service? = null
+    var youtubePlayers : YouTubePlayer ?= null
     lateinit var retrofit: Retrofit
+    var songUrl : String = ""
     var playListModel = ArrayList<MyPlayListModel>()
     val playListAdapter: PlayListCheckAdapter = PlayListCheckAdapter(playListModel)
     var db : RoomDatabase ?= null
@@ -100,6 +100,12 @@ class MainActivity : AppCompatActivity() {
 
 
         lifecycle.addObserver(youTubePlayerView)
+
+        GlobalScope.launch {
+            async {
+                Log.d("songs", (db as PlayingRoomDatabase).playingList().getAll().toString())
+            }.await()
+        }
 
         val listener = object : YouTubePlayerListener {
             override fun onApiChange(youTubePlayer: YouTubePlayer) {
@@ -151,6 +157,7 @@ class MainActivity : AppCompatActivity() {
         }
         youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
+                youtubePlayers = youTubePlayer
                 observe(youTubePlayer, btnStart)
                 initTimer = true
             }
@@ -204,6 +211,7 @@ class MainActivity : AppCompatActivity() {
                         titleSong.text = viewModel!!.playingModel!!.value!!.title!!
                         Glide.with(applicationContext).load(viewModel!!.playingModel!!.value!!.jacket).into(coverImage)
                         nameArtist.text = viewModel!!.playingModel!!.value!!.singer!!
+                        songUrl = viewModel!!.playingModel!!.value!!.link!!
                         youTubePlayer.loadVideo(viewModel!!.playingModel!!.value!!.link!!, 0F)
                         Log.d("youtube", viewModel!!.playingModel!!.value!!.link!!)
                         Log.d("artist", viewModel!!.playingModel!!.value!!.singer!!)
@@ -237,10 +245,22 @@ class MainActivity : AppCompatActivity() {
                 playList = (db as PlayingRoomDatabase).playingList().getAll()
                 playListAdapters = PlayingListAdapter(playList, applicationContext, this@MainActivity, viewModel!!, viewModel!!.songTitle!!.value!!  ,object : OnItemClick{
                     override fun OnItemClick(song : Song) {
-                        progressPlaying.progress = 0
-                        Log.d("song", "song URL : "+getLink(song.songUrl!!) + "," + song.songUrl)
-                        viewModel!!.playingModel!!.value = PlayModel(song.jacket, getLink(song.songUrl!!), song.title, song.artistName)
-                        viewModel!!.isViewing!!.value = true
+                        Log.d("s", "$songUrl , ${getLink(song.songUrl!!)}")
+                        if(songTitle.text != song.title){
+                            progressPlaying.progress = 0
+                            Log.d("song", "song URL : "+getLink(song.songUrl!!) + "," + getLink(song.songUrl!!) )
+                            viewModel!!.playingModel!!.value = PlayModel(song.jacket, getLink(song.songUrl!!), song.title, song.artistName)
+                            viewModel!!.isViewing!!.value = true
+                            thisPlaying = true
+                        }else{
+                            if(thisPlaying && youtubePlayers != null){
+                                youtubePlayers!!.pause()
+                                thisPlaying = false
+                            }else if(!thisPlaying && youtubePlayers != null){
+                                youtubePlayers!!.play()
+                                thisPlaying = true
+                            }
+                        }
                     }
 
                 })
@@ -257,7 +277,7 @@ class MainActivity : AppCompatActivity() {
                 .create()
 
             importButton.setOnClickListener {
-                showingDialog()
+                showingDialog(alertDialogBuilder)
             }
             closeButton.setOnClickListener{
               alertDialogBuilder.dismiss()
@@ -292,7 +312,7 @@ class MainActivity : AppCompatActivity() {
         return ""
     }
 
-     private fun showingDialog(){
+     private fun showingDialog(alertDialog: AlertDialog){
         val prefs: SharedPreferences = getSharedPreferences("user_info", Context.MODE_PRIVATE)
         var id: String? = prefs.getString("userId", "user")
 
@@ -319,9 +339,11 @@ class MainActivity : AppCompatActivity() {
          addButton.setOnClickListener {
              for(i in playListModel.indices){
                  if(playListModel[i].check == true){
-                     callSongList(playListModel[i].listId)
+                     callSongList(playListModel[i].listId, recyclerPlaylist)
                      playListAdapters!!.notifyDataSetChanged()
                      alertDialogBuilder.dismiss()
+                     alertDialog.dismiss()
+                     Toast.makeText(applicationContext,"성공적으로 플레이리스트에 추가되었습니다", Toast.LENGTH_LONG).show()
                  }
              }
          }
@@ -332,7 +354,12 @@ class MainActivity : AppCompatActivity() {
         alertDialogBuilder.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         alertDialogBuilder.show()
     }
-    private fun callSongList(listId : Int){
+    private fun callSongList(listId : Int, recyclerView: RecyclerView){
+        (playList as ArrayList).clear()
+        playListAdapters!!.setData(playList)
+        playListAdapters!!.notifyDataSetChanged()
+        recyclerView.adapter = playListAdapter
+
         API?.getSongList(PlayListBody(listId))
             ?.enqueue(object : Callback<PlayListModel>{
                 override fun onResponse(call: Call<PlayListModel>, response: Response<PlayListModel>) {
@@ -343,16 +370,20 @@ class MainActivity : AppCompatActivity() {
                                     songInfo.subGenreId, songInfo.albumId, songInfo.songUrl, songInfo.age, songInfo.writer, songInfo.jacket)
                                 GlobalScope.launch {
                                     async {
-                                        checkingDelete(song , i)
+                                        //checkingDelete(song , i)
                                         (db as PlayingRoomDatabase).playingList().songInsert(song)
-                                        (playList as ArrayList).add(playList.size, song)
+                                        for(i in (db as PlayingRoomDatabase).playingList().getAll()){
+                                            (playList as ArrayList).add(playList.size, i)
+                                        }
                                     }
 
+                                }
+                                Handler().post(Runnable {
+                                    playListAdapters!!.setData(playList)
+                                })
+                                playListAdapters!!.notifyDataSetChanged()
+
                             }
-                        }
-                        Handler().post(Runnable {
-                            playListAdapters!!.setData(playList)
-                        })
                     }
                     else{
                         Log.d("SongListActivity", response.code().toString())
@@ -365,17 +396,15 @@ class MainActivity : AppCompatActivity() {
             })
 
     }
-    private fun checkingDelete(songInfo : Song, i : Int){
-        GlobalScope.launch {
-            async {
-                if(songInfo.songId != (db as PlayingRoomDatabase).playingList().getAll()[i].songId){
-                    (db as PlayingRoomDatabase).playingList().songInsert(songInfo)
-                }else{
-                    (db as PlayingRoomDatabase).playingList().songDelete(songInfo)
-                }
-            }
-        }
-    }
+//    private fun checkingDelete(songInfo : Song, i : Int){
+//        GlobalScope.launch {
+//            async {
+//                if(songInfo.songId == (db as PlayingRoomDatabase).playingList().getAll()[i].songId){
+//                    (db as PlayingRoomDatabase).playingList().songDelete(songInfo)
+//                }
+//            }
+//        }
+//    }
     private fun callPlayList(id: String?) {
         API?.myList(CallPlayListBody(userId = id))
             ?.enqueue(object : Callback<List<MyPlayListModel>> {
