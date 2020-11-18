@@ -72,6 +72,7 @@ class BottomSheet(songId: Int, type: Int, songName: String, songArtist: String, 
         }else if(type == IMPORT){ // if import playlist
             titleName.text = "플레이리스트 가져오기"
             subTitle.text = "다른 사람들의 플레이리스트를 가져옵니다."
+            addMusiclist.visibility = View.GONE
         }else {
             Toast.makeText(context, "오류가 발생했습니다.", Toast.LENGTH_LONG).show()
         }

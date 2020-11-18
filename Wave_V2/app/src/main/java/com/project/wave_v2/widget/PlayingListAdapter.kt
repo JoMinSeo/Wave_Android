@@ -15,6 +15,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
+import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.project.wave_v2.R
 import com.project.wave_v2.data.dao.playinglist.PlayingRoomDatabase
@@ -48,6 +49,7 @@ class PlayingListAdapter(var playList: List<Song>, var context: Context, var act
         var deleteButton : ImageButton = itemView.findViewById<ImageButton>(R.id.delete)
         val nowPlaying : ConstraintLayout = itemView.findViewById(R.id.nowPlaying)
         val isPlayingNow : TextView = itemView.findViewById(R.id.isPlaying)
+        val lottieView : LottieAnimationView = itemView.findViewById(R.id.animation_view)
 
 
 
@@ -66,10 +68,12 @@ class PlayingListAdapter(var playList: List<Song>, var context: Context, var act
                         title.setTextColor(Color.WHITE)
                         isPlayingNow.visibility = View.VISIBLE
                         isPlayingNow.setTextColor(Color.WHITE)
+                        lottieView.visibility = View.VISIBLE
                     }else{
                         nowPlaying.setBackgroundColor(Color.WHITE)
                         title.setTextColor(Color.BLACK)
                         isPlayingNow.visibility = View.GONE
+                        lottieView.visibility = View.GONE
                     }
                 })
 

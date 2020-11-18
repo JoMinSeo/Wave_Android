@@ -29,7 +29,7 @@ class SongListActivity : AppCompatActivity() {
     var API : Service? = null
     lateinit var retrofit : Retrofit
     var songList : ArrayList<SongInfo> = ArrayList<SongInfo>()
-    var songListAdapter : SongListAdapter = SongListAdapter(songList)
+    var songListAdapter : SongListAdapter ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +64,7 @@ class SongListActivity : AppCompatActivity() {
     }
 
     private fun rcViewSetting(){
+        songListAdapter = SongListAdapter(songList, listId, this)
         songList_rcview.adapter = songListAdapter
         songList_rcview.layoutManager = LinearLayoutManager(this)
         songList_rcview.setHasFixedSize(true)
@@ -84,7 +85,7 @@ class SongListActivity : AppCompatActivity() {
                                     Log.d("Logd", response.body()?.song!![i].toString())
                                 }
 
-                                songListAdapter.notifyDataSetChanged()
+                                songListAdapter!!.notifyDataSetChanged()
                             }
                         }
                         else{
