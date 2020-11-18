@@ -6,9 +6,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
@@ -37,13 +40,15 @@ class SearchedAllAdapter internal constructor(
     returnType: Int
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var data: SearchModel? = null
-    private var OnItemClick: OnItemClick? = null
+    private var positionCheck = 0
+    private var isStartViewCheck = true
     private var context: Context? = null
     private var viewHolder: RecyclerView.ViewHolder? = null
     private var allData: ArrayList<SearchObject> = ArrayList()
     private var returnType: Int = 0
     private var activity : ViewModelStoreOwner ?= null
     private var viewModel : SearchedViewModel ?= null
+    private var db : PlayingRoomDatabase ?= null
     private val youtube_link: String =
         "[https:]+\\:+\\/+[www]+\\.+[youtube]+\\.+[com]+\\/+[ watch ]+\\?+[v]+\\=+[a-z A-Z 0-9 _ \\- ? !]+"
     private val youtube_link_sec: String =
@@ -52,7 +57,7 @@ class SearchedAllAdapter internal constructor(
         "[https:]+\\:+\\/+[www]+\\.+[youtube]+\\.+[com]+\\/+[ watch ]+\\?+[v]+\\=+[a-z A-Z 0-9 _ \\- ? !]+\\&+[list]+\\=+[a-z A-Z 0-9 _ \\- ? !]+"
     private val youtube_link_fou : String =
             "[https:]+\\:+\\/+[www]+\\.+[youtube]+\\.+[com]+\\/+[ watch ]+\\?+[v]+\\=+[a-z A-Z 0-9 _ \\- ? !]+\\&+[list]+\\=+[a-z A-Z 0-9 _ \\- ? !]+\\&+[index]+\\=[0-9]+"
-
+    var modifyList : List<PlayModel> = arrayListOf()
 
     fun setDataModel(data: SearchModel?) {
         this.data = data
@@ -66,6 +71,10 @@ class SearchedAllAdapter internal constructor(
         val view: View
         val context: Context = parent.context
         viewModel = ViewModelProvider(activity!!).get(SearchedViewModel::class.java)
+
+        db = Room.databaseBuilder(
+                context,
+                PlayingRoomDatabase::class.java, "PlayingList").build()
 
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         if (viewType == SearchedViewType.ViewType.ALBUM) {
@@ -97,6 +106,7 @@ class SearchedAllAdapter internal constructor(
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
         val type = allData[position].viewType
 
+
         Log.d("logging", allData.toString())
         if (type == SearchedViewType.ViewType.MUSIC) {
             if (type == SearchedViewType.ViewType.CATEGORY) {
@@ -107,6 +117,17 @@ class SearchedAllAdapter internal constructor(
                 if (allData[position] is SearchSongInfo) {
                     val musicInfo = allData[position] as SearchSongInfo
                     viewHolder as MusicHolder
+
+                    if (isStartViewCheck) {
+                        if (position > 6) isStartViewCheck = false
+                    } else {
+                        if (position > positionCheck) {
+                            viewHolder.viewAnimation.animation = AnimationUtils.loadAnimation(context, R.anim.fall_down)
+                        } else {
+                            viewHolder.viewAnimation.animation = AnimationUtils.loadAnimation(context, R.anim.rising_up)
+                        }
+                    }
+
                     viewHolder.artist.text = musicInfo.song?.artistName
                     viewHolder.title.text = musicInfo.song?.title
 
@@ -131,6 +152,7 @@ class SearchedAllAdapter internal constructor(
                         GlobalScope.launch {
                             async {
                                 db.playingList().songInsert(musicInfo.song!!)
+                                convertList()
                             }.await()
                         }
 
@@ -176,6 +198,7 @@ class SearchedAllAdapter internal constructor(
                                     musicInfo.song!!.artistName!!)
                         }
                         viewModel!!.isViewing!!.value = true
+
                        // context!!.startActivity(intent)
                     }
                 }
@@ -204,10 +227,30 @@ class SearchedAllAdapter internal constructor(
             Glide.with(viewHolder.itemView)
                 .load(albumInfo.album!!.jacket)
                 .into(viewHolder.imageCover)
+
+            if (isStartViewCheck) {
+                if (position > 6) isStartViewCheck = false
+            } else {
+                if (position > positionCheck) {
+                    viewHolder.viewAnimation.animation = AnimationUtils.loadAnimation(context, R.anim.fall_down)
+                } else {
+                    viewHolder.viewAnimation.animation = AnimationUtils.loadAnimation(context, R.anim.rising_up)
+                }
+            }
         } else if(type == SearchedViewType.ViewType.SMALL_ARTIST){
             val artistInfo = allData[position] as ArtistInfo
             viewHolder as SmallArtistHolder
             viewHolder.title.text = artistInfo.artist!!.artistName
+
+            if (isStartViewCheck) {
+                if (position > 6) isStartViewCheck = false
+            } else {
+                if (position > positionCheck) {
+                    viewHolder.viewAnimation.animation = AnimationUtils.loadAnimation(context, R.anim.fall_down)
+                } else {
+                    viewHolder.viewAnimation.animation = AnimationUtils.loadAnimation(context, R.anim.rising_up)
+                }
+            }
         }else {
             viewHolder as ErrorHolder
             viewHolder.error.text = "에러 발생"
@@ -216,7 +259,38 @@ class SearchedAllAdapter internal constructor(
 
     }
 
+    fun convertList(){
+        GlobalScope.launch {
+            async {
+                for(i in (db as PlayingRoomDatabase).playingList().getAll()){
+                    (modifyList as ArrayList).add((modifyList as ArrayList).size,PlayModel(i.jacket,getLink(i.songUrl!!),i.title,i.artistName))
+                }
+            }
+        }
+        viewModel!!.playingModelList!!.postValue(modifyList)
+    }
 
+    fun getLink(songLink : String) : String {
+        var result: String = ""
+        if (Pattern.matches(youtube_link, songLink)) {
+            result = songLink.substring(songLink.indexOf('=', 0) + 1, songLink.length)
+            Log.d("logPattern1", "result : $result")
+            return result
+        } else if (Pattern.matches(youtube_link_sec, songLink)) {
+            result = songLink.substring(songLink.indexOf("e/") + 2, songLink.length)
+            Log.d("logPattern2", "result : $result")
+            return result
+        } else if (Pattern.matches(youtube_link_thr, songLink)) {
+            result = songLink.substring(songLink.indexOf('=', 0)+ 1, songLink.indexOf('&', 0))
+            Log.d("logPattern3", "result : $result")
+            return result
+        } else if (Pattern.matches(youtube_link_fou, songLink)) {
+            result = songLink.substring(songLink.indexOf('=', 0) + 1, songLink.indexOf('&', 0))
+            Log.d("logPattern4", "result : $result")
+            return result
+        }
+        return ""
+    }
 
     override fun getItemCount(): Int {
         return allData.size
@@ -237,12 +311,14 @@ class SearchedAllAdapter internal constructor(
         var title: TextView = itemView.findViewById(R.id.musicName)
         var artistTitle : TextView = itemView.findViewById(R.id.artistName)
         var imageCover: ImageView = itemView.findViewById(R.id.imageCover)
+        var viewAnimation : ConstraintLayout = itemView.findViewById(R.id.viewAnimation)
     }
 
     inner class SmallArtistHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(
         itemView
     ) {
         var title: TextView = itemView.findViewById(R.id.artistName)
+        var viewAnimation : ConstraintLayout = itemView.findViewById(R.id.viewAnimation)
     }
 
     inner class CategoryHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(
@@ -267,6 +343,7 @@ class SearchedAllAdapter internal constructor(
         var artist: TextView = itemView.findViewById(R.id.artistName)
         var imageCover: ImageView = itemView.findViewById(R.id.imageCover)
         var moreButton: Button = itemView.findViewById(R.id.moreButton)
+        var viewAnimation : ConstraintLayout = itemView.findViewById(R.id.viewAnimation)
 
     }
 

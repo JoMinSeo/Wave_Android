@@ -94,12 +94,15 @@ class MainActivity : AppCompatActivity() {
         db = Room.databaseBuilder(
             applicationContext,
             PlayingRoomDatabase::class.java, "PlayingList").build()
+        viewModel = ViewModelProvider(this).get(SearchedViewModel::class.java)
+
+
+        convertList()
 
         val btnStart: Button = findViewById<Button>(R.id.playing)
         val youTubePlayerView: YouTubePlayerView = findViewById(R.id.youtube_player_view)
         val progressPlaying: ProgressBar = findViewById<ProgressBar>(R.id.progressPlaying)
         val navController = Navigation.findNavController(this, R.id.fragment_host)
-        viewModel = ViewModelProvider(this).get(SearchedViewModel::class.java)
 
 
         lifecycle.addObserver(youTubePlayerView)
@@ -137,6 +140,15 @@ class MainActivity : AppCompatActivity() {
                     Log.d("DONE", "ENDED")
                     btnStart.background = getDrawable(R.drawable.ic_baseline_play_arrow_24)
                     isPlaying = false
+                    viewModel!!.isViewing!!.value = false
+                    for(i in modifyList.indices - 1){
+                        if(viewModel!!.songTitle!!.value == modifyList[i].title){
+                                viewModel!!.playingModel!!.value = modifyList[i+1]
+                                viewModel!!.isViewing!!.value = true
+                                initTimer = true
+                                isPlaying = true
+                        }
+                    }
                 } else if (state == PlayerConstants.PlayerState.PLAYING) {
                     btnStart.background = getDrawable(R.drawable.ic_baseline_pause_24)
                     isPlaying = true
@@ -200,7 +212,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun convertList(){
-
+        GlobalScope.launch {
+            async {
+                for(i in (db as PlayingRoomDatabase).playingList().getAll()){
+                    (modifyList as ArrayList).add((modifyList as ArrayList).size,PlayModel(i.jacket,getLink(i.songUrl!!),i.title,i.artistName))
+                }
+            }
+        }
+        viewModel!!.playingModelList!!.value = modifyList
     }
 
     fun observe(youTubePlayer: YouTubePlayer, btnStart: Button){

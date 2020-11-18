@@ -18,6 +18,8 @@ import java.util.*
 
 class ArtistSearchedFragment : Fragment() {
     private var viewModel : SearchedViewModel ?= null
+    private var positionCheck = 0
+    private var isStartViewCheck = true
     var searchModel : SearchModel?= null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

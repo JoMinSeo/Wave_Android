@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.RadioButton
@@ -48,6 +49,8 @@ class PlayListCheckAdapter(var playList : ArrayList<MyPlayListModel>) : Recycler
         var radioCheck : RadioButton = itemView.findViewById(R.id.radioAddButton)
 
         fun bind(list : MyPlayListModel) {
+
+
 
             retrofit = RetrofitClient.getInstance()
             API = RetrofitClient.getService()

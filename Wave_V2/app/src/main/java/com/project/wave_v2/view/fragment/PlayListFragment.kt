@@ -1,7 +1,6 @@
 package com.project.wave_v2.view.fragment
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
@@ -13,34 +12,31 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.wave_v2.R
 import com.project.wave_v2.data.request.playlist.CallPlayListBody
 import com.project.wave_v2.data.response.playlist.MyPlayListModel
 import com.project.wave_v2.network.RetrofitClient
 import com.project.wave_v2.network.Service
-import com.project.wave_v2.view.activity.MainActivity
-import com.project.wave_v2.view.activity.MakePlaylistActivity
 import com.project.wave_v2.view.viewmodel.CallPlayListViewModel
-import com.project.wave_v2.view.viewmodel.SearchedViewModel
 import com.project.wave_v2.widget.PlayListAdapter
+import com.project.wave_v2.widget.sheet.BottomSheet
 import kotlinx.android.synthetic.main.fragment_playlist.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 
-class PlayListFragment : Fragment() {
+class PlayListFragment() : Fragment() {
 
     lateinit var navController: NavController
 
     var API: Service? = null
     lateinit var retrofit: Retrofit
-
     lateinit var viewModel: CallPlayListViewModel
 
     var playList = ArrayList<MyPlayListModel>()
-    val playListAdapter: PlayListAdapter = PlayListAdapter(playList)
+    var playListAdapter: PlayListAdapter ?= null
+
 
     override fun onPause() {
         super.onPause()
@@ -60,6 +56,7 @@ class PlayListFragment : Fragment() {
         retrofit = RetrofitClient.getInstance()
         API = RetrofitClient.getService()
 
+        playListAdapter = PlayListAdapter(playList, requireContext())
         selectedPlayList.adapter = playListAdapter
         selectedPlayList.setHasFixedSize(true)
 
@@ -88,10 +85,10 @@ class PlayListFragment : Fragment() {
                 ?.enqueue(object : Callback<List<MyPlayListModel>> {
                     override fun onResponse(call: Call<List<MyPlayListModel>>, response: Response<List<MyPlayListModel>>) {
                         playList.clear()
-                            for (i in 0 until response.body()?.size!!) {
-                                playList.add(response.body()!![i])
-                            }
-                            playListAdapter.notifyDataSetChanged()
+                        for (i in 0 until response.body()?.size!!) {
+                            playList.add(0, response.body()!![i])
+                        }
+                        playListAdapter!!.notifyDataSetChanged()
                     }
 
                     override fun onFailure(call: Call<List<MyPlayListModel>>, t: Throwable) {

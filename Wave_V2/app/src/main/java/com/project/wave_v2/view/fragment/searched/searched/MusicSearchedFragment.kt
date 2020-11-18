@@ -16,7 +16,6 @@ import com.project.wave_v2.data.viewtype.ReturnViewType
 import com.project.wave_v2.view.viewmodel.SearchedViewModel
 
 class MusicSearchedFragment : Fragment() {
-
     var viewModel : SearchedViewModel = SearchedViewModel()
     var searchModel : SearchModel?= null
 

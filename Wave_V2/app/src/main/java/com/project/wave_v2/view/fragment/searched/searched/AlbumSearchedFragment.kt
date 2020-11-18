@@ -30,6 +30,8 @@ class AlbumSearchedFragment : Fragment() {
         recyclerView.layoutManager = manager // LayoutManager 등록
         recyclerView.adapter = SearchedAllAdapter(requireActivity(), requireContext(), searched, ReturnViewType.ReturnType.SMALL_ALBUM) // Adapter 등록
 
+
+
         viewModel!!.searchModel!!.observe(viewLifecycleOwner, {
             val searchingAlbum = SearchedAllAdapter(requireActivity(), requireContext(), viewModel!!.searchModel!!.value, ReturnViewType.ReturnType.SMALL_ALBUM)
             recyclerView.adapter = searchingAlbum

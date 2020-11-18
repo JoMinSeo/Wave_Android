@@ -12,6 +12,7 @@ class SearchedViewModel : ViewModel(){
     var searchModel : MutableLiveData<SearchModel> ?= MutableLiveData()
     var isViewing : MutableLiveData<Boolean> ?= MutableLiveData()
     var playingModel : MutableLiveData<PlayModel> ?= MutableLiveData()
+    var playingModelList : MutableLiveData<List<PlayModel>> ?= MutableLiveData()
     var playList : MutableLiveData<List<Song>> ?= MutableLiveData()
     var songTitle : MutableLiveData<String> ?= MutableLiveData()
 }

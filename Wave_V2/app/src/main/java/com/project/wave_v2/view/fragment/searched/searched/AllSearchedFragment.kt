@@ -22,8 +22,8 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class AllSearchedFragment : Fragment() {
-
-
+    private var positionCheck = 0
+    private var isStartViewCheck = true
     var viewModel : SearchedViewModel = SearchedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
