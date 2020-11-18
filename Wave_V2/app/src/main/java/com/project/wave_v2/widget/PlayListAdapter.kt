@@ -4,8 +4,11 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -80,17 +83,25 @@ class PlayListAdapter(val playList: ArrayList<MyPlayListModel>, val context: Con
                 })
             }
             shareButton.setOnClickListener {
+                val view : View = LayoutInflater.from(context).inflate(R.layout.dialog_success_shared, null)
+                val positiveButton : Button = view.findViewById(R.id.positiveButton)
+                val textResult : TextView = view.findViewById(R.id.resultText)
+
                 val alert = AlertDialog.Builder(context)
-                        .setTitle("성공적으로 공유가 되었습니다.")
-                        .setMessage("리스트 아이디 : ${list.listId}")
+                    .setView(view)
 
-                var  build = alert.create()
 
-                alert.setPositiveButton("확인") { dialogInterface: DialogInterface, i: Int ->
+                var build = alert.create()
+                build.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+
+                textResult.gravity = Gravity.CENTER
+                textResult.text = "공유에 성공했습니다.\n리스트 아이디 : ${list.listId}\n친구나 다른 사람들과 공유해보세요!"
+                positiveButton.setOnClickListener {
                     build.dismiss()
                 }
-
                 build = alert.create()
+                build.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+
                 build.show()
            }
 

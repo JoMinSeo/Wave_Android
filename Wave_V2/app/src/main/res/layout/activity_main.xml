@@ -105,7 +105,7 @@
                 app:layout_constraintVertical_bias="0.52">
 
                 <Button
-                    android:id="@+id/button3"
+                    android:id="@+id/previousButton"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_marginEnd="10dp"
@@ -119,7 +119,7 @@
                     android:background="@drawable/ic_baseline_play_arrow_24" />
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/nextButton"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:background="@drawable/ic_baseline_skip_next_24" />

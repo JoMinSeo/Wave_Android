@@ -10,7 +10,7 @@ import com.project.wave_v2.data.response.search.Song
         @TypeConverter
         fun getAll(): List<Song>
 
-        @Insert(onConflict = OnConflictStrategy.IGNORE)
+        @Insert(onConflict = OnConflictStrategy.REPLACE)
         fun songInsert(song: Song)
 
         @Delete

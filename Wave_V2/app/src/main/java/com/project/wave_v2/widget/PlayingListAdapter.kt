@@ -2,11 +2,13 @@ package com.project.wave_v2.widget
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -36,6 +38,8 @@ class PlayingListAdapter(var playList: List<Song>, var context: Context, var act
     lateinit var retrofit: Retrofit
     var playListModel = ArrayList<MyPlayListModel>()
     val playListAdapter: PlayListCheckAdapter = PlayListCheckAdapter(playListModel)
+    private var positionCheck = 0
+    private var isStartViewCheck = true
 
     fun setData(playList: List<Song>){
         this.playList = playList
@@ -60,18 +64,28 @@ class PlayingListAdapter(var playList: List<Song>, var context: Context, var act
 
                 title.text = song.title
 
-
+            if (isStartViewCheck) {
+                if (position > 6) isStartViewCheck = false
+            } else {
+                if (position > positionCheck) {
+                    nowPlaying.animation = AnimationUtils.loadAnimation(context, R.anim.fall_down)
+                } else {
+                    nowPlaying.animation = AnimationUtils.loadAnimation(context, R.anim.rising_up)
+                }
+            }
                 viewModel.songTitle!!.observe(activity, Observer {
                     if(viewModel.songTitle!!.value == song.title){
                         Log.d("observe", "observing now")
                         nowPlaying.setBackgroundColor(context.getColor(R.color.colorPrimary))
                         title.setTextColor(Color.WHITE)
+                        deleteButton.setImageDrawable(context.getDrawable(R.drawable.ic_baseline_close_24_2))
                         isPlayingNow.visibility = View.VISIBLE
                         isPlayingNow.setTextColor(Color.WHITE)
                         lottieView.visibility = View.VISIBLE
                     }else{
                         nowPlaying.setBackgroundColor(Color.WHITE)
                         title.setTextColor(Color.BLACK)
+                        deleteButton.setImageDrawable(context.getDrawable(R.drawable.ic_baseline_close_24))
                         isPlayingNow.visibility = View.GONE
                         lottieView.visibility = View.GONE
                     }

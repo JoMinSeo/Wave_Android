@@ -100,10 +100,48 @@ class MainActivity : AppCompatActivity() {
         convertList()
 
         val btnStart: Button = findViewById<Button>(R.id.playing)
+        val btnNext: Button = findViewById<Button>(R.id.previousButton)
+        val btnPrevious: Button = findViewById<Button>(R.id.nextButton)
         val youTubePlayerView: YouTubePlayerView = findViewById(R.id.youtube_player_view)
         val progressPlaying: ProgressBar = findViewById<ProgressBar>(R.id.progressPlaying)
         val navController = Navigation.findNavController(this, R.id.fragment_host)
 
+        nextButton.setOnClickListener {
+            for(i in modifyList.indices){
+                if(youtubeTimer != null){
+                    youtubeTimer!!.cancel()
+                }
+                progressPlaying.progress = 0
+                Log.d("DONE", "ENDED")
+                btnStart.background = getDrawable(R.drawable.ic_baseline_play_arrow_24)
+                isPlaying = false
+                viewModel!!.isViewing!!.value = false
+                if(viewModel!!.songTitle!!.value == modifyList[i].title){
+                    viewModel!!.playingModel!!.value = modifyList[i+1]
+                    viewModel!!.isViewing!!.value = true
+                    initTimer = true
+                    isPlaying = true
+                }
+            }
+        }
+        previousButton.setOnClickListener {
+            if(youtubeTimer != null){
+                youtubeTimer!!.cancel()
+            }
+            progressPlaying.progress = 0
+            Log.d("DONE", "ENDED")
+            btnStart.background = getDrawable(R.drawable.ic_baseline_play_arrow_24)
+            isPlaying = false
+            viewModel!!.isViewing!!.value = false
+            for(i in modifyList.indices){
+                if(viewModel!!.songTitle!!.value == modifyList[i].title){
+                    viewModel!!.playingModel!!.value = modifyList[i-1]
+                    viewModel!!.isViewing!!.value = true
+                    initTimer = true
+                    isPlaying = true
+                }
+            }
+        }
 
         lifecycle.addObserver(youTubePlayerView)
 
@@ -157,6 +195,7 @@ class MainActivity : AppCompatActivity() {
                     isPlaying = false
                 }
             }
+
 
             override fun onVideoDuration(youTubePlayer: YouTubePlayer, duration: Float) {
                 Log.d("durations", "${duration.toString()} , ${duration * 1000}")
