@@ -61,6 +61,17 @@ var isPlaying = false
 var thisPlaying = false
 var youtubeTimer : CountDownTimer ?= null
 var initTimer = false
+var db : RoomDatabase ?= null
+var songs : Song ?= null
+var modifyList : List<PlayModel> = arrayListOf()
+private val youtube_link: String =
+    "[https:]+\\:+\\/+[www]+\\.+[youtube]+\\.+[com]+\\/+[ watch ]+\\?+[v]+\\=+[a-z A-Z 0-9 _ \\- ? !]+"
+private val youtube_link_sec: String =
+    "[https]+\\:+\\/+\\/+[youtu]+\\.+[be]+\\/+[a-z A-Z 0-9 _ \\- ? !]+"
+private val youtube_link_thr: String =
+    "[https:]+\\:+\\/+[www]+\\.+[youtube]+\\.+[com]+\\/+[ watch ]+\\?+[v]+\\=+[a-z A-Z 0-9 _ \\- ? !]+\\&+[list]+\\=+[a-z A-Z 0-9 _ \\- ? !]+"
+private val youtube_link_fou : String =
+    "[https:]+\\:+\\/+[www]+\\.+[youtube]+\\.+[com]+\\/+[ watch ]+\\?+[v]+\\=+[a-z A-Z 0-9 _ \\- ? !]+\\&+[list]+\\=+[a-z A-Z 0-9 _ \\- ? !]+\\&+[index]+\\=[0-9]+"
 
 class MainActivity : AppCompatActivity() {
     val KEY_USER = "user_info"
@@ -71,21 +82,10 @@ class MainActivity : AppCompatActivity() {
     var songUrl : String = ""
     var playListModel = ArrayList<MyPlayListModel>()
     val playListAdapter: PlayListCheckAdapter = PlayListCheckAdapter(playListModel)
-    var db : RoomDatabase ?= null
     var playListAdapters : PlayingListAdapter ?= null
     var playList : List<Song> = arrayListOf()
-    var modifyList : List<PlayModel> = arrayListOf()
     var leftMusicTime : Long = 0
     lateinit var songReceiver: SongReceiver
-
-    private val youtube_link: String =
-            "[https:]+\\:+\\/+[www]+\\.+[youtube]+\\.+[com]+\\/+[ watch ]+\\?+[v]+\\=+[a-z A-Z 0-9 _ \\- ? !]+"
-    private val youtube_link_sec: String =
-            "[https]+\\:+\\/+\\/+[youtu]+\\.+[be]+\\/+[a-z A-Z 0-9 _ \\- ? !]+"
-    private val youtube_link_thr: String =
-            "[https:]+\\:+\\/+[www]+\\.+[youtube]+\\.+[com]+\\/+[ watch ]+\\?+[v]+\\=+[a-z A-Z 0-9 _ \\- ? !]+\\&+[list]+\\=+[a-z A-Z 0-9 _ \\- ? !]+"
-    private val youtube_link_fou : String =
-            "[https:]+\\:+\\/+[www]+\\.+[youtube]+\\.+[com]+\\/+[ watch ]+\\?+[v]+\\=+[a-z A-Z 0-9 _ \\- ? !]+\\&+[list]+\\=+[a-z A-Z 0-9 _ \\- ? !]+\\&+[index]+\\=[0-9]+"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -118,7 +118,7 @@ class MainActivity : AppCompatActivity() {
                 btnStart.background = getDrawable(R.drawable.ic_baseline_play_arrow_24)
                 isPlaying = false
                 viewModel!!.isViewing!!.value = false
-                if(viewModel!!.playingModel!!.value == modifyList[i]){
+                     if(viewModel!!.playingModel!!.value == modifyList[i]){
                     if(i != modifyList.size - 1){
                         Log.d("dong", viewModel!!.playingModel!!.value.toString())
                         viewModel!!.playingModel!!.value = modifyList[i+1]
@@ -148,24 +148,24 @@ class MainActivity : AppCompatActivity() {
             isPlaying = false
             viewModel!!.isViewing!!.value = false
             for(i in modifyList.indices){
-                if(viewModel!!.playingModel!!.value == modifyList[i]){
-                    if(i != 0){
-                        Log.d("dong", viewModel!!.playingModel!!.value.toString())
-                        viewModel!!.playingModel!!.value = modifyList[i-1]
-                        Log.d("dong", viewModel!!.playingModel!!.value.toString())
-                        viewModel!!.isViewing!!.value = true
-                        initTimer = true
-                        isPlaying = true
-                    }else{
-                        Log.d("dong", viewModel!!.playingModel!!.value.toString())
-                        viewModel!!.playingModel!!.value = modifyList[modifyList.size-1]
-                        Log.d("dong", viewModel!!.playingModel!!.value.toString())
-                        viewModel!!.isViewing!!.value = true
-                        initTimer = true
-                        isPlaying = true
+                    if(viewModel!!.playingModel!!.value == modifyList[i]){
+                        if(i != 0){
+                            Log.d("dong", viewModel!!.playingModel!!.value.toString())
+                            viewModel!!.playingModel!!.value = modifyList[i-1]
+                            Log.d("dong", viewModel!!.playingModel!!.value.toString())
+                            viewModel!!.isViewing!!.value = true
+                            initTimer = true
+                            isPlaying = true
+                        }else{
+                            Log.d("dong", viewModel!!.playingModel!!.value.toString())
+                            viewModel!!.playingModel!!.value = modifyList[modifyList.size-1]
+                            Log.d("dong", viewModel!!.playingModel!!.value.toString())
+                            viewModel!!.isViewing!!.value = true
+                            initTimer = true
+                            isPlaying = true
+                        }
+                        break
                     }
-                    break
-                }
             }
         }
 
@@ -206,7 +206,7 @@ class MainActivity : AppCompatActivity() {
                     isPlaying = false
                     viewModel!!.isViewing!!.value = false
                     for(i in modifyList.indices - 1){
-                        if(viewModel!!.playingModel!!.value == modifyList[i]){
+                             if(viewModel!!.playingModel!!.value == modifyList[i]){
                             if(i != modifyList.size - 1){
                                 Log.d("dong", viewModel!!.playingModel!!.value.toString())
                                 viewModel!!.playingModel!!.value = modifyList[i+1]
@@ -326,6 +326,7 @@ class MainActivity : AppCompatActivity() {
         viewModel!!.isViewing!!.observe(this,
                 Observer<Boolean> {
                     if (viewModel!!.isViewing!!.value!!) {
+                        convertList()
                         progressPlaying.progress = 0
                         titleSong.text = viewModel!!.playingModel!!.value!!.title!!
                         Glide.with(applicationContext).load(viewModel!!.playingModel!!.value!!.jacket).into(coverImage)
@@ -524,21 +525,70 @@ class MainActivity : AppCompatActivity() {
     }
     class SongReceiver : BroadcastReceiver() {
         override fun onReceive(p0: Context?, p1: Intent?) {
-            Log.i("onBroadCast", p1!!.getStringExtra("jacket").toString())
-            Log.i("onBroadCast", p1!!.getStringExtra("artistName").toString())
-            Log.i("onBroadCast", p1!!.getStringExtra("link").toString())
-            Log.i("onBroadCast", p1!!.getStringExtra("title").toString())
 
             playModel = PlayModel(p1!!.getStringExtra("jacket").toString(), p1!!.getStringExtra("link").toString(), p1!!.getStringExtra("title").toString(), p1!!.getStringExtra("artistName").toString())
-            
+
+
             Log.d("DONE", "ENDED")
             isPlaying = false
             viewModel!!.isViewing!!.value = false
+
+
+            GlobalScope.launch {
+                    async {
+                        (db as PlayingRoomDatabase).playingList().songDelete((db as PlayingRoomDatabase).playingList().getAll())
+                        for(i in (db as PlayingRoomDatabase).playingList().getAll()){
+                            if (Pattern.matches(youtube_link, i.songUrl)) {
+                                i.songUrl = i.songUrl!!.substring(i.songUrl!!.indexOf('=', 0) + 1, i.songUrl!!.length)
+                                (modifyList as ArrayList).add((modifyList as ArrayList).size,PlayModel(i.jacket,i.songUrl,i.title,i.artistName))
+
+                                songs = Song(p1!!.getIntExtra("id", -1), p1!!.getStringExtra("title").toString(),
+                                    p1!!.getIntExtra("artistId", -1), p1!!.getStringExtra("artistName"),  p1!!.getIntExtra("mainGenreId", -1),
+                                    p1!!.getIntExtra("subGenreId", -1), p1!!.getIntExtra("albumId", -1), p1!!.getStringExtra("link").toString(),
+                                    p1.getIntExtra("age", -1), p1!!.getStringExtra("writer"), p1!!.getStringExtra("jacket").toString(), false)
+
+                                (db as PlayingRoomDatabase).playingList().songInsert(songs!!)
+                            } else if (Pattern.matches(youtube_link_sec, i.songUrl)) {
+                                i.songUrl = i.songUrl!!.substring(i.songUrl!!.indexOf("e/") + 2, i.songUrl!!.length)
+                                (modifyList as ArrayList).add((modifyList as ArrayList).size,PlayModel(i.jacket,i.songUrl,i.title,i.artistName))
+
+                                songs = Song(p1!!.getIntExtra("id", -1), p1!!.getStringExtra("title").toString(),
+                                    p1!!.getIntExtra("artistId", -1), p1!!.getStringExtra("artistName"),  p1!!.getIntExtra("mainGenreId", -1),
+                                    p1!!.getIntExtra("subGenreId", -1), p1!!.getIntExtra("albumId", -1), p1!!.getStringExtra("link").toString(),
+                                    p1.getIntExtra("age", -1), p1!!.getStringExtra("writer"), p1!!.getStringExtra("jacket").toString(), false)
+
+                                (db as PlayingRoomDatabase).playingList().songInsert(songs!!)
+                            } else if (Pattern.matches(youtube_link_thr, i.songUrl)) {
+                                i.songUrl = i.songUrl!!.substring(i.songUrl!!.indexOf('=', 0)+ 1, i.songUrl!!.indexOf('&', 0))
+                                (modifyList as ArrayList).add((modifyList as ArrayList).size,PlayModel(i.jacket,i.songUrl,i.title,i.artistName))
+
+                                songs = Song(p1!!.getIntExtra("id", -1), p1!!.getStringExtra("title").toString(),
+                                    p1!!.getIntExtra("artistId", -1), p1!!.getStringExtra("artistName"),  p1!!.getIntExtra("mainGenreId", -1),
+                                    p1!!.getIntExtra("subGenreId", -1), p1!!.getIntExtra("albumId", -1), p1!!.getStringExtra("link").toString(),
+                                    p1.getIntExtra("age", -1), p1!!.getStringExtra("writer"), p1!!.getStringExtra("jacket").toString(), false)
+
+                                (db as PlayingRoomDatabase).playingList().songInsert(songs!!)
+                            } else if (Pattern.matches(youtube_link_fou, i.songUrl)) {
+                                i.songUrl = i.songUrl!!.substring(i.songUrl!!.indexOf('=', 0) + 1, i.songUrl!!.indexOf('&', 0))
+                                (modifyList as ArrayList).add((modifyList as ArrayList).size,PlayModel(i.jacket,i.songUrl,i.title,i.artistName))
+
+                                songs = Song(p1!!.getIntExtra("id", -1), p1!!.getStringExtra("title").toString(),
+                                    p1!!.getIntExtra("artistId", -1), p1!!.getStringExtra("artistName"),  p1!!.getIntExtra("mainGenreId", -1),
+                                    p1!!.getIntExtra("subGenreId", -1), p1!!.getIntExtra("albumId", -1), p1!!.getStringExtra("link").toString(),
+                                    p1.getIntExtra("age", -1), p1!!.getStringExtra("writer"), p1!!.getStringExtra("jacket").toString(), false)
+
+                                (db as PlayingRoomDatabase).playingList().songInsert(songs!!)
+                            }
+                        }
+                    }
+                }
+            viewModel!!.playingModelList!!.value = modifyList
 
             viewModel!!.playingModel!!.value = playModel
             viewModel!!.isViewing!!.value = true
             initTimer = true
             isPlaying = true
+
         }
 
     }

@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.*
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.textfield.TextInputEditText
 import com.project.wave_v2.R
 import com.project.wave_v2.data.request.like.LikeFeelBody
 import com.project.wave_v2.data.request.playlist.CallPlayListBody
@@ -202,15 +203,12 @@ class AddPlayListFragment : DialogFragment() {
         override fun onClick(dialog: DialogInterface?, which: Int) {
             when(which) {
                 DialogInterface.BUTTON_POSITIVE -> { // 확인 버튼
-                    if (listName.text.isEmpty()) {
+                    if (listName.text!!.isEmpty()) {
                         Toast.makeText(requireContext(), "플레이리스트의 이름을 입력해주세요", Toast.LENGTH_SHORT).show()
                     } else {
                         mainInfoSetting(listName.text.toString())
                     }
                     Log.d("Logd", "확인버튼입력됨")
-
-
-
                 }
                 DialogInterface.BUTTON_NEGATIVE -> { // 취소 버튼
                 }

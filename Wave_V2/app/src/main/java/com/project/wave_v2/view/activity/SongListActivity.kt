@@ -94,6 +94,13 @@ class SongListActivity : AppCompatActivity() {
                     it.putExtra("artistName",song.artistName)
                     it.putExtra("link", getLink(song.songUrl!!))
                     it.putExtra("title", song.title)
+                    it.putExtra("id", song.songId)
+                    it.putExtra("age",song.age)
+                    it.putExtra("albumId", song.albumId)
+                    it.putExtra("artistId", song.artistId)
+                    it.putExtra("subGenreId", song.subGenreId)
+                    it.putExtra("mainGenreId", song.mainGenreId)
+                    it.putExtra("writer",song.writer)
                     sendBroadcast(it)
                 }
             }
