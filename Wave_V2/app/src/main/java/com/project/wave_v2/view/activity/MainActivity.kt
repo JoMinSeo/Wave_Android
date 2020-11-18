@@ -538,47 +538,12 @@ class MainActivity : AppCompatActivity() {
                     async {
                         (db as PlayingRoomDatabase).playingList().songDelete((db as PlayingRoomDatabase).playingList().getAll())
                         for(i in (db as PlayingRoomDatabase).playingList().getAll()){
-                            if (Pattern.matches(youtube_link, i.songUrl)) {
-                                i.songUrl = i.songUrl!!.substring(i.songUrl!!.indexOf('=', 0) + 1, i.songUrl!!.length)
-                                (modifyList as ArrayList).add((modifyList as ArrayList).size,PlayModel(i.jacket,i.songUrl,i.title,i.artistName))
-
-                                songs = Song(p1!!.getIntExtra("id", -1), p1!!.getStringExtra("title").toString(),
+                            songs = Song(p1!!.getIntExtra("id", -1), p1!!.getStringExtra("title").toString(),
                                     p1!!.getIntExtra("artistId", -1), p1!!.getStringExtra("artistName"),  p1!!.getIntExtra("mainGenreId", -1),
                                     p1!!.getIntExtra("subGenreId", -1), p1!!.getIntExtra("albumId", -1), p1!!.getStringExtra("link").toString(),
                                     p1.getIntExtra("age", -1), p1!!.getStringExtra("writer"), p1!!.getStringExtra("jacket").toString(), false)
 
-                                (db as PlayingRoomDatabase).playingList().songInsert(songs!!)
-                            } else if (Pattern.matches(youtube_link_sec, i.songUrl)) {
-                                i.songUrl = i.songUrl!!.substring(i.songUrl!!.indexOf("e/") + 2, i.songUrl!!.length)
-                                (modifyList as ArrayList).add((modifyList as ArrayList).size,PlayModel(i.jacket,i.songUrl,i.title,i.artistName))
-
-                                songs = Song(p1!!.getIntExtra("id", -1), p1!!.getStringExtra("title").toString(),
-                                    p1!!.getIntExtra("artistId", -1), p1!!.getStringExtra("artistName"),  p1!!.getIntExtra("mainGenreId", -1),
-                                    p1!!.getIntExtra("subGenreId", -1), p1!!.getIntExtra("albumId", -1), p1!!.getStringExtra("link").toString(),
-                                    p1.getIntExtra("age", -1), p1!!.getStringExtra("writer"), p1!!.getStringExtra("jacket").toString(), false)
-
-                                (db as PlayingRoomDatabase).playingList().songInsert(songs!!)
-                            } else if (Pattern.matches(youtube_link_thr, i.songUrl)) {
-                                i.songUrl = i.songUrl!!.substring(i.songUrl!!.indexOf('=', 0)+ 1, i.songUrl!!.indexOf('&', 0))
-                                (modifyList as ArrayList).add((modifyList as ArrayList).size,PlayModel(i.jacket,i.songUrl,i.title,i.artistName))
-
-                                songs = Song(p1!!.getIntExtra("id", -1), p1!!.getStringExtra("title").toString(),
-                                    p1!!.getIntExtra("artistId", -1), p1!!.getStringExtra("artistName"),  p1!!.getIntExtra("mainGenreId", -1),
-                                    p1!!.getIntExtra("subGenreId", -1), p1!!.getIntExtra("albumId", -1), p1!!.getStringExtra("link").toString(),
-                                    p1.getIntExtra("age", -1), p1!!.getStringExtra("writer"), p1!!.getStringExtra("jacket").toString(), false)
-
-                                (db as PlayingRoomDatabase).playingList().songInsert(songs!!)
-                            } else if (Pattern.matches(youtube_link_fou, i.songUrl)) {
-                                i.songUrl = i.songUrl!!.substring(i.songUrl!!.indexOf('=', 0) + 1, i.songUrl!!.indexOf('&', 0))
-                                (modifyList as ArrayList).add((modifyList as ArrayList).size,PlayModel(i.jacket,i.songUrl,i.title,i.artistName))
-
-                                songs = Song(p1!!.getIntExtra("id", -1), p1!!.getStringExtra("title").toString(),
-                                    p1!!.getIntExtra("artistId", -1), p1!!.getStringExtra("artistName"),  p1!!.getIntExtra("mainGenreId", -1),
-                                    p1!!.getIntExtra("subGenreId", -1), p1!!.getIntExtra("albumId", -1), p1!!.getStringExtra("link").toString(),
-                                    p1.getIntExtra("age", -1), p1!!.getStringExtra("writer"), p1!!.getStringExtra("jacket").toString(), false)
-
-                                (db as PlayingRoomDatabase).playingList().songInsert(songs!!)
-                            }
+                            (db as PlayingRoomDatabase).playingList().songInsert(songs!!)
                         }
                     }
                 }
