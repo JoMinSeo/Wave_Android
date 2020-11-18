@@ -18,6 +18,7 @@ import com.project.wave_v2.data.response.playlist.MyPlayListModel
 import com.project.wave_v2.network.RetrofitClient
 import com.project.wave_v2.network.Service
 import com.project.wave_v2.view.viewmodel.CallPlayListViewModel
+import com.project.wave_v2.view.viewmodel.SearchedViewModel
 import com.project.wave_v2.widget.PlayListAdapter
 import com.project.wave_v2.widget.sheet.BottomSheet
 import kotlinx.android.synthetic.main.fragment_playlist.*
@@ -26,13 +27,14 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 
-class PlayListFragment() : Fragment() {
+class PlayListFragment : Fragment() {
 
     lateinit var navController: NavController
 
     var API: Service? = null
     lateinit var retrofit: Retrofit
     lateinit var viewModel: CallPlayListViewModel
+    lateinit var viewModelSearch : SearchedViewModel
 
     var playList = ArrayList<MyPlayListModel>()
     var playListAdapter: PlayListAdapter ?= null
@@ -47,6 +49,8 @@ class PlayListFragment() : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(requireActivity()).get(CallPlayListViewModel::class.java)
+        viewModelSearch = ViewModelProvider(requireActivity()).get(SearchedViewModel::class.java)
+
 
         val prefs: SharedPreferences = requireActivity().getSharedPreferences("user_info", Context.MODE_PRIVATE)
         var id: String? = prefs.getString("userId", "user")

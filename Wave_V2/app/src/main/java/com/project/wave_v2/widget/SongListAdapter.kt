@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
@@ -22,12 +23,14 @@ import com.project.wave_v2.data.response.playlist.PlayListModel
 import com.project.wave_v2.data.response.playlist.SongInfo
 import com.project.wave_v2.network.RetrofitClient
 import com.project.wave_v2.network.Service
+import com.project.wave_v2.view.fragment.searched.onclick.OnItemClick
+import com.project.wave_v2.view.viewmodel.SearchedViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 
-class SongListAdapter(val songList : ArrayList<SongInfo>, val listId : Int, val context : Context) : RecyclerView.Adapter<SongListAdapter.Holder>(){
+class SongListAdapter(val songList : ArrayList<SongInfo>, val listId : Int, val context : Context, val onItemClick : OnItemClick) : RecyclerView.Adapter<SongListAdapter.Holder>(){
 
     var API: Service? = null
     lateinit var retrofit: Retrofit
@@ -44,14 +47,15 @@ class SongListAdapter(val songList : ArrayList<SongInfo>, val listId : Int, val 
             title.text = song.title
             singer.text = song.artistName
 
-
             if(song.jacket == ""){
                 img.setImageResource(R.drawable.def_music)
             }else{
                 val glide = Glide.with(itemView.context)
                 glide.load(Uri.parse(song.jacket)).into(img)
             }
-
+            itemView.setOnClickListener {
+                onItemClick.PlayModelClick(song)
+            }
             delete.setOnClickListener {
                 API?.delPlayListSong(PlayListSongBody(listId, song.songId))!!.enqueue(object : Callback<ResultModel> {
                     override fun onResponse(call: Call<ResultModel>, response: Response<ResultModel>) {
@@ -77,9 +81,6 @@ class SongListAdapter(val songList : ArrayList<SongInfo>, val listId : Int, val 
                 })
             }
 
-            itemView.setOnClickListener {
-
-            }
         }
     }
 

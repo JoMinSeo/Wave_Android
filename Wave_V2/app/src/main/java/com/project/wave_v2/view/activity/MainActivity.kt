@@ -1,8 +1,7 @@
 package com.project.wave_v2.view.activity
 
 import android.app.AlertDialog
-import android.content.Context
-import android.content.SharedPreferences
+import android.content.*
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
@@ -56,14 +55,15 @@ import java.util.*
 import java.util.regex.Pattern
 import kotlin.collections.ArrayList
 
+var playModel : PlayModel ?= null
+var viewModel: SearchedViewModel? = null
+var isPlaying = false
+var thisPlaying = false
+var youtubeTimer : CountDownTimer ?= null
+var initTimer = false
 
 class MainActivity : AppCompatActivity() {
     val KEY_USER = "user_info"
-    var viewModel: SearchedViewModel? = null
-    var isPlaying = false
-    var thisPlaying = false
-    var youtubeTimer : CountDownTimer ?= null
-    var initTimer = false
     var songId : Int ?= 0
     var API: Service? = null
     var youtubePlayers : YouTubePlayer ?= null
@@ -76,6 +76,7 @@ class MainActivity : AppCompatActivity() {
     var playList : List<Song> = arrayListOf()
     var modifyList : List<PlayModel> = arrayListOf()
     var leftMusicTime : Long = 0
+    lateinit var songReceiver: SongReceiver
 
     private val youtube_link: String =
             "[https:]+\\:+\\/+[www]+\\.+[youtube]+\\.+[com]+\\/+[ watch ]+\\?+[v]+\\=+[a-z A-Z 0-9 _ \\- ? !]+"
@@ -96,6 +97,8 @@ class MainActivity : AppCompatActivity() {
             PlayingRoomDatabase::class.java, "PlayingList").build()
         viewModel = ViewModelProvider(this).get(SearchedViewModel::class.java)
 
+        viewModel!!.classOwner!!.value = this
+
 
         convertList()
 
@@ -103,7 +106,7 @@ class MainActivity : AppCompatActivity() {
         val btnNext: Button = findViewById<Button>(R.id.nextButton)
         val btnPrevious: Button = findViewById<Button>(R.id.previousButton)
         val youTubePlayerView: YouTubePlayerView = findViewById(R.id.youtube_player_view)
-        val progressPlaying: ProgressBar = findViewById<ProgressBar>(R.id.progressPlaying)
+        val progressPlaying = findViewById<ProgressBar>(R.id.progressPlaying)
         val navController = Navigation.findNavController(this, R.id.fragment_host)
 
         btnNext.setOnClickListener {
@@ -203,11 +206,22 @@ class MainActivity : AppCompatActivity() {
                     isPlaying = false
                     viewModel!!.isViewing!!.value = false
                     for(i in modifyList.indices - 1){
-                        if(viewModel!!.songTitle!!.value == modifyList[i].title){
+                        if(viewModel!!.playingModel!!.value == modifyList[i]){
+                            if(i != modifyList.size - 1){
+                                Log.d("dong", viewModel!!.playingModel!!.value.toString())
                                 viewModel!!.playingModel!!.value = modifyList[i+1]
+                                Log.d("dong", viewModel!!.playingModel!!.value.toString())
                                 viewModel!!.isViewing!!.value = true
                                 initTimer = true
                                 isPlaying = true
+                            }else{
+                                Log.d("dong", viewModel!!.playingModel!!.value.toString())
+                                viewModel!!.playingModel!!.value = modifyList[0]
+                                Log.d("dong", viewModel!!.playingModel!!.value.toString())
+                                viewModel!!.isViewing!!.value = true
+                                initTimer = true
+                                isPlaying = true
+                            }
                         }
                     }
                 } else if (state == PlayerConstants.PlayerState.PLAYING) {
@@ -248,6 +262,11 @@ class MainActivity : AppCompatActivity() {
 
         NavigationUI.setupWithNavController(bottomNavigationView, navController)
 
+        songReceiver = SongReceiver()
+        val intentfilter = IntentFilter("WAVE_PLAY_SONG").apply {
+
+        }
+        registerReceiver(songReceiver, intentfilter)
     }
     fun initTimer(duration: Long) {
         youtubeTimer = object : CountDownTimer(duration * 1000, 1000) {
@@ -325,6 +344,10 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(songReceiver)
+    }
 
     private fun showDialog(){
         val prefs: SharedPreferences = getSharedPreferences("user_info", Context.MODE_PRIVATE)
@@ -361,6 +384,9 @@ class MainActivity : AppCompatActivity() {
                                 thisPlaying = true
                             }
                         }
+                    }
+
+                    override fun PlayModelClick(song: SongInfo) {
                     }
 
                 })
@@ -496,6 +522,27 @@ class MainActivity : AppCompatActivity() {
             })
 
     }
+    class SongReceiver : BroadcastReceiver() {
+        override fun onReceive(p0: Context?, p1: Intent?) {
+            Log.i("onBroadCast", p1!!.getStringExtra("jacket").toString())
+            Log.i("onBroadCast", p1!!.getStringExtra("artistName").toString())
+            Log.i("onBroadCast", p1!!.getStringExtra("link").toString())
+            Log.i("onBroadCast", p1!!.getStringExtra("title").toString())
+
+            playModel = PlayModel(p1!!.getStringExtra("jacket").toString(), p1!!.getStringExtra("link").toString(), p1!!.getStringExtra("title").toString(), p1!!.getStringExtra("artistName").toString())
+            
+            Log.d("DONE", "ENDED")
+            isPlaying = false
+            viewModel!!.isViewing!!.value = false
+
+            viewModel!!.playingModel!!.value = playModel
+            viewModel!!.isViewing!!.value = true
+            initTimer = true
+            isPlaying = true
+        }
+
+    }
+
 //    private fun checkingDelete(songInfo : Song, i : Int){
 //        GlobalScope.launch {
 //            async {
