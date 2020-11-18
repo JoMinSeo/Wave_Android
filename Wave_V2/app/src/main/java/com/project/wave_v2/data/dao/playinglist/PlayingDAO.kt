@@ -15,4 +15,7 @@ import com.project.wave_v2.data.response.search.Song
 
         @Delete
         fun songDelete(song : Song)
+
+        @Delete
+        fun songDelete(songList : List<Song>)
     }

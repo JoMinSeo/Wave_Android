@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.project.wave_v2.R
 import com.project.wave_v2.data.request.playlist.PlayListBody
+import com.project.wave_v2.data.request.playlist.PlayListDeleteBody
 import com.project.wave_v2.data.response.ResultModel
 import com.project.wave_v2.data.response.playlist.MyPlayListModel
 import com.project.wave_v2.network.RetrofitClient
@@ -32,7 +33,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 
-class PlayListAdapter(val playList: ArrayList<MyPlayListModel>, val context: Context) : RecyclerView.Adapter<PlayListAdapter.Holder>(){
+class PlayListAdapter(val playList: ArrayList<MyPlayListModel>, val context: Context, val userId : String) : RecyclerView.Adapter<PlayListAdapter.Holder>(){
 
     var API: Service? = null
     lateinit var retrofit: Retrofit
@@ -68,10 +69,20 @@ class PlayListAdapter(val playList: ArrayList<MyPlayListModel>, val context: Con
             glide.load(Uri.parse(list.jacket)).into(img)
 
             deleteButton.setOnClickListener{
-                API?.delPlayList(PlayListBody(list.listId))!!.enqueue( object : Callback<ResultModel>{
+                API?.delPlayList(PlayListDeleteBody(userId ,list.listId))!!.enqueue( object : Callback<ResultModel>{
                     override fun onResponse(call: Call<ResultModel>, response: Response<ResultModel>) {
                         Toast.makeText(context , "성공적으로 삭제되었습니다",Toast.LENGTH_LONG).show()
-                        for(i in playList.indices)
+                        for(i in playList.indices){
+                            if(i != 0){
+                                if(playList[i - 1].listId == list.listId){
+                                    playList.remove(list)
+                                }
+                            }else{
+                                if(playList[i].listId == list.listId){
+                                    playList.remove(list)
+                                }
+                            }
+                        }
                         notifyDataSetChanged()
                     }
 

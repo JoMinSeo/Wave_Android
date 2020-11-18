@@ -56,7 +56,7 @@ class PlayListFragment() : Fragment() {
         retrofit = RetrofitClient.getInstance()
         API = RetrofitClient.getService()
 
-        playListAdapter = PlayListAdapter(playList, requireContext())
+        playListAdapter = PlayListAdapter(playList, requireContext(), prefs.getString("userId", "user")!!)
         selectedPlayList.adapter = playListAdapter
         selectedPlayList.setHasFixedSize(true)
 

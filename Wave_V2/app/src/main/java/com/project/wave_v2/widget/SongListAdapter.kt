@@ -57,8 +57,14 @@ class SongListAdapter(val songList : ArrayList<SongInfo>, val listId : Int, val 
                     override fun onResponse(call: Call<ResultModel>, response: Response<ResultModel>) {
                         Toast.makeText(context , "성공적으로 삭제되었습니다",Toast.LENGTH_LONG).show()
                         for(i in songList.indices){
-                            if(songList[i].songId == song.songId){
-                                songList.remove(song)
+                            if(i != 0){
+                                if(songList[i - 1].songId == song.songId){
+                                    songList.remove(song)
+                                }
+                            }else{
+                                if(songList[i].songId == song.songId){
+                                    songList.remove(song)
+                                }
                             }
                         }
                         notifyDataSetChanged()

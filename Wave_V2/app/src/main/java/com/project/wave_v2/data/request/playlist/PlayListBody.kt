@@ -4,3 +4,7 @@ package com.project.wave_v2.data.request.playlist
 data class PlayListBody(
     var listId : Int?
 )
+data class PlayListDeleteBody(
+    var userId : String?,
+    var listId : Int?
+)

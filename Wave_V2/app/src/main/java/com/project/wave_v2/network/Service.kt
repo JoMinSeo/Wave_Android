@@ -66,7 +66,7 @@ interface Service {
     fun delPlayListSong(@Body playListSong : PlayListSongBody): Call<ResultModel>
 
     @POST("deletePlaylist.api")
-    fun delPlayList(@Body playList : PlayListBody): Call<ResultModel>
+    fun delPlayList(@Body playList : PlayListDeleteBody): Call<ResultModel>
 
     @POST("addMylist.api")
     fun addMyList(@Body myList : MyPlayListBody): Call<ResultModel>

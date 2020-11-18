@@ -100,31 +100,42 @@ class MainActivity : AppCompatActivity() {
         convertList()
 
         val btnStart: Button = findViewById<Button>(R.id.playing)
-        val btnNext: Button = findViewById<Button>(R.id.previousButton)
-        val btnPrevious: Button = findViewById<Button>(R.id.nextButton)
+        val btnNext: Button = findViewById<Button>(R.id.nextButton)
+        val btnPrevious: Button = findViewById<Button>(R.id.previousButton)
         val youTubePlayerView: YouTubePlayerView = findViewById(R.id.youtube_player_view)
         val progressPlaying: ProgressBar = findViewById<ProgressBar>(R.id.progressPlaying)
         val navController = Navigation.findNavController(this, R.id.fragment_host)
 
-        nextButton.setOnClickListener {
+        btnNext.setOnClickListener {
             for(i in modifyList.indices){
                 if(youtubeTimer != null){
                     youtubeTimer!!.cancel()
                 }
                 progressPlaying.progress = 0
-                Log.d("DONE", "ENDED")
                 btnStart.background = getDrawable(R.drawable.ic_baseline_play_arrow_24)
                 isPlaying = false
                 viewModel!!.isViewing!!.value = false
-                if(viewModel!!.songTitle!!.value == modifyList[i].title){
-                    viewModel!!.playingModel!!.value = modifyList[i+1]
-                    viewModel!!.isViewing!!.value = true
-                    initTimer = true
-                    isPlaying = true
+                if(viewModel!!.playingModel!!.value == modifyList[i]){
+                    if(i != modifyList.size - 1){
+                        Log.d("dong", viewModel!!.playingModel!!.value.toString())
+                        viewModel!!.playingModel!!.value = modifyList[i+1]
+                        Log.d("dong", viewModel!!.playingModel!!.value.toString())
+                        viewModel!!.isViewing!!.value = true
+                        initTimer = true
+                        isPlaying = true
+                    }else{
+                        Log.d("dong", viewModel!!.playingModel!!.value.toString())
+                        viewModel!!.playingModel!!.value = modifyList[0]
+                        Log.d("dong", viewModel!!.playingModel!!.value.toString())
+                        viewModel!!.isViewing!!.value = true
+                        initTimer = true
+                        isPlaying = true
+                    }
+                    break
                 }
             }
         }
-        previousButton.setOnClickListener {
+        btnPrevious.setOnClickListener {
             if(youtubeTimer != null){
                 youtubeTimer!!.cancel()
             }
@@ -134,11 +145,23 @@ class MainActivity : AppCompatActivity() {
             isPlaying = false
             viewModel!!.isViewing!!.value = false
             for(i in modifyList.indices){
-                if(viewModel!!.songTitle!!.value == modifyList[i].title){
-                    viewModel!!.playingModel!!.value = modifyList[i-1]
-                    viewModel!!.isViewing!!.value = true
-                    initTimer = true
-                    isPlaying = true
+                if(viewModel!!.playingModel!!.value == modifyList[i]){
+                    if(i != 0){
+                        Log.d("dong", viewModel!!.playingModel!!.value.toString())
+                        viewModel!!.playingModel!!.value = modifyList[i-1]
+                        Log.d("dong", viewModel!!.playingModel!!.value.toString())
+                        viewModel!!.isViewing!!.value = true
+                        initTimer = true
+                        isPlaying = true
+                    }else{
+                        Log.d("dong", viewModel!!.playingModel!!.value.toString())
+                        viewModel!!.playingModel!!.value = modifyList[modifyList.size-1]
+                        Log.d("dong", viewModel!!.playingModel!!.value.toString())
+                        viewModel!!.isViewing!!.value = true
+                        initTimer = true
+                        isPlaying = true
+                    }
+                    break
                 }
             }
         }
