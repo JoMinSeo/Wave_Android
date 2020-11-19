@@ -312,6 +312,7 @@ class MainActivity : AppCompatActivity() {
 
         playListButton.setOnClickListener {
             showDialog()
+            Log.d("clicked","click")
         }
 
         btnStart.setOnClickListener {
@@ -536,15 +537,13 @@ class MainActivity : AppCompatActivity() {
 
             GlobalScope.launch {
                     async {
-                        (db as PlayingRoomDatabase).playingList().songDelete((db as PlayingRoomDatabase).playingList().getAll())
-                        for(i in (db as PlayingRoomDatabase).playingList().getAll()){
-                            songs = Song(p1!!.getIntExtra("id", -1), p1!!.getStringExtra("title").toString(),
-                                    p1!!.getIntExtra("artistId", -1), p1!!.getStringExtra("artistName"),  p1!!.getIntExtra("mainGenreId", -1),
-                                    p1!!.getIntExtra("subGenreId", -1), p1!!.getIntExtra("albumId", -1), p1!!.getStringExtra("link").toString(),
-                                    p1.getIntExtra("age", -1), p1!!.getStringExtra("writer"), p1!!.getStringExtra("jacket").toString(), false)
+                        songs = Song(p1.getIntExtra("id", -1), p1.getStringExtra("title"),
+                                p1.getIntExtra("artistId", -1), p1.getStringExtra("artistName"),  p1.getIntExtra("mainGenreId", -1),
+                                p1.getIntExtra("subGenreId", -1), p1.getIntExtra("albumId", -1), p1.getStringExtra("link"),
+                                p1.getIntExtra("age", -1), p1.getStringExtra("writer"), p1.getStringExtra("jacket"), false)
 
-                            (db as PlayingRoomDatabase).playingList().songInsert(songs!!)
-                        }
+                        (db as PlayingRoomDatabase).playingList().songInsert(songs!!)
+                        (modifyList as ArrayList).add(PlayModel(p1.getStringExtra("jacket"), p1.getStringExtra("link"), p1.getStringExtra("title"), p1.getStringExtra("artistName")))
                     }
                 }
             viewModel!!.playingModelList!!.value = modifyList
