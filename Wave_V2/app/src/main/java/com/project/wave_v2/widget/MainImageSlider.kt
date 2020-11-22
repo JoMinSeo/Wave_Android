@@ -42,8 +42,8 @@ class MainImageSlider(private val context: Context?) : SliderViewAdapter<MainIma
                 .fitCenter()
                 .dontTransform()
                 .into(viewHolder.imageViewBackground)
-        viewHolder.itemView.setOnClickListener { Toast.makeText(context, "This is item in position $position", Toast.LENGTH_SHORT).show() }
-    }
+        viewHolder.itemView.setOnClickListener { }
+      }
 
     override fun getCount(): Int {
         //slider view count could be dynamic size
